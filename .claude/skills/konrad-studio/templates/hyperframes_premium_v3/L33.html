@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .ch { display: flex; align-items: center; gap: 26px; }
+      .av { width: 96px; height: 96px; border-radius: 50%; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 800; }
+      .nm { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; }
+      .nm small { display: block; font-size: 28px; font-weight: 400; color: var(--mute); letter-spacing: 0; }
+      .sb { position: relative; margin-top: 40px; height: 100px; }
+      .sb > div { position: absolute; inset: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 42px; font-weight: 700; }
+      .sb .s1 { background: var(--fg); color: #0a0d16; }
+      .sb .s2 { background: var(--surface2); color: var(--fg); opacity: 0; }
+      .cur { position: absolute; left: 340px; top: 215px; width: 46px; height: 60px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.3" data-width="1920" data-height="1080">
+
+      <div class="card" style="top:300px">
+        <div class="ch" id="ch"><div class="av">K</div><div class="nm">Konrad Tatura<small>YouTube</small></div></div>
+        <div class="sb" id="sb"><div class="s1">Subskrybuj</div>
+          <div class="s2" id="s2"><svg width="40" height="42" viewBox="0 0 40 42"><path d="M20 4 C12 4 8 10 8 17 V26 L4 32 H36 L32 26 V17 C32 10 28 4 20 4 Z M15 36 C16 39 18 40 20 40 C22 40 24 39 25 36" fill="none" stroke="#f4f6fa" stroke-width="3.4" stroke-linejoin="round"/></svg>Subskrybujesz</div></div>
+        <svg class="cur" id="cur" viewBox="0 0 46 60"><path d="M4 3 L4 48 L15 37 L23 56 L31 52 L23 34 L39 34 Z" fill="#f4f6fa" stroke="#0a0d16" stroke-width="3" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(3.3);
+      K.lift("#ch", 0.08, { y: 18, dur: 0.5 });
+      K.lift("#sb", 0.18, { y: 18, dur: 0.5 });
+      tl.fromTo("#cur", { x: 160, y: 120, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.3);
+      tl.to("#sb", { scale: 0.96, duration: 0.08, ease: "power2.in", yoyo: true, repeat: 1 }, 0.95);
+      tl.to("#cur", { scale: 0.88, duration: 0.08, yoyo: true, repeat: 1 }, 0.95);
+      tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none", immediateRender: false }, 1.02);
+      tl.fromTo("#s2 svg", { rotation: 0 }, { rotation: 16, duration: 0.09, yoyo: true, repeat: 5, ease: "sine.inOut", transformOrigin: "50% 10%", immediateRender: false }, 1.15);
+      tl.to("#cur", { x: 120, y: 80, opacity: 0, duration: 0.5, ease: "power2.in" }, 2.0);
+      K.done();
+    </script>
+  </body>
+</html>

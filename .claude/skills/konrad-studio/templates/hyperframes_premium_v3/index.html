@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .q { font-size: 56px; font-weight: 300; letter-spacing: -0.03em; }
+      .pr { font-size: 150px; font-weight: 900; letter-spacing: -0.06em; line-height: 0.95; }
+      .rk { display: flex; align-items: center; gap: 22px; margin-top: 8px; }
+      .rk .t { font-size: 32px; font-weight: 500; color: var(--mute); width: 130px; }
+      .rk .tr { flex: 1; height: 14px; border-radius: 7px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+      .rk .f { position: absolute; inset: 0; background: var(--neg); transform-origin: left center; }
+      .btn { margin-top: 34px; height: 104px; border-radius: 999px; background: var(--accent); display: flex; align-items: center; justify-content: center;
+             font-size: 44px; font-weight: 700; letter-spacing: -0.02em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8.4" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="q" id="q">A co jeśli to scam?</div><div class="sp"></div>
+        <div class="pr" id="pr">59 zł</div><div class="sp"></div>
+        <div class="rk" id="rk"><div class="t">Ryzyko</div><div class="tr"><div class="f" id="f"></div></div></div>
+        <div class="btn" id="btn">Kupuję</div>
+      </div>
+      <svg class="cur" id="cur" viewBox="0 0 46 60"><path d="M4 3 L4 48 L15 37 L23 56 L31 52 L23 34 L39 34 Z" fill="#f4f6fa" stroke="#0a0d16" stroke-width="3" stroke-linejoin="round"/></svg>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(8.4);
+      K.rise("#q", 0.12, { stagger: 0.05 });
+      K.rise("#pr", 0.98, { dur: 0.8 });
+      K.lift("#rk", 2.0, { y: 16, dur: 0.45 });
+      tl.fromTo("#f", { scaleX: 0 }, { scaleX: 0.92, duration: 0.5, ease: "power2.out" }, 2.2);
+      K.strike("#q", 2.9);
+      tl.to("#f", { scaleX: 0.08, duration: 1.0, ease: "expo.inOut" }, 4.3);
+      K.lift("#btn", 5.4, { y: 26, dur: 0.55, ease: "expo.out" });
+      K.click("#cur", 760, 900, 420, 560, 5.55, 6.03, null); tl.to("#cur", { opacity: 0, duration: 0.3 }, 8.4 - 0.34);
+      tl.to("#btn", { scale: 0.95, duration: 0.09, ease: "power2.in", yoyo: true, repeat: 1 }, 6.05);
+      tl.fromTo("#btn", { backgroundColor: "#3d7bff" }, { backgroundColor: "#2a5fd6", duration: 0.12, ease: "none", yoyo: true, repeat: 1, immediateRender: false }, 6.05);
+      K.done();
+    </script>
+  </body>
+</html>

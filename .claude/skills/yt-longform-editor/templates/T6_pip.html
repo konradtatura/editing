@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T6 pip</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* Tool / website demo: a macOS browser window fills the frame, the speaker shrinks into a
+     rounded corner window and grows back at the end. Screenshot scrolls / zooms to the focus
+     area, a ring draws around it, the cursor travels there and clicks. */
+  #spk { position: absolute; left: 0; top: 0; width: __W__px; height: __H__px; object-fit: cover; transform-origin: 100% 100%; }
+  .browser { left: 96px; top: 84px; width: 1500px; height: 912px; }
+  .browser .view img { transform-origin: 0 0; }
+  .caption { position: absolute; left: 96px; bottom: 34px; font: 500 26px/1 var(--f-sans); color: var(--ink-2); }
+</style>
+</head>
+<body class="opaque">
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <div class="stage-bg clip" data-start="0" data-duration="__DURATION__" data-track-index="0"></div>
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="1">
+    <div class="browser" id="br">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><div class="url" id="url"></div></div>
+      <div class="view" id="view"><img id="shot" /><div class="ring" id="ring" style="opacity:0"></div>
+        <svg class="cursor" id="cur" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4 3.6 7.3-2.6 1.3-3.6-7.3L5 19z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+  <video id="spk" class="clip" src="speaker.mp4" data-start="0" data-duration="__DURATION__" data-track-index="2" muted playsinline></video>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const W = __W__, H = __H__, D = __DURATION__;
+  document.getElementById("url").textContent = p.url || "";
+  const shot = document.getElementById("shot");
+  shot.src = p.image || p.screenshot || "";
+  const view = document.getElementById("view");
+  const VW = 1500, VH = 912 - 52;
+  // image is drawn at view width; focus is given in IMAGE pixels of a 1440-wide capture (p.imageW)
+  const iw = p.imageW || 1440, k = VW / iw;
+  const fx = p.focus || null;        // [x, y, w, h] in image px
+  const ring = document.getElementById("ring");
+  const cur = document.getElementById("cur");
+
+  const tl = gsap.timeline({ paused: true });
+  const spk = document.getElementById("spk");
+  const pipScale = p.pipScale || 0.27;
+  const showSpeaker = p.speaker !== false;
+  S.inBlock(tl, "#br", 0.05, { y: 40, scale: 0.97 });
+  if (showSpeaker) {
+    tl.fromTo(spk, { scale: 1, x: 0, y: 0, borderRadius: 0 }, { scale: pipScale, x: -54, y: -54, borderRadius: 110, duration: 0.75, ease: S.EASE_MOVE }, 0.0);
+  } else {
+    tl.set(spk, { opacity: 0 }, 0);
+  }
+  const imgH = (p.imageH || 900) * k;          // drawn height of the screenshot
+  gsap.set(shot, { x: 0, y: 0, scale: 1 });
+  if (!fx && !p.scroll) tl.to(shot, { scale: 1.03, duration: D, ease: "none" }, 0);   // micro-zoom keeps a still page alive
+  if (fx) {
+    const t1 = p.focusAt != null ? p.focusAt : 1.0;
+    const z = p.zoom || 1.35;
+    // move so the focus box is centred in the view, zoomed — clamped so the page never leaves the window
+    const cxv = (fx[0] + fx[2] / 2) * k, cyv = (fx[1] + fx[3] / 2) * k;
+    const clampX = (v) => Math.min(0, Math.max(VW - VW * z, v));
+    const clampY = (v) => Math.min(0, Math.max(Math.min(0, VH - imgH * z), v));
+    const tx = clampX(VW / 2 - cxv * z), ty = clampY(VH / 2 - cyv * z);
+    tl.to(shot, { x: tx, y: ty, scale: z, duration: 1.2, ease: S.EASE_MOVE }, t1);
+    // ring in view coordinates after the move
+    const rx = tx + fx[0] * k * z - 10, ry = ty + fx[1] * k * z - 10;
+    gsap.set(ring, { left: rx, top: ry, width: fx[2] * k * z + 20, height: fx[3] * k * z + 20 });
+    tl.fromTo(ring, { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.45, ease: S.EASE_IN }, t1 + 1.25);
+    if (p.cursor !== false) {
+      tl.fromTo(cur, { x: VW * 0.72, y: VH * 0.82, opacity: 0 }, { opacity: 1, duration: 0.2 }, t1 + 0.6);
+      tl.to(cur, { x: rx + (fx[2] * k * z) * 0.5, y: ry + (fx[3] * k * z) * 0.55, duration: 0.9, ease: "power3.inOut" }, t1 + 0.8);
+      tl.to(cur, { scale: 0.85, duration: 0.08, yoyo: true, repeat: 1 }, t1 + 1.75);
+    }
+  } else if (p.scroll) {
+    tl.to(shot, { y: -p.scroll, duration: Math.max(1, D - 2), ease: "power1.inOut" }, 0.9);
+  }
+  if (!fx || p.cursor === false) gsap.set(cur, { opacity: 0 });
+  // end: speaker back to full frame, window out
+  if (showSpeaker) tl.to(spk, { scale: 1, x: 0, y: 0, borderRadius: 0, duration: 0.75, ease: S.EASE_MOVE }, D - 0.8);
+  S.out(tl, "#br", D - 0.55, { dur: 0.4 });
+  S.register("anim", tl);
+</script>
+</body>
+</html>

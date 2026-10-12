@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T2 cards</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* Cards over footage. layout: stack (list beside the head) | space (2-4 cards around the speaker).
+     Items appear one by one, timed to the words via item.at (seconds from clip start). */
+  .stack { position: absolute; display: flex; flex-direction: column; gap: 18px; }
+  .cardi { display: flex; align-items: center; gap: 26px; padding: 26px 38px 26px 26px; }
+  .cardi.noicon { padding-left: 32px; }
+  .cardi .t { font: 600 48px/1.1 var(--f-sans); letter-spacing: -0.02em; }
+  .cardi .sub { font: 400 30px/1.25 var(--f-sans); margin-top: 6px; letter-spacing: -0.005em; }
+  .cardi .num { font: 500 32px/1 var(--f-mono); color: var(--accent); width: 54px; flex: none; text-align: center; }
+  .cardi img.logo { width: 80px; height: 80px; border-radius: 16px; object-fit: cover; flex: none; }
+  .space .cardi { position: absolute; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="1">
+    <div id="wrap" class="fill"></div>
+  </section>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const W = __W__, H = __H__, D = __DURATION__;
+  if (p.ink === "dark") document.documentElement.classList.add("overlay-dark-ink");
+  const items = (p.items || [{ title: "Karta" }]).slice(0, 5);
+  const wrap = document.getElementById("wrap");
+  const layout = p.layout || "stack";
+  const box = f.speakerBox || [W * 0.38, H * 0.06, W * 0.62, H * 0.58];
+
+  function cardHTML(it, i) {
+    const lead = it.logo ? `<img class="logo" src="${it.logo}">`
+      : it.icon ? `<div class="ic ${it.tone || ""}">${S.icon(it.icon, 40)}</div>`
+      : p.numbered ? `<div class="num">${String(i + 1).padStart(2, "0")}</div>` : "";
+    return `<div class="cardi ovcard ${lead ? "" : "noicon"}">${lead}<div><div class="t">${it.title || ""}</div>${it.sub ? `<div class="sub">${it.sub}</div>` : ""}</div></div>`;
+  }
+
+  let cards;
+  if (layout === "space") {
+    wrap.classList.add("space");
+    wrap.innerHTML = items.map(cardHTML).join("");
+    cards = [...wrap.querySelectorAll(".cardi")];
+    // alternate right / left of the head, stepping down
+    const gap = 60, ys = [H * 0.16, H * 0.34, H * 0.52, H * 0.70];
+    cards.forEach((c, i) => {
+      const right = i % 2 === 0;
+      const r = c.getBoundingClientRect();
+      const y = ys[Math.floor(i / 2) * 2 + (right ? 0 : 1)] || ys[i % 4];
+      c.style.top = y + "px";
+      c.style.left = (right ? Math.min(W - 80 - r.width, box[2] + gap) : Math.max(80, box[0] - gap - r.width)) + "px";
+    });
+  } else {
+    const z = p._zone || { x: W - 96 - 640, y: 220, w: 640 };
+    const st = document.createElement("div");
+    st.className = "stack";
+    st.style.left = z.x + "px"; st.style.top = (p.y || z.y) + "px"; st.style.width = Math.min(z.w, 760) + "px";
+    if (z.side === "left") st.style.alignItems = "flex-end";
+    st.innerHTML = items.map(cardHTML).join("");
+    wrap.appendChild(st);
+    cards = [...st.querySelectorAll(".cardi")];
+  }
+
+  const tl = gsap.timeline({ paused: true });
+  cards.forEach((c, i) => {
+    const at = items[i].at != null ? items[i].at : 0.08 + i * 0.5;
+    S.inBlock(tl, c, at, { stagger: 0 });
+  });
+  S.out(tl, cards, D - S.T_OUT - 0.02, { stagger: 0.03 });
+  S.register("anim", tl);
+</script>
+</body>
+</html>

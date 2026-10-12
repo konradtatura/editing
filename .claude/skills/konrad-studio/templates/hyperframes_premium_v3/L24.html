@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .lcol { left: 160px; top: 170px; width: 820px; }
+      .ch { display: flex; align-items: center; gap: 24px; font-size: 52px; font-weight: 700; letter-spacing: -0.025em; margin-top: 26px; }
+      .post { left: 1040px; top: 190px; width: 720px; padding: 44px 48px; }
+      .post .gh { display: flex; align-items: center; gap: 22px; }
+      .post .gh img { width: 72px; height: 72px; }
+      .post .gh b { font-size: 34px; font-weight: 700; display: block; letter-spacing: -0.015em; }
+      .post .gh small { font-size: 26px; color: var(--mute); }
+      .post .au { font-size: 30px; font-weight: 600; margin-top: 34px; }
+      .post .au span { color: var(--mute); font-weight: 400; }
+      .post .tx { font-size: 42px; font-weight: 400; line-height: 1.3; margin-top: 14px; letter-spacing: -0.015em; }
+      .post .ft { display: flex; gap: 40px; margin-top: 34px; padding-top: 26px; border-top: 1px solid var(--line); font-size: 30px; color: var(--mute); font-weight: 500; }
+      .post .ft b { color: var(--fg); font-weight: 800; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.4" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs lcol">
+          <div class="t-l w300" id="h1">Pierwszy efekt</div>
+          <div class="t-l w900" id="h2">w 10 minut.</div>
+          <div style="height:50px"></div>
+          <div class="ch" id="c1"><div class="chk"><div class="on"><svg viewBox="0 0 28 26"><path d="M3 13 L11 21 L25 4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="off"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></div></div>Brak zwrotów</div>
+          <div class="ch" id="c2"><div class="chk"><div class="on"><svg viewBox="0 0 28 26"><path d="M3 13 L11 21 L25 4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="off"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></div></div>Polecają dalej</div>
+        </div>
+        <div class="abs post surf" id="post">
+          <div class="gh"><img src="assets/app_facebook.png" alt="" /><div><b>Rodzice ósmoklasistów 2026</b><small>Grupa · 48 tys. członków</small></div></div>
+          <div class="au">Monika <span>· 2 godz.</span></div>
+          <div class="tx" id="ptx">Polecam z czystym sumieniem. Pierwszy efekt już po jednym wieczorze, zadziałało od razu!</div>
+          <div class="ft"><span><b id="lk">0</b> polubień</span><span><b id="cm">0</b> komentarzy</span></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(10.4, 1.03);
+      K.rise("#h1", 1.35); K.rise("#h2", 2.3);
+      K.lift("#c1", 4.3, { y: 20, dur: 0.45 }); K.tick("#c1", 4.5);
+      K.lift("#c2", 5.55, { y: 20, dur: 0.45 }); K.tick("#c2", 5.75);
+      K.lift("#post", 6.55, { y: 50, dur: 0.7, ease: "expo.out" });
+      K.count("#lk", 0, 128, 7.4, 2.6, K.pl, "power1.out");
+      K.count("#cm", 0, 46, 7.7, 2.4, K.pl, "power1.out");
+      K.whip(10.4);
+      K.done();
+    </script>
+  </body>
+</html>

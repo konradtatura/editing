@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .op { display: flex; align-items: baseline; justify-content: space-between; padding: 20px 0; border-top: 1px solid var(--line); }
+      .op .a { font-size: 40px; font-weight: 300; color: var(--mute); }
+      .op .b { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="2.55" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Ten sam produkt</div><div class="sp"></div>
+        <div class="op" id="o1"><span class="a">Opis 1</span><span class="b acc" id="b1">sprzedaje</span></div>
+        <div class="op" id="o2"><span class="a">Opis 2</span><span class="b mute" id="b2">nie sprzedaje</span></div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(2.55);
+      K.rise("#lab", 0.08);
+      K.lift("#o1", 0.15, { y: 20, dur: 0.45 }); K.rise("#b1", 0.6);
+      K.lift("#o2", 1.3, { y: 20, dur: 0.45 }); K.rise("#b2", 1.75);
+      K.done();
+    </script>
+  </body>
+</html>

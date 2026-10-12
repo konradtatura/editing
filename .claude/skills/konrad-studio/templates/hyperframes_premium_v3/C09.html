@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="2.85" data-width="1920" data-height="1080">
+      <div class="co"><div><span class="a" id="l0">Pierwsze</span></div><div><span class="b s" id="l1">10 minut:</span></div><div><span class="b ng" id="l2">nic.</span></div></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+      K.rise("#l0", 0.1, { dur: 0.6, stagger: 0.05 });
+      K.rise("#l1", 0.6, { dur: 0.6, stagger: 0.05 });
+      K.rise("#l2", 2.45, { dur: 0.6, stagger: 0.05 });
+      tl.to(".co", { y: -14, duration: 2.5500000000000003, ease: "none" }, 0);
+      K.done();
+    </script>
+  </body>
+</html>

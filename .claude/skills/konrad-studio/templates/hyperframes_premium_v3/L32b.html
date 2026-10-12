@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .ar { width: 70px; height: 90px; margin-top: 30px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.0" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="k1" style="font-size:72px" id="a">Link w opisie</div>
+        <div class="k2 w300 acc" style="margin-top:14px" id="b">za darmo.</div>
+        <svg class="ar" id="ar" viewBox="0 0 70 90"><path d="M35 6 V78 M10 54 L35 80 L60 54" fill="none" stroke="#f4f6fa" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(3.0);
+      K.rise("#a", 0.6);
+      K.lift("#ar", 1.0, { y: -20, dur: 0.4 });
+      tl.to("#ar", { y: 16, duration: 0.42, ease: "sine.inOut", yoyo: true, repeat: 3 }, 1.4);
+      K.rise("#b", 1.85);
+      K.done();
+    </script>
+  </body>
+</html>

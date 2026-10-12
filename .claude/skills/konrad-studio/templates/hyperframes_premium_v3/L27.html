@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      canvas { position: absolute; left: 0; top: 0; }
+      .lcol { left: 160px; top: 160px; width: 700px; }
+      .pin { display: flex; align-items: center; gap: 18px; }
+      .pin b { font-size: 64px; font-weight: 800; letter-spacing: -0.035em; }
+      .six { display: flex; align-items: flex-end; gap: 22px; margin-top: 80px; }
+      .six b { font-size: 300px; font-weight: 900; letter-spacing: -0.065em; line-height: 0.78; }
+      .six span { font-size: 76px; font-weight: 300; letter-spacing: -0.03em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9.1" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam"><canvas id="cv" width="1920" height="1080"></canvas></div>
+      <div class="abs lcol">
+        <div class="pin" id="pn"><svg width="44" height="58" viewBox="0 0 44 58"><path d="M22 56 C22 56 4 34 4 21 A18 18 0 0 1 40 21 C40 34 22 56 22 56 Z" fill="#3d7bff"/><circle cx="22" cy="21" r="7" fill="#070b15"/></svg><b>Warszawa</b></div>
+        <div class="t-s mute" style="margin-top:14px" id="pk">TK Maxx przy Pałacu Kultury</div>
+        <div class="t-s" style="margin-top:30px" id="ppl"><b id="n" style="font-weight:800">0</b> <span class="w300">osób dziennie</span></div>
+        <div class="six" id="six"><b>6</b><span>wystarczy.</span></div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      const cv = K.$("#cv"), cx = cv.getContext("2d"), rnd = K.rng(27), P = [];
+      for (let r = 0; r < 26; r++) for (let c = 0; c < 46; c++)
+        P.push({ x: 900 + c * 21 + (r % 2) * 10 + (rnd() - 0.5) * 6, y: 150 + r * 31 + (rnd() - 0.5) * 6, k: rnd(), s: 0.85 + rnd() * 0.3 });
+      const SIX = [140, 377, 615, 702, 941, 1095];
+      const st = { a: 0, on: 0, dim: 1 };
+      function person(x, y, s, col) { cx.fillStyle = col; cx.beginPath(); cx.arc(x, y, 4.2 * s, 0, 6.2832); cx.fill();
+        cx.beginPath(); cx.roundRect(x - 5 * s, y + 6 * s, 10 * s, 12 * s, 4 * s); cx.fill(); }
+      function draw() { cx.clearRect(0, 0, 1920, 1080);
+        P.forEach((p, i) => { const k = Math.min(1, Math.max(0, (st.a * 1.3 - p.k) * 5)); if (k <= 0) return;
+          person(p.x, p.y, p.s, `rgba(125,135,155,${0.75 * k * st.dim})`); });
+        SIX.forEach((i, j) => { const g = Math.min(1, Math.max(0, st.on * 6 - j)); if (g <= 0) return; const p = P[i];
+          person(p.x, p.y, p.s * (1 + 0.6 * g), "#3d7bff"); cx.strokeStyle = `rgba(61,123,255,${0.55 * g})`; cx.lineWidth = 2;
+          cx.beginPath(); cx.arc(p.x, p.y + 6, 26 + 8 * (1 - g), 0, 6.2832); cx.stroke(); }); }
+      tl.fromTo("#cam", { scale: 1.06, transformOrigin: "1380px 540px" }, { scale: 1, duration: 9.1, ease: "sine.out" }, 0);
+      K.frame(draw);
+      tl.to(st, { a: 1, duration: 5.0, ease: "power1.inOut" }, 0.2);
+      K.lift("#pn", 0.1, { y: 20, dur: 0.5, ease: "expo.out" });
+      K.rise("#pk", 1.75, { stagger: 0.05 });
+      K.lift("#ppl", 4.4, { y: 20, dur: 0.5 });
+      K.count("#n", 0, 40000, 4.45, 1.3, (v) => "~" + K.pl(v), "expo.out");
+      tl.to(st, { dim: 0.45, duration: 0.6 }, 6.9);
+      tl.to(st, { on: 1, duration: 0.8, ease: "none" }, 7.1);
+      K.lift("#six", 7.1, { y: 50, dur: 0.6, ease: "expo.out" });
+      K.whip(9.1);
+      K.done();
+    </script>
+  </body>
+</html>

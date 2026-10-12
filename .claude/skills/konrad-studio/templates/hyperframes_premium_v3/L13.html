@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .lcol { left: 160px; top: 180px; width: 800px; }
+      .hero { display: flex; align-items: baseline; gap: 26px; margin-top: 20px; }
+      .hero b { font-size: 300px; font-weight: 900; letter-spacing: -0.065em; line-height: 0.9; }
+      .hero span { font-size: 88px; font-weight: 300; }
+      .att { margin-top: 60px; font-size: 52px; font-weight: 300; }
+      .att b { font-weight: 800; color: var(--neg); }
+      .pan { left: 1040px; top: 180px; width: 720px; padding: 48px 52px; }
+      .pan .hd { font-size: 30px; color: var(--mute); font-weight: 500; }
+      .fee { display: flex; justify-content: space-between; align-items: baseline; padding: 26px 0; border-top: 1px solid var(--line); }
+      .fee span { font-size: 36px; font-weight: 500; }
+      .fee b { font-size: 44px; font-weight: 700; }
+      .sum { display: flex; justify-content: space-between; align-items: baseline; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.3); margin-top: 6px; }
+      .sum span { font-size: 36px; color: var(--mute); font-weight: 500; }
+      .sum b { font-size: 92px; font-weight: 900; letter-spacing: -0.05em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9.8" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs lcol">
+          <div class="t-s mute" id="lab">Egzamin na prawo jazdy za</div>
+          <div class="hero" id="hero"><b id="d">0</b><span>dni</span></div>
+          <div class="att" id="att">Podejście 1: <b>oblany</b></div>
+        </div>
+        <div class="abs pan surf" id="pan">
+          <div class="hd">Kolejne opłaty</div><div style="height:16px"></div>
+          <div class="fee" id="f1"><span>Poprawka egzaminu</span><b>200 zł</b></div>
+          <div class="fee" id="f2"><span>Kolejna poprawka</span><b>200 zł</b></div>
+          <div class="fee" id="f3"><span>Jazdy doszkalające</span><b>320 zł</b></div>
+          <div class="sum"><span>Razem</span><b id="sum">0 zł</b></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(9.8, 1.03);
+      K.rise("#lab", 0.1, { stagger: 0.04 });
+      K.lift("#hero", 1.15, { y: 40, dur: 0.6, ease: "expo.out" });
+      K.count("#d", 0, 21, 1.2, 0.8, K.pl, "expo.out");
+      K.lift("#att", 3.3, { y: 24, dur: 0.5, ease: "expo.out" });
+      K.lift("#pan", 4.6, { y: 40, dur: 0.7, ease: "expo.out" });
+      const zl = (v) => K.pl(v) + " zł";
+      K.lift("#f1", 5.4, { y: 20, dur: 0.45 }); K.count("#sum", 0, 200, 5.45, 0.6, zl);
+      K.lift("#f2", 7.3, { y: 20, dur: 0.45 }); K.count("#sum", 200, 400, 7.35, 0.6, zl);
+      K.lift("#f3", 8.4, { y: 20, dur: 0.45 }); K.count("#sum", 400, 720, 8.45, 0.8, zl);
+      K.whip(9.8);
+      K.done();
+    </script>
+  </body>
+</html>

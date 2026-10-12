@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .ttl { left: 160px; top: 140px; }
+      .rows { left: 160px; top: 480px; width: 1600px; }
+      .row { position: relative; height: 210px; }
+      .row .lab { font-size: 44px; font-weight: 500; color: var(--mute); }
+      .row .track { position: relative; height: 96px; margin-top: 14px; }
+      .row .b { position: absolute; left: 0; top: 0; width: 1400px; height: 96px; transform-origin: left center; }
+      .row .v { position: absolute; top: 14px; font-size: 60px; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="4.9" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs t-xl ttl"><span class="w300" id="t1">Awersja</span> <span class="w800" id="t2">do straty</span></div>
+        <div class="abs rows">
+          <div class="row"><div class="lab" id="la">Stracić 100 zł</div><div class="track"><div class="b" id="ba" style="background:var(--neg)"></div><div class="v" id="va" style="left:1430px">×2</div></div></div>
+          <div class="row"><div class="lab" id="lb">Zyskać 100 zł</div><div class="track"><div class="b" id="bb" style="background:var(--fg)"></div><div class="v" id="vb" style="left:730px">×1</div></div></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(4.9, 1.04);
+      K.rise("#t1", 0.35); K.rise("#t2", 1.0);
+      K.lift("#la", 2.9, { y: 18, dur: 0.4 });
+      tl.fromTo("#ba", { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: "expo.out" }, 3.1);
+      K.lift("#va", 3.6, { y: 0, s: 0.7, dur: 0.4, ease: "back.out(2)" });
+      K.lift("#lb", 3.85, { y: 18, dur: 0.4 });
+      tl.fromTo("#bb", { scaleX: 0 }, { scaleX: 0.5, duration: 0.8, ease: "expo.out" }, 4.05);
+      K.lift("#vb", 4.4, { y: 0, s: 0.7, dur: 0.35, ease: "back.out(2)" });
+      K.whip(4.9);
+      K.done();
+    </script>
+  </body>
+</html>

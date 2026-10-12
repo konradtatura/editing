@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .tx { display: flex; justify-content: space-between; font-size: 36px; font-weight: 500; padding: 14px 0; border-top: 1px solid var(--line); }
+      .tx b { font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.8" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Portfel w tej niszy jest</div><div class="sp"></div>
+        <div class="k1"><span class="ws" id="ws"><span class="lo w300">otwarty.</span><span class="hi w900">otwarty.</span></span></div><div class="sp"></div>
+        <div class="tx" id="t1"><span class="mute">Korepetycje</span><b>+80 zł</b></div>
+        <div class="tx" id="t2"><span class="mute">Korepetycje</span><b>+70 zł</b></div>
+        <div class="tx" id="t3"><span class="mute">Korepetycje</span><b>+80 zł</b></div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(3.8);
+      K.rise("#lab", 0.1, { stagger: 0.04 });
+      K.lift(".k1", 0.25, { y: 30, dur: 0.6, ease: "expo.out" });
+      K.weight("#ws", 1.2);
+      K.lift("#t1", 1.7, { y: 20, dur: 0.45 }); K.lift("#t2", 1.98, { y: 20, dur: 0.45 }); K.lift("#t3", 2.26, { y: 20, dur: 0.45 });
+      K.done();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T9 chapter</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* Chapter card — the SAME card every time a chapter starts. Carries the narrative device:
+     a segmented progress rail (one segment per chapter, current one fills). */
+  .ch { position: absolute; inset: 0; padding: 0 180px; display: flex; flex-direction: column; justify-content: center; }
+  .ch .num { font: 500 34px/1 var(--f-mono); color: var(--accent); letter-spacing: 0.02em; margin-bottom: 30px; }
+  .ch .title { font: 600 136px/0.98 var(--f-sans); letter-spacing: -0.052em; color: var(--ink); max-width: 1500px; text-wrap: balance; }
+  .ch .title .accent { color: var(--accent); }
+  .rail { position: absolute; left: 180px; right: 180px; bottom: 150px; display: flex; gap: 14px; }
+  .seg { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .seg .bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; position: relative; }
+  .seg .bar i { position: absolute; inset: 0; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); display: block; }
+  .seg.done .bar i { transform: scaleX(1); opacity: 0.45; }
+  .seg .lab { font: 500 26px/1.2 var(--f-sans); color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .seg.cur .lab { color: var(--ink); }
+</style>
+</head>
+<body class="opaque">
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <div class="stage-bg clip" data-start="0" data-duration="__DURATION__" data-track-index="0"></div>
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="1">
+    <div class="ch"><div class="num" id="num"></div><div class="title" id="title"></div></div>
+    <div class="rail" id="rail"></div>
+  </section>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const D = __DURATION__;
+  const chapters = (f.device && f.device.chapters) || p.chapters || [];
+  const idx = p.index != null ? p.index : 0;         // 0-based chapter index
+  const total = chapters.length || p.total || 1;
+  document.getElementById("num").textContent = (p.label || "Rozdział") + " " + String(idx + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+  const words = S.words(document.getElementById("title"), p.title || chapters[idx] || "Rozdział", p.accent || []);
+  const rail = document.getElementById("rail");
+  rail.innerHTML = Array.from({ length: total }, (_, i) =>
+    `<div class="seg ${i < idx ? "done" : ""} ${i === idx ? "cur" : ""}"><div class="bar"><i></i></div><div class="lab">${chapters[i] || ""}</div></div>`).join("");
+  const tl = gsap.timeline({ paused: true });
+  S.inWords(tl, "#num", 0.12, { y: 8, blur: 4 });
+  S.inWords(tl, words, 0.22, { stagger: 0.08, y: 24, blur: 10 });
+  S.inBlock(tl, rail.querySelectorAll(".seg"), 0.35, { y: 12, scale: 1, stagger: 0.05, dur: 0.5 });
+  const cur = rail.querySelector(".seg.cur .bar i");
+  if (cur) tl.to(cur, { scaleX: 1, duration: 0.9, ease: S.EASE_IN }, 0.85);
+  S.register("anim", tl);
+</script>
+</body>
+</html>

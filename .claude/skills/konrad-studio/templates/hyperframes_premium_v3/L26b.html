@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .g { padding: 22px 0; border-top: 1px solid var(--line); }
+      .g .w1 { font-size: 34px; font-weight: 400; color: var(--mute); line-height: 1.25; }
+      .g .w2 { display: flex; align-items: baseline; gap: 18px; margin-top: 10px; }
+      .g .w2 b { font-size: 120px; font-weight: 900; letter-spacing: -0.06em; line-height: 0.9; }
+      .g .w2 span { font-size: 44px; font-weight: 300; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9.0" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Musisz znaleźć tylko</div><div class="sp"></div>
+        <div class="g" id="g1"><div class="w1">Wszyscy rodzice ósmoklasistów w Polsce</div><div class="w2" id="n1"><b>6</b><span>osób dziennie</span></div></div>
+        <div class="g" id="g2"><div class="w1">Wszyscy 3 tygodnie przed egzaminem na prawo jazdy</div><div class="w2" id="n2"><b>6</b><span>osób dziennie</span></div></div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(9.0);
+      K.rise("#lab", 0.1, { stagger: 0.04 });
+      K.lift("#g1 .w1", 0.3, { y: 18, dur: 0.5 });
+      K.lift("#n1", 3.6, { y: 34, dur: 0.55, ease: "expo.out" });
+      K.lift("#g2 .w1", 4.3, { y: 18, dur: 0.5 });
+      K.lift("#n2", 6.55, { y: 34, dur: 0.5, ease: "expo.out" });
+      K.done();
+    </script>
+  </body>
+</html>

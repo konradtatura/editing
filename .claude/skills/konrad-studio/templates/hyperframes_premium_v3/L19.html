@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .it { font-size: 92px; letter-spacing: -0.045em; line-height: 1.08; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.65" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Za co naprawdę płacą</div><div class="sp"></div>
+        <div class="it"><span class="ws" id="a"><span class="lo w300 mute">skrót.</span><span class="hi w900">skrót.</span></span></div>
+        <div class="it"><span class="ws" id="b"><span class="lo w300 mute">kolejność.</span><span class="hi w900">kolejność.</span></span></div>
+        <div class="it"><span class="ws" id="c"><span class="lo w300 mute">pewność.</span><span class="hi w900">pewność.</span></span></div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(3.65);
+      K.rise("#lab", 0.06, { stagger: 0.03 });
+      K.lift(".it", 0.12, { y: 26, dur: 0.5, stagger: 0.07, ease: "expo.out" });
+      K.weight("#a", 0.4); K.weight("#b", 0.96); K.weight("#c", 1.68);
+      K.done();
+    </script>
+  </body>
+</html>

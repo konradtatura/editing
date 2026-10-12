@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .lab1 { left: 160px; top: 120px; }
+      .clock { left: 152px; top: 190px; font-size: 300px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+      .clock span { font-weight: 300; color: var(--mute); }
+      .tiles { left: 160px; top: 560px; display: flex; gap: 40px; }
+      .tile { width: 370px; height: 380px; padding: 44px; display: flex; flex-direction: column; justify-content: space-between; }
+      .tile .doc { width: 72px; height: 90px; color: var(--mute); }
+      .tile b { font-size: 58px; font-weight: 700; letter-spacing: -0.03em; display: block; }
+      .tile small { font-size: 28px; color: var(--mute); font-weight: 500; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6.1" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs t-s mute lab1" id="lab">Z AI każdy zrobi produkt w</div>
+        <div class="abs clock" id="clk"><b id="mm">00:00</b> <span>min</span></div>
+        <div class="abs tiles">
+          <div class="tile surf" id="f1"><svg viewBox="0 0 64 80" class="doc"><path d="M6 4 H42 L58 20 V76 H6 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M42 4 V20 H58" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M16 38 H48 M16 50 H48 M16 62 H36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><div><b>Ebook</b><small>PDF · gotowy</small></div></div>
+          <div class="tile surf" id="f2"><svg viewBox="0 0 64 80" class="doc"><path d="M6 4 H42 L58 20 V76 H6 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M42 4 V20 H58" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M16 38 H48 M16 50 H48 M16 62 H36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><div><b>Planer</b><small>PDF · gotowy</small></div></div>
+          <div class="tile surf" id="f3"><svg viewBox="0 0 64 80" class="doc"><path d="M6 4 H42 L58 20 V76 H6 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M42 4 V20 H58" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M16 38 H48 M16 50 H48 M16 62 H36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><div><b>Checklista</b><small>PDF · gotowa</small></div></div>
+          <div class="tile surf" id="f4"><svg viewBox="0 0 64 80" class="doc"><path d="M6 4 H42 L58 20 V76 H6 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M42 4 V20 H58" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M16 38 H48 M16 50 H48 M16 62 H36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><div><b>Cokolwiek</b><small>PDF · gotowe</small></div></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(6.1, 1.04);
+      K.rise("#lab", 0.1, { stagger: 0.04 });
+      K.lift("#clk", 0.3, { y: 40, dur: 0.6, ease: "expo.out" });
+      K.count("#mm", 0, 900, 0.45, 2.7, (v) => { v = Math.round(v); return String(Math.floor(v / 60)).padStart(2, "0") + ":" + String(v % 60).padStart(2, "0"); }, "power2.inOut");
+      [["#f1", 4.38], ["#f2", 4.78], ["#f3", 5.18], ["#f4", 5.58]].forEach(([s, t]) => K.lift(s, t, { y: 70, dur: 0.55, ease: "expo.out" }));
+      K.whip(6.1);
+      K.done();
+    </script>
+  </body>
+</html>

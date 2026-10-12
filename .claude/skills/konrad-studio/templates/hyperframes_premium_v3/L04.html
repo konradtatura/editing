@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.3" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Sprzedane produkty cyfrowe</div><div class="sp"></div>
+        <div class="k1" style="font-size:118px;font-weight:900" id="n">0</div><div class="sp"></div>
+        <div class="k3" id="s"><span class="w300 mute">Start:</span> 14 lat</div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(3.3);
+      K.rise("#lab", 0.12, { stagger: 0.04 });
+      K.lift("#n", 0.25, { y: 30, dur: 0.6, ease: "expo.out" });
+      K.count("#n", 0, 130000, 0.3, 1.2, (v) => K.pl(v) + "+", "expo.out");
+      K.lift("#s", 2.4, { y: 24, dur: 0.5, ease: "expo.out" });
+      K.done();
+    </script>
+  </body>
+</html>

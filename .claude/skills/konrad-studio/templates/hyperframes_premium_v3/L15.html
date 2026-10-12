@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .p { display: flex; align-items: center; gap: 24px; padding: 14px 0; font-size: 52px; font-weight: 700; letter-spacing: -0.03em; }
+      .sc { display: flex; align-items: baseline; justify-content: space-between; margin-top: 18px; padding-top: 26px; border-top: 1px solid var(--line); }
+      .sc .n { font-size: 120px; font-weight: 900; letter-spacing: -0.06em; line-height: 0.9; position: relative; }
+      .sc .n > div { position: absolute; right: 0; bottom: 0; white-space: nowrap; }
+      .sc .l { font-size: 34px; font-weight: 500; color: var(--mute); position: relative; width: 260px; height: 44px; }
+      .sc .l > div { position: absolute; left: 0; top: 0; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7.5" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Zasada 3P</div><div class="sp"></div>
+        <div class="p" id="p1"><div class="chk"><div class="on"><svg viewBox="0 0 28 26"><path d="M3 13 L11 21 L25 4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="off"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></div></div>Portfel</div>
+        <div class="p" id="p2"><div class="chk"><div class="on"><svg viewBox="0 0 28 26"><path d="M3 13 L11 21 L25 4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="off"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></div></div>Problem</div>
+        <div class="p" id="p3"><div class="chk"><div class="on"><svg viewBox="0 0 28 26"><path d="M3 13 L11 21 L25 4" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="off"><svg viewBox="0 0 24 24"><path d="M4 4 L20 20 M20 4 L4 20" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></div></div>Pora</div>
+        <div class="sc">
+          <div class="l"><div id="l1">sprzedaje</div><div id="l2" class="neg">nie sprzedaje</div><div id="l3" class="acc">sprzedaje</div></div>
+          <div class="n" style="width:250px;height:108px"><div id="s3a">3/3</div><div id="s2" class="neg">2/3</div><div id="s1" class="neg">1/3</div><div id="s3b" class="acc">3/3</div></div>
+        </div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(7.5);
+      K.rise("#lab", 0.1);
+      ["#p1", "#p2", "#p3"].forEach((p, i) => { K.lift(p, 0.2 + i * 0.16, { y: 18, dur: 0.45 }); K.tick(p, 0.5 + i * 0.22); });
+      K.lift("#s3a", 1.7, { y: 30, dur: 0.5, ease: "expo.out" }); K.rise("#l1", 1.75);
+      // „nie może przejść przez dwa” → 2/3
+      K.tick("#p3", 3.0, false); tl.to("#s3a", { opacity: 0, duration: 0.15 }, 3.0); K.lift("#s2", 3.0, { y: 24, dur: 0.4 });
+      K.sink("#l1", 2.95); K.rise("#l2", 3.1);
+      // „nie może przejść przez jeden” → 1/3
+      K.tick("#p2", 4.0, false); tl.to("#s2", { opacity: 0, duration: 0.15 }, 4.0); K.lift("#s1", 4.0, { y: 24, dur: 0.4 });
+      // „musi przejść przez wszystkie trzy” → 3/3
+      K.tick("#p2", 5.45); K.tick("#p3", 5.6); tl.to("#s1", { opacity: 0, duration: 0.15 }, 5.6); K.lift("#s3b", 5.6, { y: 24, dur: 0.45, ease: "back.out(1.8)" });
+      K.sink("#l2", 5.5); K.rise("#l3", 5.65);
+      K.done();
+    </script>
+  </body>
+</html>

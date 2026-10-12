@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .top { left: 160px; top: 130px; display: flex; align-items: baseline; gap: 56px; }
+      .price { font-size: 230px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+      .verd { font-size: 120px; letter-spacing: -0.045em; line-height: 1; position: relative; }
+      .verd > div { position: absolute; left: 0; bottom: 0; white-space: nowrap; }
+      .kick { left: 166px; top: 110px; }
+      .rows { left: 160px; top: 560px; width: 1600px; }
+      .row { position: relative; height: 170px; }
+      .row .lab { position: relative; height: 56px; font-size: 40px; font-weight: 500; color: var(--mute); letter-spacing: -0.015em; }
+      .row .lab > div { position: absolute; left: 0; top: 0; white-space: nowrap; }
+      .row .track { position: relative; height: 76px; margin-top: 10px; }
+      .row .b { position: absolute; left: 0; top: 0; width: 1500px; height: 76px; background: var(--fg); transform-origin: left center; }
+      .row .v { position: absolute; left: 0; top: 6px; font-size: 54px; font-weight: 700; letter-spacing: -0.03em; white-space: nowrap; padding-left: 26px; }
+      .axis { left: 160px; top: 950px; width: 1600px; height: 1px; background: var(--line); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7.9" data-width="1920" data-height="1080">
+      <div class="cam" id="cam">
+        <div class="abs top">
+          <div class="price" id="price">59 zł</div>
+          <div class="verd" id="verd">
+            <div class="w300 neg" id="v1">to dużo?</div>
+            <div id="v2"><span class="ws" id="vt"><span class="lo w300 acc">tanio.</span><span class="hi w900 acc">tanio.</span></span></div>
+          </div>
+        </div>
+        <div class="abs rows">
+          <div class="row" id="rowA">
+            <div class="lab"><div id="la1">Kawa</div><div id="la2">Miesiąc korepetycji</div></div>
+            <div class="track"><div class="b" id="bA" style="background: var(--mute)"></div><div class="v" id="vA">15 zł</div></div>
+          </div>
+          <div class="row" id="rowB">
+            <div class="lab"><div id="lb">Twój produkt</div></div>
+            <div class="track"><div class="b" id="bB"></div><div class="v" id="vB">59 zł</div></div>
+          </div>
+        </div>
+        <div class="abs axis" id="axis"></div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      // words (scene s): 59 zł 0.14 · kawę 1.04 · dużo 2.28 · ale 59 zł obok 3.02 · miesiąc korków 4.70 · kilkaset złotych 5.62 · śmieszne 6.94 · tanio 7.40
+      const tl = K.tl, W = 1500;
+      const sx = (v, max) => v / max;              // bar scale on a 1500 px track
+      const vx = (v, max) => W * v / max;          // value label sits right after the bar end
+      K.push(7.9, 1.035, -10, 0);
+      K.rise("#price", 0.12, { dur: 0.8 });
+      // phase 1 — scale of a coffee (max 60 zł)
+      K.lift("#rowA .lab, #rowB .lab", 0.55, { y: 20, dur: 0.5, stagger: 0.1 });
+      tl.fromTo("#axis", { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: 0.9, ease: "expo.out" }, 0.5);
+      tl.fromTo("#bA", { scaleX: 0 }, { scaleX: sx(15, 60), duration: 0.7, ease: "expo.out" }, 0.95);
+      tl.fromTo("#vA", { x: 0, opacity: 0 }, { x: vx(15, 60), opacity: 1, duration: 0.7, ease: "expo.out" }, 0.95);
+      tl.fromTo("#bB", { scaleX: 0 }, { scaleX: sx(59, 60), duration: 1.0, ease: "expo.out" }, 1.55);
+      tl.fromTo("#vB", { x: 0, opacity: 0 }, { x: vx(59, 60), opacity: 1, duration: 1.0, ease: "expo.out" }, 1.55);
+      tl.fromTo("#bB", { backgroundColor: "#f4f6fa" }, { backgroundColor: "#ff4d5e", duration: 0.3, ease: "power2.out", immediateRender: false }, 2.2);
+      K.rise("#v1", 2.2);
+      // phase 2 — rescale to a month of tutoring (max 640 zł): the same 59 zł shrinks
+      K.sink("#v1", 3.0);
+      K.sink("#la1", 3.05);
+      tl.to("#bA", { scaleX: sx(15, 640), duration: 0.8, ease: "power3.inOut" }, 3.15);
+      tl.to("#vA", { x: vx(15, 640), opacity: 0, duration: 0.8, ease: "power3.inOut" }, 3.15);
+      tl.to("#bB", { scaleX: sx(59, 640), backgroundColor: "#f4f6fa", duration: 0.9, ease: "power3.inOut" }, 3.2);
+      tl.to("#vB", { x: vx(59, 640), duration: 0.9, ease: "power3.inOut" }, 3.2);
+      K.rise("#la2", 4.62);
+      tl.to("#bA", { scaleX: sx(600, 640), backgroundColor: "#7d879b", duration: 1.1, ease: "expo.out" }, 4.75);
+      tl.to("#vA", { x: vx(600, 640), opacity: 1, duration: 1.1, ease: "expo.out" }, 4.75);
+      K.count("#vA", 15, 600, 4.75, 1.1, (v) => K.pl(v) + " zł", "expo.out");
+      tl.to("#bB", { backgroundColor: "#3d7bff", duration: 0.35, ease: "power2.out" }, 6.9);
+      // verdict: light "tanio." on "śmieszne", turns heavy on "tanio"
+      K.lift("#v2", 6.88, { y: 50, dur: 0.6, ease: "expo.out" });
+      K.weight("#vt", 7.38, { kick: 1.05 });
+      K.whip(7.9);
+      K.done();
+    </script>
+  </body>
+</html>

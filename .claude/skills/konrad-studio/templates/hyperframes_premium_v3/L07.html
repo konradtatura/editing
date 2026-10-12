@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5.2" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Produkt robiony</div><div class="sp"></div>
+        <div class="k1" id="a">na czuja</div><div class="hr"></div>
+        <div class="k2 w300" id="b1">Dane:</div>
+        <div class="k2" id="b2">kto już płaci?</div><div class="sp"></div>
+        <div class="lab" id="c">W Polsce prawie nikt o tym nie mówi.</div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(5.2);
+      K.rise("#lab", 0.12, { stagger: 0.04 });
+      K.rise("#a", 1.1);
+      K.strike("#a", 1.85);
+      K.rise("#b1", 2.15); K.rise("#b2", 2.35);
+      K.rise("#c", 2.6, { stagger: 0.03 });
+      K.done();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .ad { top: 150px; width: 760px; height: 780px; padding: 52px 56px; display: flex; flex-direction: column; }
+      .ad .lab { font-size: 30px; font-weight: 500; color: var(--mute); }
+      .ad .h { font-size: 60px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; margin-top: 22px; }
+      .ad .kind { margin-top: auto; font-size: 104px; letter-spacing: -0.05em; line-height: 0.98; }
+      .ad .sl { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; }
+      .ad .sl span { font-size: 32px; color: var(--mute); font-weight: 500; }
+      .ad .sl b { font-size: 60px; font-weight: 900; letter-spacing: -0.04em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8.7" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs ad surf" id="A" style="left:160px">
+          <div class="lab">Reklama 1</div>
+          <div class="h" id="ha">Twoje dziecko może mieć lepszy wynik na egzaminie.</div>
+          <div class="kind w300" id="ka">Witamina</div>
+          <div class="sl" id="sa"><span>Sprzedaż</span><b class="mute">0</b></div>
+        </div>
+        <div class="abs ad surf" id="B" style="left:1000px">
+          <div class="lab">Reklama 2</div>
+          <div class="h" id="hb">Twoje dziecko może nie dostać się do dobrego liceum.</div>
+          <div class="kind w900" id="kb">Tabletka przeciw&shy;bólowa</div>
+          <div class="sl" id="sb"><span>Sprzedaż</span><b class="acc" id="nb">0</b></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(8.7, 1.03);
+      K.lift("#A", 0.05, { y: 40, dur: 0.7, ease: "expo.out" });
+      K.rise("#ha", 0.3, { stagger: 0.05 });
+      K.rise("#ka", 3.0);
+      K.lift("#sa", 3.5, { y: 16, dur: 0.4 });
+      K.lift("#B", 4.75, { y: 40, dur: 0.7, ease: "expo.out" });
+      K.rise("#hb", 4.95, { stagger: 0.05 });
+      tl.to("#A", { opacity: 0.45, duration: 0.5, ease: "sine.inOut" }, 7.4);
+      K.lift("#kb", 7.7, { y: 40, dur: 0.5, ease: "expo.out" });
+      K.lift("#sb", 7.95, { y: 16, dur: 0.35 });
+      K.count("#nb", 0, 124, 8.0, 0.7, K.pl, "power2.out");
+      K.whip(8.7);
+      K.done();
+    </script>
+  </body>
+</html>

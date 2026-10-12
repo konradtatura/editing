@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      svg.ice { position: absolute; left: 0; top: 0; }
+      .tag { position: absolute; font-size: 40px; font-weight: 600; letter-spacing: -0.015em; }
+      .lay { position: absolute; left: 0; width: 1920px; text-align: center; font-size: 84px; font-weight: 800; letter-spacing: -0.04em; }
+      .hd { left: 160px; top: 120px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6.8" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <svg class="ice" width="1920" height="2100" viewBox="0 0 1920 2100">
+          <rect x="0" y="560" width="1920" height="1540" fill="#0a1530"/>
+          <path d="M840 560 L905 430 L950 470 L1000 380 L1080 560 Z" fill="#e9eef7"/>
+          <path d="M840 560 L1080 560 L1340 760 L1500 1120 L1420 1560 L1120 1900 L760 1880 L470 1500 L420 1080 L600 760 Z" fill="#1b3366"/>
+          <rect x="0" y="558" width="1920" height="4" fill="rgba(143,178,255,0.7)"/>
+        </svg>
+        <div class="tag" id="tg" style="left:1110px; top:430px">Ten film</div>
+        <div class="abs t-m hd"><span class="w300" id="h1">Tylko</span> <span class="w800" id="h2">wierzchołek.</span></div>
+        <div class="lay" id="y1" style="top:920px">Rynek</div>
+        <div class="lay" id="y2" style="top:1060px">Produkt</div>
+        <div class="lay" id="y3" style="top:1200px">Ruch i sprzedaż</div>
+        <div class="lay" id="y4" style="top:1340px">System AI</div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.rise("#h1", 1.2); K.rise("#h2", 1.5);
+      K.lift("#tg", 1.9, { y: 14, dur: 0.4 });
+      tl.fromTo("#cam", { y: 0 }, { y: -560, duration: 1.3, ease: "power3.inOut" }, 2.7);
+      K.lift("#y1", 3.85, { y: 30, dur: 0.45, ease: "expo.out" });
+      K.lift("#y2", 4.6, { y: 30, dur: 0.45, ease: "expo.out" });
+      K.lift("#y3", 5.5, { y: 30, dur: 0.45, ease: "expo.out" });
+      K.lift("#y4", 6.05, { y: 30, dur: 0.45, ease: "expo.out" });
+      K.whip(6.8);
+      K.done();
+    </script>
+  </body>
+</html>

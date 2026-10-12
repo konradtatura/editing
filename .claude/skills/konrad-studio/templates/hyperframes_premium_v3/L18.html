@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .bar { left: 220px; top: 130px; width: 1480px; height: 116px; display: flex; align-items: center; gap: 30px; padding: 0 44px; }
+      .bar img { width: 56px; height: 56px; }
+      .q { font-size: 46px; font-weight: 500; letter-spacing: -0.02em; white-space: nowrap; }
+      .caret { width: 3px; height: 50px; background: var(--fg); }
+      .cnt { left: 268px; top: 284px; font-size: 32px; font-weight: 400; color: var(--mute); }
+      .cnt b { color: var(--fg); font-weight: 700; }
+      .vp { left: 268px; top: 350px; width: 1420px; height: 730px; overflow: hidden; }
+      .res { padding: 26px 0 30px; border-top: 1px solid var(--line); }
+      .res .d { font-size: 26px; color: var(--mute); font-weight: 400; }
+      .res .t { font-size: 46px; color: #8fb2ff; font-weight: 600; letter-spacing: -0.02em; margin-top: 8px; white-space: nowrap; }
+      .res .x { font-size: 30px; color: var(--mute); font-weight: 400; margin-top: 8px; white-space: nowrap; }
+      .say { left: 160px; top: 0; height: 1080px; display: flex; flex-direction: column; justify-content: center; }
+      .lab2 { font-size: 44px; font-weight: 500; color: var(--mute); margin-bottom: 26px; letter-spacing: -0.015em; }
+      .big { font-size: 270px; letter-spacing: -0.06em; line-height: 0.9; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7.6" data-width="1920" data-height="1080">
+      <div class="cam" id="cam">
+        <div id="web">
+          <div class="abs bar surf pill" id="bar"><img src="assets/app_google.png" alt="" /><span class="q" id="q"></span><span class="caret" id="caret"></span></div>
+          <div class="abs cnt" id="cnt">Około <b id="n">0</b> wyników</div>
+          <div class="abs vp"><div id="results"></div></div>
+        </div>
+        <svg class="cur" id="cur" viewBox="0 0 46 60"><path d="M4 3 L4 48 L15 37 L23 56 L31 52 L23 34 L39 34 Z" fill="#f4f6fa" stroke="#0a0d16" stroke-width="3" stroke-linejoin="round"/></svg>
+        <div class="abs say" id="sayA">
+          <div class="t-xl w800" id="a1">To jest problem,</div>
+          <div class="t-xl w300 mute" id="a2">nie rozwiązanie.</div>
+        </div>
+        <div class="abs say" id="sayB">
+          <div class="lab2" id="b0">W psychologii to</div>
+          <div class="big w900" id="b1">Paradoks</div>
+          <div class="big w300" id="b2">wyboru.</div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      // words (scene s): Google 0.16 · dziesiątki tysięcy odpowiedzi 0.80–1.64 · problem 3.66 · nie rozwiązanie 4.80 · psychologii 5.70 · paradoks 6.72 · wyboru 7.18
+      const RES = [
+        ["librus.pl › egzamin", "Jak przygotować dziecko do egzaminu ósmoklasisty?", "10 sprawdzonych sposobów, które naprawdę działają…"],
+        ["cke.gov.pl › arkusze", "Egzamin ósmoklasisty 2026 – arkusze i odpowiedzi", "Oficjalne arkusze z matematyki, polskiego i angielskiego"],
+        ["forum.rodzice.pl", "Dziecko nie chce się uczyć do egzaminu. Co robić?", "Mam ten sam problem, próbowaliśmy już wszystkiego…"],
+        ["korepetycje.pl", "Korepetycje z matematyki – czy to ma sens?", "Średnia cena: 80 zł za godzinę. Sprawdź opinie…"],
+        ["youtube.com", "Matematyka do egzaminu – cały materiał w 2 godziny", "Powtórka przed egzaminem ósmoklasisty, część 1…"],
+        ["edukacja.pl › poradnik", "Ile godzin dziennie powinno uczyć się dziecko?", "Psycholog radzi, jak ułożyć plan nauki…"],
+        ["blog.nauka.pl", "Plan nauki do egzaminu – darmowy PDF", "Pobierz gotowy plan na 30 dni. Bez rejestracji…"],
+        ["reddit.com › r/Polska", "Czy egzamin ósmoklasisty ma w ogóle znaczenie?", "Szczerze, z perspektywy czasu…"],
+        ["parenting.pl", "7 błędów rodziców przed egzaminem", "Numer 4 popełnia prawie każdy…"],
+        ["matma.pl", "Zadania otwarte – jak zdobyć maksimum punktów", "Schematy oceniania i przykładowe rozwiązania…"],
+        ["szkola.pl", "Stres przed egzaminem – jak pomóc dziecku?", "Techniki oddechowe i rytm dnia…"],
+        ["wiki.edu", "Egzamin ósmoklasisty – Wikipedia", "Egzamin przeprowadzany w ostatniej klasie…"],
+      ];
+      const R = K.$("#results");
+      for (let k = 0; k < 3; k++) RES.forEach((r) => { R.insertAdjacentHTML("beforeend", `<div class="res"><div class="d">${r[0]}</div><div class="t">${r[1]}</div><div class="x">${r[2]}</div></div>`); });
+      const tl = K.tl;
+      K.push(7.6, 1.04);
+      // search: bar in, query typed, count rolls
+      K.lift("#bar", 0.05, { y: 24, dur: 0.6 });
+      K.click("#cur", 1100, 640, 330, 175, 0.0, 0.2, null); tl.to("#cur", { opacity: 0, duration: 0.25 }, 0.75);
+      const Q = "jak przygotować dziecko do egzaminu", qEl = K.$("#q"), qs = { n: 0 };
+      tl.to(qs, { n: Q.length, duration: 0.85, ease: "none", onUpdate: () => { qEl.textContent = Q.slice(0, Math.round(qs.n)); } }, 0.2);
+      tl.fromTo("#caret", { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "steps(1)", repeat: 5, yoyo: true, immediateRender: false }, 0.2);
+      K.lift("#cnt", 0.75, { y: 16, dur: 0.5, ease: "power2.out" });
+      K.count("#n", 0, 48300000, 0.8, 1.3, K.pl, "expo.out");
+      // results land, then scroll faster and faster (endless)
+      K.lift(".res:nth-child(-n+6)", 0.95, { y: 30, dur: 0.6, stagger: 0.06 });
+      tl.fromTo("#results", { y: 0 }, { y: -4300, duration: 2.6, ease: "power3.in", immediateRender: false }, 1.6);
+      tl.fromTo("#results", { filter: "blur(0px)" }, { filter: "blur(6px)", duration: 0.8, ease: "power2.in", immediateRender: false }, 3.1);
+      // web steps back, the point arrives
+      tl.to("#web", { opacity: 0.07, scale: 0.94, duration: 0.55, ease: "power2.inOut" }, 3.4);
+      K.rise("#a1", 3.55);
+      K.rise("#a2", 4.72);
+      K.sink("#a1", 5.5); K.sink("#a2", 5.55);
+      K.rise("#b0", 5.86, { stagger: 0.04 });
+      K.rise("#b1", 6.62, { dur: 0.85 });
+      K.rise("#b2", 7.08, { dur: 0.7 });
+      K.whip(7.6);
+      K.done();
+    </script>
+  </body>
+</html>

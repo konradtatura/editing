@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .li { display: flex; align-items: center; gap: 22px; font-size: 34px; font-weight: 500; padding: 16px 0; border-top: 1px solid var(--line); }
+      .li i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); flex: none; }
+      .free { display: inline-block; margin-top: 30px; padding: 16px 30px; border-radius: 999px; background: var(--accent); font-size: 36px; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11.0" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="k1" style="font-size:72px" id="a">Darmowy kurs</div>
+        <div class="k1" style="font-size:72px"><span class="ws" id="b"><span class="lo w300 mute">+ system AI</span><span class="hi w900">+ system AI</span></span></div>
+        <div class="sp"></div>
+        <div class="li" id="i1"><i></i>cała moja wiedza w środku</div>
+        <div class="li" id="i2"><i></i>pytasz o swoją sytuację</div>
+        <div class="li" id="i3"><i></i>dostajesz gotowy produkt</div>
+        <div class="free" id="fr">Za darmo, link w opisie</div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(11.0);
+      K.rise("#a", 0.1);
+      K.lift("#b", 1.2, { y: 30, dur: 0.6, ease: "expo.out" });
+      K.weight("#b", 2.8);
+      K.lift("#i1", 3.7, { y: 16, dur: 0.45 });
+      K.lift("#i2", 5.35, { y: 16, dur: 0.45 });
+      K.lift("#i3", 6.6, { y: 16, dur: 0.45 });
+      K.lift("#fr", 8.6, { y: 20, s: 0.94, dur: 0.5, ease: "back.out(1.8)" });
+      K.done();
+    </script>
+  </body>
+</html>

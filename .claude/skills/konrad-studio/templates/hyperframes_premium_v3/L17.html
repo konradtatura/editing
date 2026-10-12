@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .stc { top: 150px; width: 760px; height: 780px; padding: 52px 56px; }
+      .stc .lab { font-size: 30px; color: var(--mute); font-weight: 500; }
+      .stc .h { font-size: 72px; letter-spacing: -0.04em; line-height: 1.05; margin-top: 14px; }
+      .stc svg { position: absolute; left: 56px; bottom: 210px; }
+      .stc .v { position: absolute; left: 56px; bottom: 52px; font-size: 96px; font-weight: 900; letter-spacing: -0.05em; }
+      .stc .v span { font-size: 40px; font-weight: 300; color: var(--mute); letter-spacing: -0.02em; }
+      .nt { position: absolute; right: 56px; padding: 14px 24px; border-radius: 999px; background: var(--surface2); font-size: 30px; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6.6" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs stc surf" id="A" style="left:160px">
+          <div class="lab">Produkt 1</div><div class="h w300" id="ha">leży.</div>
+          <svg width="648" height="260" viewBox="0 0 648 260"><path d="M0 256 H648" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+            <path id="la" d="M0 250 L108 250 L216 249 L324 250 L432 250 L540 249 L648 250" fill="none" stroke="#7d879b" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="v" id="va">0 zł <span>/ mies.</span></div>
+        </div>
+        <div class="abs stc surf" id="B" style="left:1000px">
+          <div class="lab">Produkt 2</div><div class="h w900" id="hb">sprzedaje się.</div>
+          <svg width="648" height="260" viewBox="0 0 648 260"><path d="M0 256 H648" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+            <path id="lb" d="M0 248 C90 240 150 226 220 200 C300 170 340 150 410 110 C480 70 560 40 648 10" fill="none" stroke="#3d7bff" stroke-width="6" stroke-linecap="round"/></svg>
+          <div class="v"><b id="nb">0 zł</b> <span>/ mies.</span></div>
+          <div class="nt" id="n1" style="top:150px">+59 zł</div><div class="nt" id="n2" style="top:220px">+59 zł</div><div class="nt" id="n3" style="top:290px">+59 zł</div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(6.6, 1.03);
+      const draw = (sel, t, d) => { const p = K.$(sel), L = p.getTotalLength(); p.style.strokeDasharray = L;
+        tl.fromTo(p, { strokeDashoffset: L }, { strokeDashoffset: 0, duration: d, ease: "power2.inOut" }, t); };
+      K.lift("#A", 0.6, { y: 40, dur: 0.7, ease: "expo.out" }); K.rise("#ha", 1.6);
+      draw("#la", 1.2, 1.2); K.lift("#va", 1.9, { y: 20, dur: 0.4 });
+      K.lift("#B", 2.25, { y: 40, dur: 0.7, ease: "expo.out" }); K.rise("#hb", 2.95);
+      tl.to("#A", { opacity: 0.45, duration: 0.5 }, 3.2);
+      draw("#lb", 3.4, 2.6);
+      K.count("#nb", 0, 47200, 4.2, 2.1, (v) => K.pl(v) + " zł", "power2.in");
+      [4.3, 4.85, 5.45].forEach((t, i) => K.lift("#n" + (i + 1), t, { y: 20, s: 0.9, dur: 0.4, ease: "back.out(2)" }));
+      K.whip(6.6);
+      K.done();
+    </script>
+  </body>
+</html>

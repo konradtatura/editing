@@ -1,0 +1,69 @@
+/* lfpdo · Premium v3 (anti-AI-slop), Konrad 2026-10-09:
+   ONE family (Inter), hierarchy only through weight + size. No serif/italic/mono, no glow, no glass,
+   no gradients, no 3D tilt, no particles, no uppercase letter-spaced eyebrows. Palette A, flat. */
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Light-BETA.otf"); font-weight: 300; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Regular.otf"); font-weight: 400; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Medium.otf"); font-weight: 500; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-SemiBold.otf"); font-weight: 600; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Bold.otf"); font-weight: 700; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-ExtraBold.otf"); font-weight: 800; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter-Black.otf"); font-weight: 900; }
+:root {
+  --bg: #070b15; --surface: #0f1526; --surface2: #151d33; --line: rgba(255, 255, 255, 0.09);
+  --fg: #f4f6fa; --mute: #7d879b; --dim: #3a4358; --accent: #3d7bff; --neg: #ff4d5e;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); }
+body.ov, body.ov #root { background: transparent; }
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Inter", sans-serif; color: var(--fg);
+        font-feature-settings: "tnum" 1, "cv11" 1; -webkit-font-smoothing: antialiased; }
+.vign { position: absolute; inset: 0; background: radial-gradient(1500px 1000px at 50% 50%, rgba(7, 11, 21, 0) 55%, rgba(3, 5, 10, 0.7) 100%); pointer-events: none; }
+.cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.abs { position: absolute; }
+/* type scale: weight carries the hierarchy */
+.t-hero { font-size: 300px; font-weight: 900; letter-spacing: -0.055em; line-height: 0.86; }
+.t-xl { font-size: 168px; font-weight: 800; letter-spacing: -0.048em; line-height: 0.95; }
+.t-l { font-size: 112px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.t-m { font-size: 64px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; }
+.t-s { font-size: 40px; font-weight: 500; letter-spacing: -0.012em; line-height: 1.25; }
+.t-xs { font-size: 30px; font-weight: 500; letter-spacing: -0.005em; color: var(--mute); }
+.w300 { font-weight: 300 !important; } .w400 { font-weight: 400 !important; } .w500 { font-weight: 500 !important; } .w600 { font-weight: 600 !important; }
+.w700 { font-weight: 700 !important; } .w800 { font-weight: 800 !important; } .w900 { font-weight: 900 !important; }
+.mute { color: var(--mute); } .acc { color: var(--accent); } .neg { color: var(--neg); } .dimc { color: var(--dim); }
+/* masked word reveal (kit.split) — room for Polish diacritics above and ogonki below */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.12em 0.03em 0.16em; margin: -0.12em -0.03em -0.16em; }
+.wi { display: inline-block; will-change: transform; }
+/* flat surfaces, one radius scale: 28 (cards) / 999 (interactive) */
+.surf { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; }
+.pill { border-radius: 999px; }
+/* overlay card that sits on the left wall next to Konrad */
+.card { position: absolute; left: 64px; top: 136px; width: 600px; padding: 44px 48px 48px; border-radius: 28px;
+        background: rgba(9, 13, 25, 0.94); color: var(--fg); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32); }
+.card .lab { font-size: 28px; font-weight: 500; color: var(--mute); }
+.grain { position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: overlay; pointer-events: none;
+         background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+/* weight play markup: <span class="ws" id="x"><span class="lo w300">tanio</span><span class="hi w900">tanio</span></span> */
+.ws { position: relative; display: inline-block; white-space: nowrap; transform-origin: left 70%; }
+.ws .hi { position: absolute; left: 0; top: 0; opacity: 0; }
+/* overlays (cards over the camera): transparent page, rendered to ProRes 4444 MOV */
+html.ov, html.ov body, html.ov #root { background: transparent; }
+.card .k1 { font-size: 88px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+.card .k2 { font-size: 64px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; }
+.card .k3 { font-size: 44px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.card .sp { height: 26px; }
+.card .hr { height: 1px; background: var(--line); margin: 30px 0; }
+.st { position: absolute; left: -6px; right: -6px; top: 52%; height: 0.075em; min-height: 4px; background: var(--neg); transform-origin: left center; border-radius: 2px; }
+.chk { position: relative; width: 46px; height: 46px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.22); flex: none; }
+.chk .on { position: absolute; inset: -2px; border-radius: 12px; background: var(--accent); opacity: 0; }
+.chk .on svg { position: absolute; left: 9px; top: 10px; width: 28px; height: 26px; }
+.chk .off { position: absolute; inset: -2px; border-radius: 12px; background: var(--neg); opacity: 0; }
+.chk .off svg { position: absolute; left: 11px; top: 11px; width: 24px; height: 24px; }
+.row2 { display: flex; align-items: center; gap: 22px; }
+/* v4 detail pass: callouts written straight on Konrad's wall (no card) + UI cursor */
+.co { position: absolute; left: 100px; top: 0; height: 1080px; width: 640px; display: flex; flex-direction: column; justify-content: center; color: #0b1020; }
+.co .a { font-size: 64px; font-weight: 300; letter-spacing: -0.03em; line-height: 1.12; }
+.co .b { font-size: 132px; font-weight: 900; letter-spacing: -0.055em; line-height: 0.98; }
+.co .b.s { font-size: 100px; }
+.co .ac { color: #2a5be0; } .co .ng { color: #e23447; }
+.mk { --m: 0; background: linear-gradient(rgba(61,123,255,0.32), rgba(61,123,255,0.32)) no-repeat 0 88% / calc(var(--m) * 100%) 0.38em; padding: 0 0.06em; }
+.cur { position: absolute; width: 46px; height: 60px; z-index: 50; }

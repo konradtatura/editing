@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .q { left: 160px; top: 130px; }
+      .apps { left: 160px; top: 470px; display: flex; gap: 40px; }
+      .app { width: 370px; height: 400px; padding: 44px; display: flex; flex-direction: column; }
+      .app img { width: 120px; height: 120px; object-fit: contain; }
+      .app b { font-size: 46px; font-weight: 700; letter-spacing: -0.025em; margin-top: auto; }
+      .app em { font-style: normal; font-size: 64px; font-weight: 300; color: var(--mute); margin-top: 4px; letter-spacing: -0.03em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5.6" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs q t-xl"><span class="w300" id="q1">Po co płacić</span> <span class="w900" id="q2">za PDF?</span></div>
+        <div class="abs apps"><div class="app surf" id="a0"><img src="assets/app_google.png" alt="" /><b>Google</b><em class="ws" id="z0"><span class="lo">0 zł</span><span class="hi w900" style="color:var(--fg)">0 zł</span></em></div><div class="app surf" id="a1"><img src="assets/app_youtube.png" alt="" /><b>YouTube</b><em class="ws" id="z1"><span class="lo">0 zł</span><span class="hi w900" style="color:var(--fg)">0 zł</span></em></div><div class="app surf" id="a2"><img src="assets/app_chatgpt.png" alt="" /><b>ChatGPT</b><em class="ws" id="z2"><span class="lo">0 zł</span><span class="hi w900" style="color:var(--fg)">0 zł</span></em></div><div class="app surf" id="a3"><img src="assets/app_google_gemini.png" alt="" /><b>Gemini</b><em class="ws" id="z3"><span class="lo">0 zł</span><span class="hi w900" style="color:var(--fg)">0 zł</span></em></div></div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(5.6, 1.035);
+      K.rise("#q1", 0.05); K.rise("#q2", 0.3);
+      K.lift("#a0", 1.68, { y: 60, dur: 0.55, ease: "expo.out" });
+      K.lift("#a1", 2.16, { y: 60, dur: 0.55, ease: "expo.out" });
+      K.lift("#a2", 2.78, { y: 60, dur: 0.55, ease: "expo.out" });
+      K.lift("#a3", 3.26, { y: 60, dur: 0.55, ease: "expo.out" });
+      [0, 1, 2, 3].forEach((i) => K.weight("#z" + i, 3.82 + i * 0.07, { kick: 1.08 }));
+      K.whip(5.6);
+      K.done();
+    </script>
+  </body>
+</html>

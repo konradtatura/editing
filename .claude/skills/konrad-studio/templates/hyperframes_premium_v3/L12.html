@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .wx { left: 160px; top: 200px; width: 760px; }
+      .ico { position: relative; width: 300px; height: 260px; }
+      .ico svg { position: absolute; left: 0; top: 0; }
+      .rain { position: absolute; left: -20px; top: 170px; width: 600px; height: 360px; overflow: hidden; }
+      .rain i { position: absolute; width: 4px; height: 46px; border-radius: 2px; background: rgba(143,178,255,0.75); transform: rotate(14deg); }
+      .tmp { font-size: 240px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; margin-top: 30px; position: relative; height: 240px; }
+      .tmp > div, .ds > div { position: absolute; left: 0; top: 0; }
+      .ds { font-size: 64px; font-weight: 300; position: relative; height: 80px; margin-top: 10px; }
+      .shop { left: 1060px; top: 250px; width: 700px; padding: 52px 56px; }
+      .shop .n { font-size: 72px; font-weight: 800; letter-spacing: -0.04em; }
+      .shop .p { font-size: 40px; color: var(--mute); font-weight: 400; margin-top: 6px; }
+      .shop .k { display: flex; justify-content: space-between; align-items: baseline; margin-top: 46px; padding-top: 28px; border-top: 1px solid var(--line); }
+      .shop .k span { font-size: 32px; color: var(--mute); font-weight: 500; }
+      .shop .k b { font-size: 72px; font-weight: 900; letter-spacing: -0.04em; }
+      .btn { position: relative; margin-top: 40px; height: 110px; }
+      .btn > div { position: absolute; inset: 0; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 42px; font-weight: 700; }
+      .btn .off { background: var(--surface2); color: var(--dim); }
+      .btn .on { background: var(--accent); color: var(--fg); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9.8" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs wx">
+          <div class="ico">
+            <svg id="sun" width="300" height="260" viewBox="0 0 300 260"><circle cx="120" cy="120" r="62" fill="#f4f6fa"/>
+              <g stroke="#f4f6fa" stroke-width="10" stroke-linecap="round"><path d="M120 18 V36 M120 204 V222 M18 120 H36 M204 120 H222 M48 48 L61 61 M179 179 L192 192 M48 192 L61 179 M179 61 L192 48"/></g></svg>
+            <svg id="cloud" width="300" height="260" viewBox="0 0 300 260"><path d="M70 170 C30 170 30 110 74 108 C80 60 150 50 168 96 C210 80 250 110 236 150 C262 156 256 172 236 172 Z" fill="#7d879b"/></svg>
+            <div class="rain" id="rain"><i style="left:20px; top:0px"></i><i style="left:73px; top:97px"></i><i style="left:126px; top:194px"></i><i style="left:179px; top:291px"></i><i style="left:232px; top:88px"></i><i style="left:285px; top:185px"></i><i style="left:338px; top:282px"></i><i style="left:391px; top:79px"></i><i style="left:444px; top:176px"></i><i style="left:497px; top:273px"></i><i style="left:550px; top:70px"></i><i style="left:43px; top:167px"></i><i style="left:96px; top:264px"></i><i style="left:149px; top:61px"></i><i style="left:202px; top:158px"></i><i style="left:255px; top:255px"></i><i style="left:308px; top:52px"></i><i style="left:361px; top:149px"></i><i style="left:414px; top:246px"></i><i style="left:467px; top:43px"></i><i style="left:520px; top:140px"></i><i style="left:573px; top:237px"></i><i style="left:66px; top:34px"></i><i style="left:119px; top:131px"></i><i style="left:172px; top:228px"></i><i style="left:225px; top:25px"></i><i style="left:278px; top:122px"></i><i style="left:331px; top:219px"></i><i style="left:384px; top:16px"></i><i style="left:437px; top:113px"></i><i style="left:490px; top:210px"></i><i style="left:543px; top:7px"></i><i style="left:36px; top:104px"></i><i style="left:89px; top:201px"></i></div>
+          </div>
+          <div class="tmp"><div id="t1">24°</div><div id="t2">14°</div></div>
+          <div class="ds"><div id="d1">Słonecznie</div><div id="d2">Deszcz</div></div>
+        </div>
+        <div class="abs shop surf" id="shop">
+          <div class="n">Parasol</div><div class="p">49 zł</div>
+          <div class="k"><span>Kupiło dzisiaj</span><b id="cnt">0</b></div>
+          <div class="btn"><div class="off">Kup parasol</div><div class="on" id="bon">Kup parasol</div></div>
+        </div>
+        <svg class="cur" id="cur" viewBox="0 0 46 60"><path d="M4 3 L4 48 L15 37 L23 56 L31 52 L23 34 L39 34 Z" fill="#f4f6fa" stroke="#0a0d16" stroke-width="3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(9.8, 1.03);
+      K.lift("#sun", 0.05, { y: 0, s: 0.8, dur: 0.7, ease: "back.out(1.6)" });
+      tl.fromTo("#sun", { rotation: 0, transformOrigin: "120px 120px" }, { rotation: 40, duration: 7.6, ease: "none", immediateRender: false }, 0.1);
+      K.rise("#t1", 0.2); K.rise("#d1", 1.4);
+      K.lift("#shop", 0.45, { y: 40, dur: 0.7, ease: "expo.out" });
+      // rain arrives on „pada”
+      tl.set(["#cloud", "#rain", "#t2", "#d2"], { opacity: 0 }, 0);
+      tl.to("#sun", { opacity: 0, scale: 0.8, duration: 0.4, ease: "power2.in" }, 7.7);
+      tl.fromTo("#cloud", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, 7.8);
+      tl.to("#rain", { opacity: 1, duration: 0.3 }, 7.95);
+      tl.fromTo("#rain i", { y: -120 }, { y: 360, duration: 0.55, ease: "none", stagger: { each: 0.03, repeat: 3 }, immediateRender: false }, 7.95);
+      K.sink("#t1", 7.75); K.rise("#t2", 7.95); K.sink("#d1", 7.8); K.rise("#d2", 8.0);
+      K.click("#cur", 1700, 1000, 1400, 680, 7.45, 8.02, null); tl.to("#cur", { opacity: 0, duration: 0.3 }, 8.9);
+      tl.to("#bon", { opacity: 1, duration: 0.25, ease: "power2.out" }, 8.05);
+      tl.fromTo(".btn", { scale: 1 }, { scale: 1.04, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 8.05);
+      K.count("#cnt", 0, 318, 8.15, 1.5, K.pl, "power2.out");
+      K.whip(9.8);
+      K.done();
+    </script>
+  </body>
+</html>

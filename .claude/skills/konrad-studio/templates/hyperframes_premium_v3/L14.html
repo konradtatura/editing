@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .tlw { position: relative; padding-left: 58px; }
+      .rail { position: absolute; left: 14px; top: 20px; bottom: 20px; width: 2px; background: var(--line); transform-origin: top center; }
+      .ev { position: relative; padding: 20px 0; }
+      .ev .dot { position: absolute; left: -54px; top: 34px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--mute); background: #090d19; }
+      .ev .y { font-size: 30px; font-weight: 500; color: var(--mute); }
+      .ev .v { font-size: 56px; font-weight: 300; letter-spacing: -0.03em; color: var(--mute); }
+      .ev.now .dot { background: var(--accent); border-color: var(--accent); }
+      .ev.now .y { color: var(--fg); }
+      .ev.now .v { font-weight: 900; color: var(--fg); font-size: 80px; letter-spacing: -0.045em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8.3" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Ta sama osoba</div><div class="sp"></div>
+        <div class="tlw">
+          <div class="rail" id="rail"></div>
+          <div class="ev" id="e1"><div class="dot"></div><div class="y">Rok wcześniej</div><div class="v">nie kupi</div></div>
+          <div class="ev now" id="e2"><div class="dot"></div><div class="y">Teraz, 3 tygodnie przed egzaminem</div><div class="v">kupi</div></div>
+          <div class="ev" id="e3"><div class="dot"></div><div class="y">Rok później</div><div class="v">nie kupi</div></div>
+        </div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(8.3);
+      K.rise("#lab", 0.1);
+      tl.fromTo("#rail", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "power3.inOut" }, 0.2);
+      K.lift("#e1", 0.62, { y: 20, dur: 0.5 });
+      K.lift("#e3", 4.1, { y: 20, dur: 0.5 });
+      K.lift("#e2", 5.5, { y: 0, s: 0.9, dur: 0.6, ease: "back.out(1.6)" });
+      K.done();
+    </script>
+  </body>
+</html>

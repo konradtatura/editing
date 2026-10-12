@@ -1,0 +1,2297 @@
+[
+{
+"t": 4.12,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 5.45,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 7.4,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 7.52,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 7.96,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 19.12,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 19.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 19.81,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 19.97,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.13,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.29,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.45,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.61,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.77,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 20.93,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.09,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.41,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.57,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.73,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 21.89,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 22.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 22.21,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 23.58,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 23.98,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 24.38,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 24.78,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 25.12,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 25.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 27.5,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 28.55,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 29.02,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 45.62,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 45.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 46.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 47.1,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 48.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 48.56,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 48.92,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 52.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 52.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 52.9,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 53.72,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 54.45,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 55.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 55.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 88.22,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 89.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 90.05,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 90.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 93.06,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 135.05,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 136.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 137.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 138.56,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 139.66,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 140.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 140.68,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 141.25,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 145.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 145.1,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 145.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 145.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 145.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 145.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 145.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 145.85,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 145.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 146.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 147.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 147.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 147.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 147.72,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 147.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 148.9,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/sparkle.mp3",
+"db": -31
+},
+{
+"t": 149.4,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 149.68,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 149.96,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 151.16,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 152.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 153.4,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 158.85,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 160.1,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 185.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 185.85,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 186.5,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 188.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 189.1,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 189.55,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 189.9,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 190.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 191.92,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 195.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 196.75,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 199.7,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 200.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 200.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 203.92,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 204.5,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 205.65,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 206.11,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 230.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 230.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 231.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 238.65,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 238.92,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 239.1,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 239.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 239.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 239.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 239.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 239.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 239.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 240.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 240.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 240.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 240.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 242.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 245.55,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 246.2,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 247.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 248.75,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 250.9,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/error.mp3",
+"db": -31
+},
+{
+"t": 252.2,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 253.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 253.15,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 254.9,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 255.05,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 256.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 256.15,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 257.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 259.52,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 260.12,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 263.6,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 265.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 267.46,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 298.52,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 299.0,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 299.22,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 299.44,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 300.2,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 301.5,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/error.mp3",
+"db": -31
+},
+{
+"t": 302.5,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/error.mp3",
+"db": -31
+},
+{
+"t": 303.95,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 304.1,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 304.15,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 305.66,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 352.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 353.85,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 354.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 354.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 355.2,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 356.58,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 357.06,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 357.68,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 358.16,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 358.72,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/sparkle.mp3",
+"db": -31
+},
+{
+"t": 360.32,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 362.32,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 363.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 364.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 364.65,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 365.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 366.6,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 366.7,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 366.75,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 366.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.25,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 367.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 367.85,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 367.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 368.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 368.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 368.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 368.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 368.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 391.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 391.8,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 391.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/typing.mp3",
+"db": -31
+},
+{
+"t": 392.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 392.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 392.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 392.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 393.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 393.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 393.2,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 393.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 393.45,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 393.6,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 395.15,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 396.32,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 397.1,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 398.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-2.mp3",
+"db": -25
+},
+{
+"t": 399.02,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 403.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 404.65,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 405.15,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 406.32,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 406.7,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 407.26,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 407.98,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 409.61,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 445.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 445.98,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 446.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 447.52,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 448.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 448.72,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 450.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 451.4,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 452.65,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 454.02,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 454.22,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 455.05,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 455.65,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 456.3,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/error.mp3",
+"db": -31
+},
+{
+"t": 457.25,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 458.85,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 458.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 459.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 461.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 461.48,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/sparkle.mp3",
+"db": -31
+},
+{
+"t": 461.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 462.8,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 465.15,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 465.4,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 469.42,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 469.52,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 470.38,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 471.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 472.3,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 473.7,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 474.8,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 475.43,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 477.46,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 489.52,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 489.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-cinematic.mp3",
+"db": -27
+},
+{
+"t": 494.15,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 494.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/click-soft.mp3",
+"db": -27
+},
+{
+"t": 496.02,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 499.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 499.75,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 501.6,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 501.92,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 503.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 504.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 506.5,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 507.75,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 508.55,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 509.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 509.58,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 509.76,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 509.94,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 510.12,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 510.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 510.48,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 510.66,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 510.84,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 511.02,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 511.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 511.38,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 511.56,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 512.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 515.42,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 516.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 518.28,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 519.32,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 519.8,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 521.5,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 521.95,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 524.06,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 529.7,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 530.55,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 532.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 555.32,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 555.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.45,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.6,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.75,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 556.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 557.24,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 557.26,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 557.35,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 557.44,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 557.53,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 557.62,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 557.71,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 559.7,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 559.75,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 559.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 560.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 561.15,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 562.22,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 563.02,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 563.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 566.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 567.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 569.55,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 571.66,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 574.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 576.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 579.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 579.6,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 581.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 583.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 584.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 585.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 586.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 586.65,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 586.78,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 586.91,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 587.04,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 587.17,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 587.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 588.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 593.92,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 594.0,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 594.95,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 595.05,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 595.17,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 595.29,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 595.41,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 595.53,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 595.65,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 596.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.45,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.6,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.75,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 596.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 597.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 597.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 597.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 597.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 601.0,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/sparkle.mp3",
+"db": -31
+},
+{
+"t": 601.42,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 625.92,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 626.85,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/impact-bass-1.mp3",
+"db": -24
+},
+{
+"t": 627.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 628.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 629.85,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.0,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.15,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.3,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.45,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.6,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.75,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 630.9,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.05,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.2,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.35,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 631.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 632.05,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 632.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 633.45,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 633.9,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 635.55,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 636.5,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/error.mp3",
+"db": -31
+},
+{
+"t": 636.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 638.92,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 639.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.4,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.55,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.7,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 640.85,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/ping.mp3",
+"db": -29
+},
+{
+"t": 644.5,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 644.5,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 644.65,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 644.75,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 644.8,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 644.95,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 645.1,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 645.25,
+"sfx": "tick",
+"db": -34
+},
+{
+"t": 645.66,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 715.12,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 716.4,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 716.7,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 717.9,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh.mp3",
+"db": -25
+},
+{
+"t": 719.05,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 719.8,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 720.7,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 721.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 721.82,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 722.92,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 723.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 725.7,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/sparkle.mp3",
+"db": -31
+},
+{
+"t": 726.6,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 728.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 729.5,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 731.5,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/chime.mp3",
+"db": -31
+},
+{
+"t": 733.56,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 739.4,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 740.3,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 740.9,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 741.42,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 742.0,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 742.4,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 743.25,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 744.06,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 745.55,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 746.8,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 751.75,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 752.95,
+"sfx": "pop",
+"db": -27
+},
+{
+"t": 755.32,
+"sfx": "swish",
+"db": -29
+},
+{
+"t": 755.6,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+},
+{
+"t": 756.25,
+"sfx": "click",
+"db": -25
+},
+{
+"t": 756.35,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/notification.mp3",
+"db": -29
+},
+{
+"t": 758.26,
+"sfx": "/Users/konradtatura/.claude/skills/media-use/audio/assets/sfx/whoosh-short.mp3",
+"db": -28
+}
+]

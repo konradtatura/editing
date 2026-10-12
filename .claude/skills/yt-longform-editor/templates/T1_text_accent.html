@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T1 text accent</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* Text accent: 2-7 words in the free space beside the speaker's head. Transparent background.
+     Geometry (_zone) and ink (light/dark) are computed by anim.py from the footage. */
+  .acc-box { position: absolute; }
+  .acc-text { position: relative; font-weight: 600; letter-spacing: -0.032em; line-height: 1.05; color: var(--overlay-ink); text-shadow: var(--overlay-shadow); text-wrap: balance; }
+  .acc-text.weight { font-weight: 300; }
+  .acc-text .acc-weight { font-weight: 650; }
+  .acc-line { position: absolute; height: 7px; border-radius: 4px; background: var(--accent); transform-origin: 0 50%; }
+  .acc-kicker { font: 500 22px/1 var(--f-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--overlay-ink); opacity: 0.75; margin-bottom: 14px; text-shadow: var(--overlay-shadow); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="1">
+    <div class="acc-box" id="box">
+      <div class="acc-kicker" id="kicker"></div>
+      <div class="acc-text" id="text"></div>
+    </div>
+  </section>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const W = __W__, H = __H__, D = __DURATION__;
+  if (p.ink === "dark") document.documentElement.classList.add("overlay-dark-ink");
+  const z = p._zone || { x: W - 96 - 600, y: 240, w: 600, align: "left" };
+  const box = document.getElementById("box");
+  box.style.left = z.x + "px"; box.style.top = z.y + "px"; box.style.width = z.w + "px";
+  const text = document.getElementById("text");
+  text.style.textAlign = z.align || "left";
+  if ((p.style || "color") === "weight") text.classList.add("weight");
+  const words = S.words(text, p.text || "Tekst akcentu", p.accent || [], p.style);
+  // fit: largest size (<= p.size or 76) that keeps the accent at <= 3 lines
+  let size = p.size || 76;
+  const lines = () => Math.round(text.getBoundingClientRect().height / (size * 1.05));
+  text.style.fontSize = size + "px";
+  while (lines() > (p.maxLines || 3) && size > 48) { size -= 2; text.style.fontSize = size + "px"; }
+  const kicker = document.getElementById("kicker");
+  if (p.kicker) kicker.textContent = p.kicker; else kicker.remove();
+
+  // underline under the accent words (only if requested)
+  const accSpans = [...text.querySelectorAll(".accent, .acc-weight")];
+  let line = null;
+  if (p.underline && accSpans.length) {
+    const tb = text.getBoundingClientRect();
+    const r0 = accSpans[0].getBoundingClientRect(), r1 = accSpans[accSpans.length - 1].getBoundingClientRect();
+    line = document.createElement("div");
+    line.className = "acc-line";
+    line.style.left = (r0.left - tb.left) + "px";
+    line.style.top = (r1.bottom - tb.top + 4) + "px";
+    line.style.width = Math.max(40, (r1.left - tb.left) + accSpans[accSpans.length - 1].getBoundingClientRect().width - (r0.left - tb.left) - size * 0.25) + "px";
+    text.appendChild(line);
+  }
+
+  const tl = gsap.timeline({ paused: true });
+  const t0 = p.delay || 0.06;
+  if (p.kicker) S.inWords(tl, kicker, t0, { y: 8, blur: 4 });
+  S.inWords(tl, words, t0 + (p.kicker ? 0.12 : 0));
+  if (line) tl.fromTo(line, { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: S.EASE_IN }, t0 + 0.15 + words.length * S.WORD_STAGGER);
+  S.out(tl, box, D - S.T_OUT - 0.02);
+  S.register("anim", tl);
+</script>
+</body>
+</html>

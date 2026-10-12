@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .pl { left: 360px; top: 80px; width: 1200px; height: 760px; overflow: hidden; }
+      .vid { position: absolute; left: 0; top: 0; width: 1200px; height: 675px; background: #0b1222; overflow: hidden; }
+      .water { position: absolute; left: 0; right: 0; top: 530px; bottom: 0; background: #142650; }
+      .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: rgba(143,178,255,0.6); }
+      .cliff { position: absolute; left: 0; top: 0; width: 330px; height: 530px; background: #161e30; }
+      .rock { position: absolute; left: 460px; top: 0; width: 140px; height: 115px; }
+      .spin { position: absolute; left: 820px; top: 220px; width: 88px; height: 88px; border-radius: 50%; border: 8px solid rgba(255,255,255,0.18); border-top-color: #f4f6fa; opacity: 0; }
+      .ctl { position: absolute; left: 0; right: 0; top: 675px; height: 85px; display: flex; align-items: center; gap: 28px; padding: 0 34px; }
+      .ctl .tm { font-size: 30px; font-weight: 600; width: 170px; }
+      .ctl .tr { flex: 1; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.14); position: relative; }
+      .ctl .f { position: absolute; inset: 0; background: var(--neg); transform-origin: left center; border-radius: 4px; }
+      .cap { left: 360px; top: 890px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6.6" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs pl surf">
+          <div class="vid"><div class="cliff"></div><div class="water"></div>
+            <svg class="rock" id="rock" viewBox="0 0 110 90"><path d="M14 40 L34 10 L78 6 L104 34 L96 74 L52 88 L12 70 Z" fill="#7d879b"/></svg>
+            <div class="spin" id="spin"></div></div>
+          <div class="ctl"><svg width="26" height="30" viewBox="0 0 26 30"><path d="M3 2 L24 15 L3 28 Z" fill="#f4f6fa"/></svg>
+            <div class="tm" id="tm">0:00 / 1:00</div><div class="tr"><div class="f" id="f"></div></div></div>
+        </div>
+        <div class="abs t-m cap"><span class="w300" id="c1">Urywa się sekundę</span> <span class="w800" id="c2">przed pluskiem.</span></div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(6.6, 1.03);
+      K.lift(".pl", 0.05, { y: 40, dur: 0.7, ease: "expo.out" });
+      tl.fromTo("#rock", { y: 20, rotation: 0 }, { y: 380, rotation: 70, duration: 4.1, ease: "power2.in" }, 0.85);
+      K.count("#tm", 0, 59, 0.3, 4.65, (v) => "0:" + String(Math.floor(v)).padStart(2, "0") + " / 1:00", "none");
+      tl.fromTo("#f", { scaleX: 0 }, { scaleX: 59 / 60, duration: 4.65, ease: "none" }, 0.3);
+      tl.to("#spin", { opacity: 1, duration: 0.2 }, 5.0);
+      tl.fromTo("#spin", { rotation: 0 }, { rotation: 720, duration: 1.6, ease: "none", immediateRender: false }, 5.0);
+      K.rise("#c1", 4.55); K.rise("#c2", 5.0);
+      K.whip(6.6);
+      K.done();
+    </script>
+  </body>
+</html>

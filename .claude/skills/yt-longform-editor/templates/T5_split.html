@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T5 split</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* Split screen: the speaker shrinks from full frame into a rounded portrait window on one side,
+     content builds on the other side, then the speaker grows back to full frame at the end
+     (so the cut back to the talking head is seamless). */
+  #spk { position: absolute; left: 0; top: 0; width: __W__px; height: __H__px; object-fit: cover; }
+  .content { position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 30px; }
+  .content h2 { margin: 0; font: 600 88px/1.02 var(--f-sans); letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; }
+  .content h2 .accent { color: var(--accent); }
+  .rows { display: flex; flex-direction: column; gap: 16px; }
+  .row { display: flex; align-items: center; gap: 28px; padding: 28px 34px; }
+  .row .k { font: 500 34px/1 var(--f-mono); color: var(--accent); width: 56px; flex: none; }
+  .row .t { font: 600 48px/1.12 var(--f-sans); letter-spacing: -0.02em; color: var(--ink); }
+  .row .sub { font: 400 31px/1.25 var(--f-sans); color: var(--ink-2); margin-top: 4px; }
+  .row .ic { width: 72px; height: 72px; border-radius: 20px; }
+  .big { font: 600 112px/1.0 var(--f-sans); letter-spacing: -0.045em; color: var(--ink); text-wrap: balance; }
+  .browser-wrap { position: relative; width: 100%; height: 700px; }
+</style>
+</head>
+<body class="opaque">
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <div class="stage-bg clip" data-start="0" data-duration="__DURATION__" data-track-index="0"></div>
+  <video id="spk" class="clip" src="speaker.mp4" data-start="0" data-duration="__DURATION__" data-track-index="1" muted playsinline></video>
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="2">
+    <div class="content" id="content"></div>
+  </section>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const W = __W__, H = __H__, D = __DURATION__;
+  const box = f.speakerBox || [W * 0.38, H * 0.06, W * 0.62, H * 0.58];
+  const side = p.side || "right";            // where the speaker window goes
+  const cw = p.windowW || 600, ch = p.windowH || 880;
+  const X0 = side === "right" ? W - 96 - cw : 96;
+  const Y0 = (H - ch) / 2;
+  const cx = (box[0] + box[2]) / 2;
+  const L = Math.max(0, Math.min(W - cw, cx - cw / 2));
+  const inset = `inset(${Y0}px ${W - (L + cw)}px ${H - (Y0 + ch)}px ${L}px round 34px)`;
+  const full = "inset(0px 0px 0px 0px round 0px)";
+
+  // content column on the other side
+  const content = document.getElementById("content");
+  const cL = side === "right" ? 120 : X0 + cw + 90;
+  const cR = side === "right" ? X0 - 90 : W - 110;
+  content.style.left = cL + "px"; content.style.width = (cR - cL) + "px";
+  const c = p.content || { kind: "steps", title: "Tytuł", items: [{ title: "Krok" }] };
+  let html = "";
+  if (c.title) html += `<h2 id="ttl"></h2>`;
+  if (c.kind === "text") html += `<div class="big" id="big"></div>`;
+  else if (c.kind === "browser") html += `<div class="browser-wrap"><div class="browser" style="inset:0"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><div class="url">${c.url || ""}</div></div><div class="view"><img id="shot" src="${p.image || ""}"></div></div></div>`;
+  else html += `<div class="rows">` + (c.items || []).map((it, i) => {
+      const lead = c.kind === "bullets" ? `<div class="ic ${it.tone || ""}">${S.icon(it.icon || "check", 30)}</div>` : `<div class="k">${String(i + 1).padStart(2, "0")}</div>`;
+      return `<div class="row card">${lead}<div><div class="t">${it.title || ""}</div>${it.sub ? `<div class="sub">${it.sub}</div>` : ""}</div></div>`;
+    }).join("") + `</div>`;
+  content.innerHTML = html;
+  const ttlWords = c.title ? S.words(document.getElementById("ttl"), c.title, c.accent || []) : [];
+  const bigWords = c.kind === "text" ? S.words(document.getElementById("big"), c.text || "", c.accent || []) : [];
+
+  const tl = gsap.timeline({ paused: true });
+  const spk = document.getElementById("spk");
+  const shrink = 0.75;
+  tl.set(spk, { clipPath: full, x: 0 }, 0);
+  tl.to(spk, { clipPath: inset, x: X0 - L, duration: shrink, ease: S.EASE_MOVE }, 0.05);
+  let t = 0.45;
+  if (ttlWords.length) { S.inWords(tl, ttlWords, t); t += 0.35 + ttlWords.length * 0.05; }
+  if (bigWords.length) S.inWords(tl, bigWords, t, { stagger: 0.09 });
+  if (c.kind === "browser") {
+    S.inBlock(tl, content.querySelector(".browser"), t);
+    const img = document.getElementById("shot");
+    if (c.scroll) tl.to(img, { y: -c.scroll, duration: Math.max(1, D - t - 2), ease: "power1.inOut" }, t + 0.9);
+  }
+  content.querySelectorAll(".row").forEach((r, i) => {
+    const at = c.items[i].at != null ? c.items[i].at : t + i * 0.55;
+    S.inBlock(tl, r, at, { stagger: 0 });
+  });
+  // exit: content out, speaker back to full frame
+  const back = D - shrink - 0.05;
+  S.out(tl, content, back - 0.25);
+  tl.to(spk, { clipPath: full, x: 0, duration: shrink, ease: S.EASE_MOVE }, back);
+  S.register("anim", tl);
+</script>
+</body>
+</html>

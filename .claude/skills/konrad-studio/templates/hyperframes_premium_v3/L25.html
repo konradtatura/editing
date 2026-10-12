@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .x { font-size: 60px; font-weight: 300; letter-spacing: -0.03em; line-height: 1.25; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9.0" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Ani słowa o</div><div class="sp"></div>
+        <div><span class="x" id="x1">ładnym pliku</span></div>
+        <div><span class="x" id="x2">czcionkach</span></div>
+        <div><span class="x" id="x3">prompcie</span></div>
+        <div class="hr"></div>
+        <div class="lab" id="m">Pieniądze robi</div>
+        <div class="k1" style="font-size:82px;font-weight:900" id="p">psychologia.</div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(9.0);
+      K.rise("#lab", 0.3, { stagger: 0.04 });
+      K.rise("#x1", 1.55); K.rise("#x2", 2.88); K.rise("#x3", 3.92);
+      K.strike("#x1", 4.4, { dim: true }); K.strike("#x2", 4.55); K.strike("#x3", 4.7);
+      K.rise("#m", 6.1, { stagger: 0.04 });
+      K.rise("#p", 6.55, { dur: 0.7 });
+      K.done();
+    </script>
+  </body>
+</html>

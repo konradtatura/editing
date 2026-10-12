@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="2.55" data-width="1920" data-height="1080">
+      <div class="co"><div><span class="a" id="l0">Darmowy kurs =</span></div><div><span class="b s ac" id="l1">no-brainer.</span></div></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+      K.rise("#l0", 0.05, { dur: 0.6, stagger: 0.05 });
+      K.rise("#l1", 1.3, { dur: 0.6, stagger: 0.05 });
+      tl.to(".co", { y: -14, duration: 2.25, ease: "none" }, 0);
+      tl.to(".co", { opacity: 0, y: -40, duration: 0.28, ease: "power2.in" }, 2.25);
+      K.done();
+    </script>
+  </body>
+</html>

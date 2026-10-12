@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5.2" data-width="1920" data-height="1080">
+      <div class="co"><div><span class="a" id="l0">Zrozum te</span></div><div><span class="b mk" id="l1">4 rzeczy</span></div><div><span class="a" id="l2">i wiesz więcej niż większość.</span></div></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+      K.rise("#l0", 0.1, { dur: 0.6, stagger: 0.05 });
+      K.rise("#l1", 0.95, { dur: 0.6, stagger: 0.05 });
+      K.mark("#l1", 1.2999999999999998);
+      K.rise("#l2", 2.4, { dur: 0.6, stagger: 0.05 });
+      tl.to(".co", { y: -14, duration: 4.9, ease: "none" }, 0);
+      tl.to(".co", { opacity: 0, y: -40, duration: 0.28, ease: "power2.in" }, 4.9);
+      K.done();
+    </script>
+  </body>
+</html>

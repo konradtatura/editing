@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .h { left: 160px; top: 110px; font-size: 230px; font-weight: 900; letter-spacing: -0.065em; line-height: 1; }
+      .file { left: 160px; top: 420px; width: 1600px; height: 160px; padding: 0 48px; display: flex; align-items: center; gap: 34px; }
+      .file .doc { width: 58px; height: 72px; color: var(--mute); }
+      .file b { font-size: 56px; font-weight: 600; letter-spacing: -0.025em; flex: 1; white-space: nowrap; }
+      .file .mo { font-size: 36px; color: var(--mute); font-weight: 500; }
+      .file .mo em { font-style: normal; color: var(--fg); font-weight: 800; }
+      .chips { left: 160px; top: 630px; display: flex; gap: 20px; }
+      .chip { padding: 18px 30px; border-radius: 999px; background: var(--surface2); font-size: 36px; font-weight: 500; }
+      .chip span { color: var(--mute); }
+      .q { left: 160px; top: 820px; font-size: 96px; letter-spacing: -0.045em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="11.0" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs h"><span class="w300" id="h1">Za</span> <span id="h2">wolno.</span></div>
+        <div class="abs file surf" id="file"><svg viewBox="0 0 64 80" class="doc"><path d="M6 4 H42 L58 20 V76 H6 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M42 4 V20 H58" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M16 38 H48 M16 50 H48 M16 62 H36" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><b id="fn">produkt_v1.pdf</b><div class="mo">Miesiąc <em id="mo">1</em></div></div>
+        <div class="abs chips"><div class="chip" id="k1"><span>zmiana:</span> kolory</div><div class="chip" id="k2"><span>zmiana:</span> czcionka</div>
+          <div class="chip" id="k3"><span>zmiana:</span> marginesy</div><div class="chip" id="k4"><span>zmiana:</span> okładka</div></div>
+        <div class="abs q"><span class="w300" id="q1">Rynek sprawdzony?</span> <span class="w900 neg" id="q2">Nie.</span></div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(11.0, 1.03);
+      K.rise("#h1", 0.5); K.rise("#h2", 0.85);
+      K.lift("#file", 1.5, { y: 40, dur: 0.6, ease: "expo.out" });
+      const fn = K.$("#fn"), mo = K.$("#mo"), s = { v: 1 };
+      tl.to(s, { v: 47, duration: 4.2, ease: "power1.in", onUpdate: () => { const v = Math.round(s.v);
+        fn.textContent = "produkt_v" + v + (v > 40 ? "_FINAL_final2" : v > 25 ? "_FINAL" : "") + ".pdf"; mo.textContent = Math.min(6, 1 + Math.floor((v - 1) / 8)); } }, 1.9);
+      [["#k1", 6.05], ["#k2", 6.95], ["#k3", 7.45], ["#k4", 7.9]].forEach(([k, t]) => K.lift(k, t, { y: 20, s: 0.9, dur: 0.4, ease: "back.out(2)" }));
+      K.rise("#q1", 9.55); K.rise("#q2", 10.5, { dur: 0.5 });
+      K.whip(11.0);
+      K.done();
+    </script>
+  </body>
+</html>

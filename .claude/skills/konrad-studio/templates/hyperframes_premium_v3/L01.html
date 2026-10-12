@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pl" class="ov">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="4.2" data-width="1920" data-height="1080">
+
+      <div class="card">
+        <div class="lab" id="lab">Masz w głowie</div><div class="sp"></div>
+        <div class="k1" id="a">pomysł.</div><div class="sp"></div>
+        <div class="k2 w300 neg" id="b">Zła wiadomość.</div>
+      </div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.card(4.2);
+      K.rise("#lab", 0.15, { stagger: 0.04 });
+      K.rise("#a", 1.35);
+      K.strike("#a", 3.3);
+      K.rise("#b", 3.42);
+      K.done();
+    </script>
+  </body>
+</html>

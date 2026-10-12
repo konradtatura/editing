@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=__W__, height=__H__" />
+<title>T3 stat</title>
+<link rel="stylesheet" href="studio.css" />
+<script src="gsap.min.js"></script>
+<script src="studio.js"></script>
+<style>
+  /* A number that matters, beside the head: rolls up, label underneath, optional delta pill.
+     variant "bare" (type on footage, default) or "card". */
+  .stat { position: absolute; display: flex; flex-direction: column; gap: 10px; }
+  .stat.card-v { padding: 30px 40px 34px; }
+  .stat .n { font: 600 150px/0.95 var(--f-sans); letter-spacing: -0.045em; font-variant-numeric: tabular-nums; color: var(--overlay-ink); text-shadow: var(--overlay-shadow); white-space: nowrap; }
+  .stat .n .u { font-weight: 500; font-size: 0.42em; letter-spacing: -0.02em; margin-left: 10px; }
+  .stat .lab { font: 500 42px/1.18 var(--f-sans); letter-spacing: -0.01em; color: var(--overlay-ink); opacity: 0.82; text-shadow: var(--overlay-shadow); max-width: 640px; }
+  .stat.card-v .n, .stat.card-v .lab { text-shadow: none; color: inherit; }
+  .stat .row { display: flex; align-items: center; gap: 14px; margin-top: 6px; }
+  .stat .n.acc { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="anim" data-width="__W__" data-height="__H__" data-duration="__DURATION__" style="width:__W__px;height:__H__px">
+  <section class="clip fill" data-start="0" data-duration="__DURATION__" data-track-index="1">
+    <div class="stat" id="stat">
+      <div class="n" id="n"><span id="num"></span><span class="u" id="unit"></span></div>
+      <div class="lab" id="lab"></div>
+      <div class="row" id="row"></div>
+    </div>
+  </section>
+</div>
+<script>
+  const DATA = /*__DATA__*/{};
+  const f = S.init(DATA);
+  const p = DATA.params || {};
+  const W = __W__, H = __H__, D = __DURATION__;
+  if (p.ink === "dark") document.documentElement.classList.add("overlay-dark-ink");
+  const z = p._zone || { x: W - 96 - 600, y: 240, w: 600, side: "right" };
+  const stat = document.getElementById("stat");
+  if (p.variant === "card") stat.classList.add("ovcard", "card-v");
+  stat.style.top = (p.y || z.y) + "px";
+  if (z.side === "left") { stat.style.right = (W - (z.x + z.w)) + "px"; stat.style.alignItems = "flex-end"; document.getElementById("lab").style.textAlign = "right"; }
+  else stat.style.left = z.x + "px";
+  const num = document.getElementById("num");
+  document.getElementById("unit").textContent = p.unit || "";
+  if (p.accentNumber) document.getElementById("n").classList.add("acc");
+  document.getElementById("lab").textContent = p.label || "";
+  const row = document.getElementById("row");
+  if (p.delta) row.innerHTML = `<span class="pill ${p.deltaTone || "good"}">${S.icon(p.deltaTone === "bad" ? "down" : "up", 28)}${p.delta}</span>`; else row.remove();
+  // size the number to fit the zone
+  const nEl = document.getElementById("n");
+  let fs = p.size || 150;
+  num.textContent = (p.prefix || "") + Number(p.value || 0).toLocaleString("pl-PL", { minimumFractionDigits: p.decimals || 0, maximumFractionDigits: p.decimals || 0 }) + (p.suffix || "");
+  while (nEl.getBoundingClientRect().width > z.w && fs > 80) { fs -= 6; nEl.style.fontSize = fs + "px"; }
+
+  const tl = gsap.timeline({ paused: true });
+  const t0 = p.delay || 0.06;
+  S.inBlock(tl, nEl, t0, { scale: 0.96, y: 20 });
+  S.roll(tl, num, Number(p.value || 0), t0 + 0.05, { from: p.from || 0, dur: p.rollDur || 1.1, decimals: p.decimals || 0, prefix: p.prefix || "", suffix: p.suffix || "" });
+  S.inWords(tl, document.getElementById("lab"), t0 + 0.35, { y: 10, blur: 6 });
+  if (p.delta) S.inBlock(tl, row, t0 + 0.9, { scale: 0.9, y: 10 });
+  S.out(tl, stat, D - S.T_OUT - 0.02);
+  S.register("anim", tl);
+</script>
+</body>
+</html>

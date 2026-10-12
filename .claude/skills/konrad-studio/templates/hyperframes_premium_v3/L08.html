@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .pan { left: 1000px; top: 90px; width: 760px; height: 900px; padding: 44px 48px 0; overflow: hidden; }
+      .pan .hd small { font-size: 30px; color: var(--mute); font-weight: 500; }
+      .pan .hd b { display: block; font-size: 60px; font-weight: 800; letter-spacing: -0.035em; margin-top: 6px; }
+      .vp { position: absolute; left: 48px; right: 48px; top: 190px; bottom: 150px; overflow: hidden; }
+      .tx { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-top: 1px solid var(--line); }
+      .tx b { font-size: 34px; font-weight: 600; display: block; letter-spacing: -0.015em; }
+      .tx small { font-size: 26px; color: var(--mute); }
+      .tx em { font-style: normal; font-size: 38px; font-weight: 700; }
+      .wk { font-size: 26px; color: var(--mute); padding: 26px 0 8px; font-weight: 500; }
+      .tot { position: absolute; left: 48px; right: 48px; bottom: 0; height: 150px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+      .tot span { font-size: 34px; color: var(--mute); font-weight: 500; }
+      .tot b { font-size: 68px; font-weight: 900; letter-spacing: -0.045em; }
+      .lcol { left: 160px; top: 0; width: 780px; height: 1080px; }
+      .lcol > div { position: absolute; left: 0; }
+      .ph { font-size: 220px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; }
+      .ph span { font-size: 72px; font-weight: 300; color: var(--mute); letter-spacing: -0.03em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10.0" data-width="1920" data-height="1080">
+
+      <div class="cam" id="cam">
+        <div class="abs lcol">
+          <div class="t-s mute" style="top:150px" id="lab">Rodzice przed egzaminem płacą</div>
+          <div class="ph" style="top:330px" id="ph">80 zł <span>/ godz.</span></div>
+          <div class="t-l w800" style="top:330px" id="c1">co tydzień,</div>
+          <div class="t-l w300" style="top:452px" id="c2">przez miesiące.</div>
+        </div>
+        <div class="abs pan surf">
+          <div class="hd"><small>Historia płatności</small><b>Wrzesień</b></div>
+          <div class="vp"><div id="list"><div class="tx" id="r0"><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id="r1"><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id="r2"><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id="r3"><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 2</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 3</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 4</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 5</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 6</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 7</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="wk">Tydzień 8</div><div class="tx" id=""><div><b>Korepetycje · matematyka</b><small>60 min</small></div><em>−80 zł</em></div><div class="tx" id=""><div><b>Korepetycje · angielski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · polski</b><small>60 min</small></div><em>−70 zł</em></div><div class="tx" id=""><div><b>Korepetycje · fizyka</b><small>60 min</small></div><em>−80 zł</em></div></div></div>
+          <div class="tot"><span>Razem</span><b id="sum">0 zł</b></div>
+        </div>
+      </div>
+      <div class="vign"></div>
+      <div class="grain"></div>
+    </div>
+    <script src="kit.js"></script>
+    <script>
+      const tl = K.tl;
+
+      K.push(10.0, 1.035);
+      K.lift(".pan", 0.1, { y: 40, dur: 0.7, ease: "expo.out" });
+      K.rise("#lab", 0.3, { stagger: 0.04 });
+      [0.96, 2.06, 2.62, 3.08].forEach((t, i) => K.lift("#r" + i, t, { y: 24, dur: 0.45, ease: "expo.out" }));
+      const tot = (v) => (v < 0.5 ? "" : "−") + K.pl(v) + " zł";
+      K.count("#sum", 0, 80, 1.0, 0.5, tot);
+      K.count("#sum", 80, 300, 2.1, 1.3, tot);
+      K.lift("#ph", 3.65, { y: 40, dur: 0.6, ease: "expo.out" });
+      K.fadeOut("#ph", 6.95, { y: -30 });
+      K.rise("#c1", 7.4); K.rise("#c2", 8.25);
+      tl.fromTo("#list", { y: 0 }, { y: -2600, duration: 2.3, ease: "power2.in", immediateRender: false }, 7.5);
+      K.count("#sum", 300, 4800, 7.5, 2.3, tot, "power2.in");
+      K.whip(10.0);
+      K.done();
+    </script>
+  </body>
+</html>
