@@ -106,7 +106,7 @@ IT7 = [
         dict(icon="play", label="ogląda filmik", t=21.02), dict(icon="globe", label="wchodzi na stronę", t=21.78),
         dict(icon="shopping-cart", label="kupuje", t=24.70)]),
     dict(type="notif", t0=25.1, t1=26.8, y=330, title="Nowa płatność", sub="Poradnik: 30 szybkich obiadów", amount="+39 zł"),
-    dict(type="plansza", t0=35.267, t1=37.5, hideCaps=True, y0=820, fs=74, rows=[dict(words=pw([
+    dict(type="plansza", t0=35.267, t1=37.75, hideCaps=True, y0=820, fs=74, rows=[dict(words=pw([
         ("I", 35.36, 0), ("na", 35.48, 0), ("tym", 35.54, 0), ("polega", 35.64, 0), ("właśnie", 35.94, 0), ("biznes", 36.24, 0),
         ("na", 36.48, 1), ("produktach", 36.64, 1), ("cyfrowych.", 37.0, 1)]))]),
     dict(type="plansza", t0=37.75, t1=42.9, hideCaps=True, y0=820, gap=230, fs=64, rows=[
@@ -170,7 +170,7 @@ IT10 = [
         dict(title="Moduł 1: Pomysł", sub="AI znajduje niszę", icon="lightbulb", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=70.12),
         dict(title="Moduł 2: Produkt", sub="e-book z AI", icon="book-open", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=70.30),
         dict(title="Moduł 3: Sprzedaż", sub="strona + reklamy", icon="trending-up", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=70.48)]),
-    dict(type="tiles", t0=77.9, t1=80.433, y=1430, size=150, gap=150, items=[
+    dict(type="tiles", t0=77.9, t1=80.433, y=1430, size=150, gap=330, items=[
         dict(icon="check", label="bez doświadczenia", t=78.0), dict(icon="check", label="bez pokazywania twarzy", t=79.42)]),
     dict(type="hero", t0=82.6, t1=83.833, y=0.52, small="za jedyne", big="17 zł", size=260, bigT=83.04, hideCaps=True),
     step(1, 84.9, 87.933, [("Dalej", 85.24, 0), ("pytać", 85.56, 0), ("AI,", 85.86, 0), ("jak", 86.32, 1), ("zarabiać", 86.44, 1)]),
