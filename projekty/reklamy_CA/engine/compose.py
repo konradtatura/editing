@@ -21,13 +21,6 @@ def scale_at(t):
     s = 1.0
     for zt, zs in zooms:
         if zt <= t: s = zs
-    # slow push inside each segment
-    seg0 = max([zt for zt, _ in zooms if zt <= t] or [0])
-    s *= 1 + 0.012 * min(1.0, (t - seg0) / 3.0)
-    for e in settles:
-        if e <= t < e + 0.45:
-            p = (t - e) / 0.45; p = 1 - (1 - p) ** 3
-            s *= 1.07 + (1 - 1.07) * p
     return s
 
 

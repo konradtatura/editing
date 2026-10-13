@@ -80,6 +80,40 @@ def sentence_starts(n):
     return [round(s["start"], 2) for s in json.load(open(os.path.join(WD, f"tr{n}.json")))]
 
 
+def cuts_of(n):
+    out = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "engine", "cuts.py"),
+                          os.path.join(WD, f"ad{n}.mp4")], capture_output=True, text=True).stdout
+    return json.loads(out)
+
+
+def snap_scenes(scenes, cuts):
+    """plansza starts on the first frame of a shot and ends on a cut when one is near; back-to-back scenes hard-cut."""
+    for s in scenes:
+        c = [c for c in cuts if s["t0"] - 0.35 <= c <= s["t0"] + 0.6]
+        if c: s["t0"] = c[0]
+        c = [c for c in cuts if abs(c - s["t1"]) <= 0.6]
+        if c: s["t1"] = min(c, key=lambda c: abs(c - s["t1"]))
+    scenes.sort(key=lambda s: s["t0"])
+    for a, b in zip(scenes, scenes[1:]):
+        if b["t0"] - a["t1"] <= 0.4:
+            b["t0"] = a["t1"]; b["noReveal"] = True
+    return scenes
+
+
+def shot_zooms(cuts, dur, scenes, cta_t0):
+    """one zoom level per shot, switching only on real cuts; CTA shots stay at 100 %."""
+    z, big = [], False
+    for t in [0.0] + cuts:
+        if any(s["t0"] - .05 <= t < s["t1"] - .05 for s in scenes): continue
+        z.append([t, 1.0 if t >= cta_t0 - 0.5 else (1.10 if big else 1.0)]); big = not big
+    # a shot that starts under a plansza gets its zoom from the plansza's end
+    for s in scenes:
+        inside = [c for c in cuts if s["t0"] - .05 <= c < s["t1"] - .05]
+        if inside and not any(abs(zt - s["t1"]) < .05 for zt, _ in z):
+            z.append([s["t1"], 1.0]); 
+    return sorted(z)
+
+
 def zooms_from(starts, scenes):
     z, big = [], False
     for t in starts:
@@ -119,7 +153,7 @@ SC8 = [
                dict(text="Wszystko, by zacząć", icon="rocket", t=12.22, y=940, cls="white")])),
     # 2: krok 1 – pomysł, AI pomaga znaleźć kierunek
     dict(type="orbit", t0=20.28, t1=27.08, cap=dict(mode="light", y=0.79), a=dict(
-        wm=WM_MONEY, R=300, cy=740, center=dict(icon="lightbulb", t=20.6, size=230, spark=True),
+        wm=WM_MONEY, R=340, cy=760, center=dict(icon="lightbulb", t=20.6, size=200, spark=True),
         sats=[dict(icon="users", ang=-150, t=22.36, label="Ludzie tego potrzebują"),
               dict(icon="sparkles", ang=-30, t=24.76, label="AI pomaga"),
               dict(icon="compass", ang=90, t=26.32, label="Kierunek")])),
@@ -143,18 +177,16 @@ SC8 = [
                dict(kind="text", text="100%", fs=150, y=1170, t=67.88, count=dict(t=67.88, d=.5, to=100, suf="%"))])),
 ]
 OV8 = [
-    dict(type="tile", t0=1.2, t1=3.2, a=dict(icon="coffee", x=830, y=760, size=170, spark=True)),
-    dict(type="tile", t0=3.2, t1=6.6, a=dict(icon="clock", x=830, y=760, size=170, badge="48 h", badgeT=3.3)),
+    dict(type="tile", t0=2.76, t1=6.6, a=dict(icon="clock", x=540, y=1410, size=150, badge="48 h", badgeT=2.9)),
     dict(type="pills", t0=28.8, t1=32.1, a=dict(items=[
-        dict(text="Poradnik", icon="book-open", x=310, y=1370, t=28.88), dict(text="Planner", icon="calendar-check", x=770, y=1370, t=29.42),
-        dict(text="Szablony", icon="files", x=310, y=1470, t=30.04), dict(text="PDF", icon="file-text", x=770, y=1470, t=30.66)])),
+        dict(text="Poradnik", icon="book-open", x=310, y=1480, t=28.88), dict(text="Planner", icon="calendar-check", x=770, y=1480, t=29.42),
+        dict(text="Szablony", icon="files", x=310, y=1580, t=30.04), dict(text="PDF", icon="file-text", x=770, y=1580, t=30.66)])),
     dict(type="pills", t0=40.05, t1=43.5, cap=dict(mode="face", y=0.645, hideIn=[[40.0, 41.6]]), a=dict(items=[
-        dict(text="Pomysł", icon="lightbulb", x=310, y=1370, t=40.12, cls="solid"), dict(text="Produkt", icon="package", x=770, y=1370, t=40.52, cls="solid"),
-        dict(text="Strona", icon="layout-template", x=310, y=1470, t=40.96, cls="solid"), dict(text="Marketing", icon="megaphone", x=770, y=1470, t=41.34, cls="solid"),
-        dict(text="+ AI", icon="sparkles", x=540, y=1570, t=42.58, cls="white")])),
+        dict(text="Pomysł", icon="lightbulb", x=310, y=1480, t=40.12, cls="solid"), dict(text="Produkt", icon="package", x=770, y=1480, t=40.52, cls="solid"),
+        dict(text="Strona", icon="layout-template", x=310, y=1580, t=40.96, cls="solid"), dict(text="Marketing", icon="megaphone", x=770, y=1580, t=41.34, cls="solid"),
+        dict(text="+ AI", icon="sparkles", x=540, y=1680, t=42.58, cls="white")])),
     dict(type="brand", t0=59.6, t1=60.8, a=dict(y=1420)),
-    dict(type="price", t0=62.8, t1=63.72, a=dict(text="17 zł", x=540, y=1450, w=480, h=230, fs=150)),
-    dict(type="price", t0=71.2, t1=73.0, a=dict(text="17 zł", x=470, y=1470, w=460, h=230, fs=150, side="coffee", sideT=71.86, strikeT=72.3)),
+    dict(type="price", t0=62.8, t1=63.72, a=dict(text="17 zł", x=540, y=1610, w=480, h=230, fs=150)),
     dict(type="cta", t0=68.9, t1=99, a=dict(text="Kliknij poniżej", y=1420)),
 ]
 
@@ -185,7 +217,7 @@ SC9 = [
         pills=[dict(text="0 zł", icon="x", t=16.12, y=880, cls="white", t1=16.85),
                dict(text="Płacą ludzie", icon="hand-coins", t=17.26, y=880, cls="white")])),
     dict(type="orbit", t0=19.22, t1=29.72, cap=dict(mode="light", y=0.8), a=dict(
-        wm=WM_MONEY, R=310, cy=760, center=dict(icon="user", t=19.5, size=210),
+        wm=WM_MONEY, R=340, cy=760, center=dict(icon="user", t=19.5, size=200),
         sats=[dict(icon="wallet", ang=-140, t=20.22, label="Planer budżetu"),
               dict(icon="chef-hat", ang=-40, t=23.18, label="Proste przepisy"),
               dict(icon="file-user", ang=90, t=26.36, label="Szablon CV")])),
@@ -196,7 +228,6 @@ SC9 = [
         dict(icon="trending-up", text="Sprzedaż z pomocą AI", t=47.96)])),
 ]
 OV9 = [
-    dict(type="tile", t0=0.3, t1=2.1, a=dict(icon="bot", x=840, y=760, size=170, badge="0 zł", badgeT=1.4)),
     dict(type="pills", t0=34.9, t1=37.95, a=dict(items=[
         dict(text="Bez pisania od zera", icon="pen-line", x=540, y=1420, t=35.18, cls="white"),
         dict(text="Bez pokazywania twarzy", icon="user", x=540, y=1530, t=36.76, cls="white")])),
@@ -204,7 +235,6 @@ OV9 = [
     dict(type="flow", t0=52.3, t1=54.85, a=dict(items=[
         dict(icon="message-square-dashed", x=290, y=1450, t=52.46, label="Pusty czat"),
         dict(x=540, y=1450, t=53.2), dict(icon="package", x=790, y=1450, t=53.52, label="Gotowy produkt", dark=True)])),
-    dict(type="price", t0=57.4, t1=60.45, a=dict(text="17 zł", x=470, y=1470, w=460, h=230, fs=150, side="coffee", sideT=59.6, strikeT=59.9)),
     dict(type="cta", t0=60.55, t1=99, a=dict(text="Kliknij poniżej", y=1420)),
 ]
 
@@ -212,9 +242,11 @@ OV9 = [
 def make(n, fixed, scenes, overlays, mirror, capY):
     src = os.path.join(WD, f"ad{n}.mp4")
     units = align(words_of(n), fixed)
-    spec = dict(src=src, dur=round(dur(src), 3), fps=30, mirror=mirror, capY=capY, zoomCenter=[0.5, 0.34],
+    cuts = cuts_of(n); scenes = snap_scenes(scenes, cuts); d = round(dur(src), 3)
+    cta = min([o["t0"] for o in overlays if o["type"] == "cta"] or [d])
+    spec = dict(src=src, dur=d, fps=30, mirror=mirror, capY=capY, zoomCenter=[0.5, 0.34], cuts=cuts,
                 caps=chunk(units), scenes=scenes, overlays=overlays,
-                zooms=zooms_from(sentence_starts(n), scenes))
+                zooms=shot_zooms(cuts, d, scenes, cta))
     p = os.path.join(WD, f"spec_ad{n}.json")
     json.dump(spec, open(p, "w"), ensure_ascii=False, indent=1)
     print(p, len(spec["caps"]), "caption blocks")
@@ -223,4 +255,4 @@ def make(n, fixed, scenes, overlays, mirror, capY):
 
 
 make(8, FIX8, SC8, OV8, False, 0.645)
-make(9, FIX9, SC9, OV9, True, 0.645)
+make(9, FIX9, SC9, OV9, True, 0.56)

@@ -119,11 +119,11 @@ function shellUpdate(sc,t){
  const {t0,t1}=sc, r=sc.root;
  if(t<t0-0.001||t>=t1){r.style.display='none';return false}
  r.style.display='';
- const pin=E.out5(P(t,t0,.5)), rad=lerp(0,1500,pin);
+ const pin=sc.noReveal?1:E.out5(P(t,t0,.5)), rad=lerp(0,1500,pin);
  if(pin<1){const m=`radial-gradient(circle ${rad}px at 50% 46%, #000 ${Math.max(0,rad-90)}px, transparent ${rad}px)`;r.style.webkitMaskImage=m}
  else r.style.webkitMaskImage='none';
- const q=E.in(P(t,t1-.24,.24));
- r.style.opacity=1-q;r.style.filter=q>0?`blur(${q*14}px)`:'none';
+ const q=0; // hard cut out, on the cut of the footage
+ r.style.opacity=1;r.style.filter='none';
  const life=P(t,t0,t1-t0);
  sc.cam.style.transform=`scale(${lerp(1.14,1,E.out5(P(t,t0,.7)))*lerp(1.0,0.965,life)*(1+q*.08)})`;
  return true}
@@ -178,7 +178,7 @@ B.orbit=(sc)=>{const c=shell(sc,'green');const a=sc.a;
  sc.sats=a.sats.map((s,i)=>{const ang=s.ang*Math.PI/180,x=540+Math.cos(ang)*a.R,y=(a.cy||760)+Math.sin(ang)*a.R;
   const ln=el('div','line',c);ln.style.left='540px';ln.style.top=(a.cy||760)+'px';ln.style.width=a.R+'px';ln.style.transform=`rotate(${s.ang}deg)`;
   const e=tile(c,s.icon,x,y,s.size||170);
-  let lb=null;if(s.label){lb=pill(c,'glass',s.label,null,x,y+(s.size||170)/2+58,36,72)}
+  let lb=null;if(s.label){const up=Math.sin(ang)<-0.2;lb=pill(c,'white',s.label,null,Math.min(820,Math.max(260,x)),up?y-(s.size||170)/2-56:y+(s.size||170)/2+56,38,76)}
   return {s,e,ln,lb,x,y}});
 };
 B.orbit.u=(sc,t)=>{const a=sc.a;
