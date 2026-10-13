@@ -47,6 +47,23 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Wysokość: wszystko na **jednej** wysokości (środek, capY 0.5), bez stref.
 - Oba hooki zostają w filmie. Napisy przycięte do cięć scen na granicach hooków (10,733 s, 21,533 s), żeby Konrad mógł sam ciąć.
 
+## Styl 5: „Nie mów / Mów” (viralowa rolka Konrada; nowa wersja „Jeśli chcesz / Musisz”)
+- Kod: `projekty/styl5/` (`build_spec5.py`, `engine/overlay5.html`), kompozycja ffmpeg overlay. Bez napisów, bez zoomów.
+- Dwie kolumny: nagłówki Inter 800, 78 px, czerwony `#FC0000` (lewa) i zielony `#00E000` (prawa), ciemny cień.
+- Pod nimi rzędy słów (Inter 700, 40 px, biel z cieniem) zakryte kolorowymi paskami (60 px wysokości, co 70 px, radius 9).
+- Pasek wyjeżdża w bok (lewy w lewo, prawy w prawo), liniowo ok. 2000 px/s (0,2–0,25 s), start 0,12 s przed pierwszym słowem frazy.
+- Zmierzone na oryginale 720×1280: kolumny 333 px, paski 40 px co 46,5 px. U Konrada (twarz niżej) tabela niżej: nagłówek 1180, paski od 1245.
+
+## Styl 6: „10/10” lista z emoji (format znajomego)
+- Kod: `projekty/styl6/` (`build_spec6.py`, `engine/overlay6.html`), fonty `assets/fonts/fmt6.css` (Anton, Poppins 500/600), emoji Noto Color Emoji.
+- Góra: biała pigułka z tytułem (Poppins 500, 50 px, czarny), np. „10/10 nawyków, których / nikt Cię nie uczy”.
+- Siatka 2×5: biała ramka 7 px, radius 22, linie 8 px (z sąsiednich obrysów), komórki półprzezroczyste, romby na skrzyżowaniach.
+- Cyfry Poppins 600, 76 px, czarny obrys 3 px; kolory co 40° na kole barw: 2 `#FD0004`, 3 `#F9A901`, 4 `#ADFA01`, 5 `#03FC04`,
+  6 `#00FCAC`, 7 `#03A8F8`, 8 `#0500FA`, 9 `#A700FE`, 10 `#FC00A7` (1 biały).
+- Na pierwszym słowie punktu cyfra gaśnie w 3 klatki, a emoji pojawia się od razu w pełnym rozmiarze (dosunięte do cięcia, jeśli jest ≤0,3 s wcześniej).
+- Napisy: Anton 66 px, wersaliki, biel z cieniem, 2–3 słowa (maks. 16 znaków), twarde przełączanie, nad siatką.
+- U Konrada: napisy na 1192 px, siatka od 1268 px (usta ok. 53% wysokości).
+
 ## Wybór stylu do nowej reklamy
 Konrad zwykle mówi, który styl. Jeśli nie: gadająca głowa + framework/kroki → styl 3; gadająca głowa, ciepło, b-rolle → styl 2;
 prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4. Nowy wzór = nowy styl (`nowy-styl.md`).

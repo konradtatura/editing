@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Style 5: "Nie mów / Mów" two-column reveal (Konrad's viral reel). Coloured bars cover the words and slide out sideways,
+     left bar to the left, right bar to the right, linearly in 0.2 s, just before each word is said. Nothing else on screen. -->
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
+<style>
+html,body{margin:0;background:transparent}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:'Inter',sans-serif}
+.hd{position:absolute;font-weight:800;font-size:78px;letter-spacing:-.045em;line-height:1;text-align:center;white-space:nowrap;
+ text-shadow:0 3px 6px rgba(0,0,0,.55),0 0 18px rgba(0,0,0,.35)}
+.tx{position:absolute;font-weight:700;color:#fff;letter-spacing:-.03em;text-align:center;white-space:nowrap;
+ text-shadow:0 2px 5px rgba(0,0,0,.6),0 0 14px rgba(0,0,0,.35)}
+.bar{position:absolute;border-radius:9px}
+</style></head><body><div id="stage"></div>
+<script>
+let SPEC=null;const st=()=>document.getElementById('stage');
+function el(cls,css,html){const e=document.createElement('div');e.className=cls;Object.assign(e.style,css);if(html!=null)e.innerHTML=html;st().appendChild(e);return e}
+window.init=(s)=>{SPEC=s;const L=s.layout;
+ s.cols.forEach((c,ci)=>{const x0=L.colX[ci],w=L.colW;
+  el('hd',{left:(x0+w/2)+'px',top:(L.hdY-39)+'px',transform:'translateX(-50%)',color:c.color},c.head);
+  c.rows.forEach((r,ri)=>{const y=L.barY+ri*L.pitch;
+   const t=el('tx',{left:x0+'px',width:w+'px',top:y+'px',height:L.barH+'px',lineHeight:L.barH+'px',fontSize:L.fs+'px'},r.text);
+   r.tx=t;
+   r.bar=el('bar',{left:x0+'px',width:w+'px',top:y+'px',height:L.barH+'px',background:c.color})})});
+ // rows keep the original size; only a row that does not fit its column shrinks
+ s.cols.flatMap(c=>c.rows).forEach(r=>{let f=L.fs;while(r.tx.scrollWidth>L.colW-12&&f>26){f-=1;r.tx.style.fontSize=f+'px'}});
+ return true};
+window.seek=(t)=>{const L=SPEC.layout;
+ SPEC.cols.forEach((c,ci)=>c.rows.forEach(r=>{const p=Math.max(0,(t-r.t)/L.exitDur);   // linear slide, like the original
+  const dx=p<=0?0:p*(1080+L.colW)*(ci?1:-1);r.bar.style.transform=`translateX(${dx}px)`;r.bar.style.visibility=p>=1?'hidden':'visible'}));
+ return true};
+</script></body></html>
