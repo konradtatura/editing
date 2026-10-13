@@ -83,7 +83,7 @@ IT5 = [
     dict(PL, t0=14.333, t1=18.067, bh=[dict(y=560, fs=74, words=pw([("Nie", 14.62, 0), ("sprzedaję", 14.70, 0)]))], rows=[
         dict(y=820, t=15.22, icon="x", bad=True, html='magiczny<br>sposób'),
         dict(y=1080, t=16.72, icon="check", html='coś <span class="s">znacznie</span><br>prostszego')]),
-    dict(type="tracker", t0=20.6, t1=34.033, capY=0.5, x=70, y=1250, gap=104, doneT=30.0, items=[
+    dict(type="tracker", t0=20.6, t1=34.033, x=70, y=1250, gap=104, doneT=30.0, items=[
         dict(text="Pomysł na produkt", t=21.80), dict(text="Zawartość z AI", t=24.04),
         dict(text="Strona sprzedażowa", t=25.98), dict(text="Płatność", t=27.26)]),
     dict(PL, t0=30.133, t1=34.033, uh=dict(y=330, bar=640, words=pw([("Wszystko", 30.20, 0), ("to", 30.32, 0), ("przygotujesz", 30.96, 0), ("w", 31.28, 0)])),
@@ -115,14 +115,14 @@ IT2 = [
         dict(img=STILL("aiimage_0"), x=250, y=1080, w=330, h=560, rot=-6, t=1.0),
         dict(img=STILL("aiimage_1"), x=540, y=1020, w=330, h=560, rot=0, t=1.25),
         dict(img=STILL("aiimage_2"), x=830, y=1080, w=330, h=560, rot=6, t=1.5)]),
-    dict(PL, t0=12.367, t1=15.567, uh=dict(y=600, bar=700, words=pw([("Chodzi", 13.04, 0), ("o", 13.26, 0), ("coś", 13.40, 0), ("prostszego:", 13.56, 0)])),
+    dict(PL, t0=12.367, t1=15.567, uh=dict(y=600, bar=820, words=pw([("Akurat", 12.48, 0), ("tutaj", 12.74, 0), ("chodzi", 13.04, 0), ("o", 13.26, 0), ("coś", 13.40, 0), ("prostszego:", 13.56, 0)])),
          bh=[dict(y=820, fs=130, words=pw([("AI", 14.50, 0), ("+", 14.70, 0), ("produkty", 14.88, 1), ("cyfrowe", 15.14, 2)]))]),
-    dict(PL, t0=15.567, t1=22.5, bh=[dict(y=230, fs=90, words=pw([("Postać", 16.26, 0), ("AI", 16.58, 1)])),
+    dict(PL, t0=15.567, t1=22.5, uh=dict(y=110, bar=380, words=pw([("Na", 15.66, 0), ("przykład:", 15.78, 0)])), bh=[dict(y=230, fs=90, words=pw([("Postać", 16.26, 0), ("AI", 16.58, 1)])),
                                    dict(y=340, fs=90, words=pw([("triki", 18.60, 0), ("w", 19.34, 2), ("kuchni", 19.44, 2)]))],
          reels=[dict(img=STILL("cooking_0"), x=330, y=1050, w=420, h=720, rot=-4, t=15.8)],
          cards=[dict(kind="product", t=20.44, x=770, y=1180, w=420, h=560, rot=5, img=STILL("cooking_1"), imgH=270,
                      title="Poradnik AI:<br>sekrety kuchni", sub="e-book PDF", price="49 zł")]),
-    dict(PL, t0=22.5, t1=26.533, noFlash=True, eq=[
+    dict(PL, t0=22.5, t1=26.533, noFlash=True, uh=dict(y=420, bar=520, words=pw([("Teraz", 22.72, 0), ("sobie", 22.86, 0), ("policzmy:", 23.04, 0)])), eq=[
         dict(t=23.62, y=600, fs=120, html='10 <span style="font-size:.6em;opacity:.8">sprzedaży</span>'),
         dict(t=24.0, y=760, fs=120, html='× 49 zł'),
         dict(t=24.56, y=980, fs=190, color="#8F8FFF", pre="", suf=" zł", count=dict(t=24.56, d=.8, to=490)),
@@ -134,15 +134,15 @@ IT2 = [
         dict(t=30.12, y=1210, fs=70, html='<span style="font-family:Instrument Serif;font-style:italic;font-weight:400">miesięcznie</span>')]),
     dict(PL, t0=42.833, t1=45.033, bh=[dict(y=300, fs=80, words=pw([("Dlatego", 43.32, 0), ("stworzyłem", 43.64, 0)]))], cards=[
         dict(kind="brand", t=44.04, x=540, y=1000, w=860, h=640, title="Cyfrowy<br>Autopilot", sub="gotowy system z AI", subY=330, price="17 zł")]),
-    dict(type="tracker", t0=45.033, t1=57.5, capY=0.5, x=70, y=1250, gap=104, doneT=56.9, items=[
+    dict(type="tracker", t0=45.033, t1=57.5, x=70, y=1250, gap=104, doneT=56.9, items=[
         dict(text="Pomysł, którego szukają", t=46.72), dict(text="Produkt z AI", t=49.62),
         dict(text="Strona sprzedażowa", t=50.98), dict(text="Filmiki i reklamy z AI", t=54.74)]),
-    dict(type="irows", t0=58.6, t1=61.933, capY=0.5, rows=[
+    dict(type="irows", t0=58.6, t1=61.933, rows=[
         dict(y=1200, t=58.66, icon="x", bad=True, html='bez bycia ekspertem'),
         dict(y=1340, t=59.58, icon="x", bad=True, html='bez programowania'),
         dict(y=1480, t=60.86, icon="x", bad=True, html='bez pokazywania twarzy')]),
     dict(type="cta", t0=62.48, t1=71.2, y=1500, text="Kliknij przycisk poniżej"),
 ]
 
-make("ads5", "ads5.mp4", "tr_ads5.json", FIX5, IT5, capY=0.62)
-make("ads2", "ads2.mp4", "tr_ads2.json", FIX2, IT2, extra_cuts=(4.167, 6.567), capY=0.62)
+make("ads5", "ads5.mp4", "tr_ads5.json", FIX5, IT5, capY=0.5)
+make("ads2", "ads2.mp4", "tr_ads2.json", FIX2, IT2, extra_cuts=(4.167, 6.567), capY=0.5)

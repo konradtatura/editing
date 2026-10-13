@@ -9,7 +9,8 @@ html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
 .abs{position:absolute}
 /* stacked captions */
 #caps{position:absolute;left:40px;right:40px;text-align:center;pointer-events:none}
-#caps .ln{display:block;line-height:.9;white-space:nowrap}
+#caps .ln{display:block;line-height:.92;white-space:nowrap}
+#caps .ln.sl{line-height:1.08;margin-top:.06em}
 #caps .w{display:inline-block;margin:0 .1em;font-weight:900;font-size:98px;color:#fff;letter-spacing:-.055em;
  text-shadow:0 4px 14px rgba(0,0,0,.45),0 0 40px rgba(0,0,0,.25)}
 #caps .w.box{background:var(--blue);padding:0 .14em .04em;border-radius:6px;font-size:86px;box-shadow:0 10px 30px rgba(20,20,120,.45);text-shadow:none}
@@ -109,8 +110,10 @@ function caps(spec,t){const box=document.getElementById('caps');
  if(hide||bi<0){box.style.visibility='hidden';return}box.style.visibility='visible';
  const ov=spec.items.find(o=>o.capY&&t>=o.t0&&t<o.t1);const capY=ov?ov.capY:spec.capY;
  const b=spec.caps[bi];if(lastKey!==bi){lastKey=bi;box.innerHTML='';
-  lines(b.words).forEach(l=>{const ln=el('span','ln',box);l.forEach(w=>{const s=el('span','w'+(w.h==1?' box':w.h==2?' ser':''),ln,w.d);s.dataset.t=w.t;if(w.h==2)s.dataset.full=w.d})})}
- box.style.top='0px';const hh=box.getBoundingClientRect().height;box.style.top=(capY*H-hh/2)+'px';
+  lines(b.words).forEach(l=>{const ln=el('span','ln'+(l.some(w=>w.h==2)?' sl':''),box);let grp=null;
+   l.forEach(w=>{if(w.h==1&&grp){grp.textContent+=' '+w.d;return}
+    const s=el('span','w'+(w.h==1?' box':w.h==2?' ser':''),ln,w.d);s.dataset.t=w.t;if(w.h==2)s.dataset.full=w.d;grp=w.h==1?s:null})})}
+ box.style.top=(capY*H)+'px';
  box.querySelectorAll('.w').forEach(s=>{if(s.dataset.full!=null){typeIn(s,t,+s.dataset.t,.3)}else blurIn(s,t,+s.dataset.t-.04,{d:.17,b0:18,s0:1.15})})}
 /* ---------- main ---------- */
 let SPEC=null;
