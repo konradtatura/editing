@@ -109,10 +109,12 @@ IT7 = [
     dict(type="plansza", t0=35.267, t1=37.5, hideCaps=True, y0=820, fs=74, rows=[dict(words=pw([
         ("I", 35.36, 0), ("na", 35.48, 0), ("tym", 35.54, 0), ("polega", 35.64, 0), ("właśnie", 35.94, 0), ("biznes", 36.24, 0),
         ("na", 36.48, 1), ("produktach", 36.64, 1), ("cyfrowych.", 37.0, 1)]))]),
-    dict(type="plansza", t0=37.5, t1=42.9, hideCaps=True, y0=640, gap=260, fs=64, rows=[
-        dict(num=1, t=39.86, words=pw([("Produkt", 39.86, 0), ("cyfrowy", 40.0, 1)])),
-        dict(num=2, t=40.64, words=pw([("Strona", 40.64, 0), ("sprzedażowa", 40.8, 1)])),
-        dict(num=3, t=41.68, words=pw([("Filmiki", 41.68, 0), ("promocyjne", 41.9, 1)]))]),
+    dict(type="plansza", t0=37.75, t1=42.9, hideCaps=True, y0=820, gap=230, fs=64, rows=[
+        dict(y=520, fs=54, words=pw([("Wyobraź", 37.82, 0), ("sobie,", 38.10, 0), ("że", 38.38, 0), ("AI", 38.46, 1), ("pomaga", 38.70, 0),
+                                     ("Ci", 38.94, 0), ("stworzyć:", 39.06, 0)])),
+        dict(num=1, t=39.86, y=820, words=pw([("Produkt", 39.86, 0), ("cyfrowy", 40.0, 1)])),
+        dict(num=2, t=40.64, y=1050, words=pw([("Strona", 40.64, 0), ("sprzedażowa", 40.8, 1)])),
+        dict(num=3, t=41.68, y=1280, words=pw([("Filmiki", 41.68, 0), ("promocyjne", 41.9, 1)]))]),
     dict(type="fan", t0=48.1, t1=52.43, x=300, y=1660, dx=230, w=270, h=370, cards=[
         dict(title="Moduł 1: Pomysł", sub="AI znajduje niszę", icon="lightbulb", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=48.14),
         dict(title="Moduł 2: Produkt", sub="e-book z AI", icon="book-open", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=48.30),
@@ -155,8 +157,9 @@ def step(n, t0, t1, wl):
 
 IT10 = [
     dict(type="hero", t0=4.0, t1=5.133, y=0.52, small="jest", big="sztuczna<br>inteligencja", size=140, bigT=4.20, hideCaps=True),
-    dict(type="plansza", t0=19.233, t1=23.533, hideCaps=True, y0=760, fs=96, rows=[dict(words=pw([
-        ("AI", 22.10, 0), ("+", 22.44, 0), ("produkty", 22.62, 1), ("cyfrowe", 22.80, 1)]))]),
+    dict(type="plansza", t0=20.40, t1=23.533, hideCaps=True, y0=760, fs=96, rows=[
+        dict(y=600, fs=56, words=pw([("Jedna", 20.48, 0), ("z", 20.72, 0), ("największych", 20.84, 0), ("okazji:", 21.20, 1)])),
+        dict(y=760, words=pw([("AI", 22.10, 0), ("+", 22.44, 0), ("produkty", 22.62, 1), ("cyfrowe", 22.80, 1)]))]),
     step(1, 28.16, 32.167, [("Pomysł,", 29.88, 0), ("na", 30.68, 0), ("który", 30.80, 0), ("jest", 31.0, 0), ("zapotrzebowanie", 31.40, 1)]),
     step(2, 32.167, 34.6, [("Analiza", 33.38, 0), ("rynku", 33.94, 1), ("i", 34.1, 1), ("klientów", 34.2, 1)]),
     step(3, 37.633, 41.433, [("Produkt", 39.12, 0), ("cyfrowy", 39.40, 1)]),

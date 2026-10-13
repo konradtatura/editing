@@ -41,13 +41,14 @@ for f in range(N):
     for k, b in enumerate(brolls):
         if b["t0"] <= t < b["t1"]:
             if k not in bdec: bdec[k] = dec(b["file"], b.get("ss", 0), grade)
+            if not bdec[k]: continue
             bb = bdec[k].stdout.read(fsz)
             if len(bb) == fsz:
                 fr = np.frombuffer(bb, np.uint8).reshape(H, W, 3)
                 ks = 1.04 + 0.05 * (t - b["t0"]) / max(.1, b["t1"] - b["t0"])          # slow push-in on b-roll
                 fr = cv2.warpAffine(fr, np.float32([[ks, 0, -(ks - 1) * W / 2], [0, ks, -(ks - 1) * H / 2]]), (W, H))
-        elif t >= b["t1"] and k in bdec:
-            bdec[k].terminate(); bdec[k] = None
+        elif t >= b["t1"] and bdec.get(k):
+            bdec[k].terminate(); bdec[k] = False
     p = os.path.join(fdir, f"f_{f:05d}.png")
     ov = cv2.imread(p, cv2.IMREAD_UNCHANGED) if os.path.exists(p) else None
     if ov is not None:

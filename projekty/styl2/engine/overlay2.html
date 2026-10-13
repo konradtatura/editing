@@ -73,9 +73,9 @@ B.plansza=(o)=>{const p=el('div','pl');o.e=p;
  const c1=el('div','c',p);Object.assign(c1.style,{width:'760px',height:'760px',right:'-330px',top:'-330px'});
  const c2=el('div','c',p);Object.assign(c2.style,{width:'680px',height:'680px',left:'-300px',bottom:'-300px'});o.cs=[c1,c2];
  el('div','grain',p);
- o.rows=o.rows.map((r,i)=>{const y=o.y0+i*(o.gap||230);let n=null;
+ o.rows=o.rows.map((r,i)=>{const y=r.y??(o.y0+i*(o.gap||230));let n=null;
   if(r.num!=null){n=el('div','num',p,r.num+'.');Object.assign(n.style,{left:'90px',top:(y-10)+'px',fontSize:(o.numSize||190)+'px'})}
-  const tx=el('div','txt',p);Object.assign(tx.style,{left:(r.num!=null?(o.textX||330):90)+'px',right:'80px',top:y+'px',fontSize:(o.fs||60)+'px'});
+  const tx=el('div','txt',p);Object.assign(tx.style,{left:(r.num!=null?(o.textX||330):90)+'px',right:'80px',top:y+'px',fontSize:(r.fs||o.fs||60)+'px'});
   r.words.forEach(w=>{const s=el('span','wd'+(w.h?' h':''),tx,w.d);s.dataset.t=w.t});return {r,n,tx}})};
 B.plansza.u=(o,t)=>{const life=P(t,o.t0,o.t1-o.t0);o.cs[0].style.transform=`translate(${-20*life}px,${20*life}px) scale(${1+.04*life})`;o.cs[1].style.transform=`translate(${20*life}px,${-20*life}px)`;
  o.rows.forEach(({r,n,tx})=>{if(n)appear(n,t,r.t,{d:.35,y0:30,s0:.8});tx.querySelectorAll('.wd').forEach(s=>appear(s,t,+s.dataset.t-.04,{d:.22,y0:10,s0:1,b0:6}))})};
