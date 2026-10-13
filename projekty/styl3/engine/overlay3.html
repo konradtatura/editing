@@ -1,0 +1,120 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
+<style>
+:root{--bg:#05071A;--blue:#3B3BFF;--blue2:#5B5BFF;--ink:#0B0D24}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+#stage{position:absolute;inset:0;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
+.abs{position:absolute}
+/* stacked captions */
+#caps{position:absolute;left:40px;right:40px;text-align:center;pointer-events:none}
+#caps .ln{display:block;line-height:.9;white-space:nowrap}
+#caps .w{display:inline-block;margin:0 .1em;font-weight:900;font-size:98px;color:#fff;letter-spacing:-.055em;
+ text-shadow:0 4px 14px rgba(0,0,0,.45),0 0 40px rgba(0,0,0,.25)}
+#caps .w.box{background:var(--blue);padding:0 .14em .04em;border-radius:6px;font-size:86px;box-shadow:0 10px 30px rgba(20,20,120,.45);text-shadow:none}
+#caps .w.ser{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em;font-size:104px}
+/* plansza */
+.pl{position:absolute;inset:0;background:var(--bg);overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px)}
+.grain{position:absolute;inset:0;opacity:.07;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+.flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(220,225,255,.95),rgba(120,130,255,.5) 60%,rgba(5,7,26,0));pointer-events:none}
+.uh{position:absolute;left:70px;right:70px;font-weight:700;font-size:44px;color:#fff;letter-spacing:-.02em}
+.uh .bar{position:absolute;left:0;height:6px;border-radius:3px;background:#fff;transform-origin:0 50%}
+.bh{position:absolute;left:40px;right:40px;text-align:center;font-weight:900;color:#fff;letter-spacing:-.055em;line-height:.95}
+.bh .h{background:var(--blue);padding:0 .12em;border-radius:6px}
+.bh .s{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+.wd{display:inline-block;margin:0 .12em}
+/* cards */
+.card{position:absolute;border-radius:34px;overflow:hidden;background:#0D1130;box-shadow:0 30px 80px rgba(0,0,30,.6),0 0 0 2px rgba(91,91,255,.35)}
+.reel{position:absolute;border-radius:28px;overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.55),0 0 0 3px rgba(255,255,255,.85)}
+.reel img{width:100%;height:100%;object-fit:cover;display:block}
+/* tracker */
+.tr{position:absolute;display:flex;align-items:center;gap:0;height:86px;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,30,.45)}
+.tr .n{width:86px;height:86px;background:var(--blue);color:#fff;font-weight:900;font-size:52px;display:flex;align-items:center;justify-content:center}
+.tr .t{padding:0 34px;font-weight:700;font-size:44px;color:#0B0D24;letter-spacing:-.02em;white-space:nowrap}
+.tr .ck{margin-right:26px;width:46px;height:46px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff}
+.tr .ck svg{width:30px;height:30px;stroke-width:3.4}
+/* icon rows */
+.ir{position:absolute;display:flex;align-items:center;gap:30px}
+.ir .ic{width:110px;height:110px;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.ir .ic svg{width:62px;height:62px;stroke-width:2.8}
+.ir .tx{font-weight:900;font-size:68px;color:#fff;letter-spacing:-.045em;line-height:.95}
+.ir .tx .s{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;letter-spacing:-.01em}
+/* equation */
+.eq{position:absolute;left:0;right:0;text-align:center;color:#fff;font-weight:900;letter-spacing:-.05em}
+/* cta */
+.cta{position:absolute;padding:20px 34px;background:var(--blue);color:#fff;font-weight:800;font-size:40px;letter-spacing:.02em;text-transform:uppercase;border-radius:8px;box-shadow:0 14px 40px rgba(20,20,120,.5);white-space:nowrap}
+</style></head>
+<body><div id="stage"></div>
+<script>
+const W=1080,H=1920;const ICONS=window.ICONS||{};
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),lerp=(a,b,p)=>a+(b-a)*p,P=(t,t0,d)=>cl((t-t0)/d);
+const E={out:t=>1-Math.pow(1-t,3),out5:t=>1-Math.pow(1-t,5),back:t=>{const c1=1.3,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
+const svg=n=>ICONS[n]||'';
+function el(tag,cls,parent,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;(parent||document.getElementById('stage')).appendChild(e);return e}
+function blurIn(e,t,t0,o={}){const d=o.d||.2,p=P(t,t0,d),pe=E.out(p);e.style.opacity=E.out(P(t,t0,d*.7));
+ e.style.filter=p<1?`blur(${(1-pe)*(o.b0??16)}px)`:'none';e.style.transform=`${e.dataset.base||''} translate(${(1-pe)*(o.x0||0)}px,${(1-pe)*(o.y0??0)}px) scale(${lerp(o.s0??1.12,1,pe)})`;return p}
+function typeIn(e,t,t0,dur){const s=e.dataset.full;const n=Math.round(s.length*P(t,t0,dur));e.textContent=s.slice(0,Math.max(0,n))||'​';e.style.opacity=t>=t0?1:0}
+/* ---------- plansza with blobs + flash ---------- */
+function plBase(o){const p=el('div','pl');o.e=p;o.blobs=[[200,300,620,'#2B2BFF'],[880,1300,700,'#1A1ACC'],[500,1700,520,'#3B3BFF']].map(([x,y,s,c],i)=>{const b=el('div','blob',p);Object.assign(b.style,{left:(x-s/2)+'px',top:(y-s/2)+'px',width:s+'px',height:s+'px',background:c,opacity:.55});return b});
+ el('div','grain',p);o.fl=el('div','flash',p);return p}
+function plUpd(o,t){const l=t-o.t0;o.blobs.forEach((b,i)=>{b.style.transform=`translate(${Math.sin(l*.6+i*2)*80}px,${Math.cos(l*.5+i)*60}px) scale(${1+.1*Math.sin(l*.7+i)})`});
+ o.fl.style.opacity=o.noFlash?0:1-E.out(P(t,o.t0,.16))}
+const B={};
+B.plansza=(o)=>{const p=plBase(o);
+ if(o.uh){const u=el('div','uh',p);u.style.top=o.uh.y+'px';o.uhw=o.uh.words.map(w=>{const s=el('span','wd',u,w.d);s.dataset.t=w.t;return s});const bar=el('div','bar',u);bar.style.top='62px';bar.style.width=(o.uh.bar||620)+'px';o.bar=bar}
+ o.bhs=(o.bh||[]).map(b=>{const d=el('div','bh',p);Object.assign(d.style,{top:b.y+'px',fontSize:(b.fs||100)+'px'});
+  const ws=b.words.map(w=>{const s=el('span','wd'+(w.h==1?' h':w.h==2?' s':''),d,w.d);s.dataset.t=w.t;if(w.h==2){s.dataset.full=w.d}return s});return {b,ws}});
+ o.reels=(o.reels||[]).map(r=>{const e=el('div','reel',p,`<img src="${r.img}">`);Object.assign(e.style,{left:(r.x-r.w/2)+'px',top:(r.y-r.h/2)+'px',width:r.w+'px',height:r.h+'px'});e.dataset.base=`rotate(${r.rot||0}deg)`;return {r,e}});
+ o.cards=(o.cards||[]).map(c=>{const e=el('div','card',p,cardHTML(c));Object.assign(e.style,{left:(c.x-c.w/2)+'px',top:(c.y-c.h/2)+'px',width:c.w+'px',height:c.h+'px'});e.dataset.base=`rotate(${c.rot||0}deg)`;return {c,e}});
+ o.irs=(o.rows||[]).map(r=>{const e=el('div','ir',p,`<div class="ic" style="background:${r.bad?'#E0483A':'var(--blue)'}">${svg(r.icon)}</div><div class="tx">${r.html}</div>`);Object.assign(e.style,{left:(r.x||110)+'px',top:r.y+'px'});return {r,e}});
+ o.eqs=(o.eq||[]).map(q=>{const e=el('div','eq',p);Object.assign(e.style,{top:q.y+'px',fontSize:q.fs+'px'});e.style.color=q.color||'#fff';return {q,e}})};
+B.plansza.u=(o,t)=>{plUpd(o,t);
+ if(o.uhw){o.uhw.forEach(s=>blurIn(s,t,+s.dataset.t-.03,{d:.18,b0:10,s0:1}));o.bar.style.transform=`scaleX(${E.out(P(t,o.uh.words[0].t,.6))})`}
+ o.bhs.forEach(({b,ws})=>ws.forEach(s=>{if(s.dataset.full!=null)typeIn(s,t,+s.dataset.t,.32);else blurIn(s,t,+s.dataset.t-.03,{d:.2})}));
+ o.reels.forEach(({r,e})=>{blurIn(e,t,r.t,{d:.4,y0:80,s0:.85,b0:12});e.style.transform+=` translateY(${Math.sin(t*1.4+r.x)*6}px)`});
+ o.cards.forEach(({c,e})=>{blurIn(e,t,c.t,{d:.45,y0:90,s0:.88,b0:12});e.style.transform+=` translateY(${Math.sin(t*1.2)*5}px)`});
+ o.irs.forEach(({r,e})=>blurIn(e,t,r.t,{d:.3,x0:-60,s0:1,b0:12}));
+ o.eqs.forEach(({q,e})=>{blurIn(e,t,q.t,{d:.25});if(q.count){const p=E.out(P(t,q.count.t,q.count.d||.7));e.textContent=(q.pre||'')+Math.round(lerp(q.count.from||0,q.count.to,p)).toLocaleString('pl-PL')+(q.suf||'')}else e.innerHTML=q.html})};
+function cardHTML(c){if(c.kind==='brand')return `<div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 20% 0%,#2A2AA8 0%,#0D1130 60%)"></div>
+ <div style="position:absolute;left:40px;top:40px;width:96px;height:96px;border-radius:26px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff">${svg('sparkles').replace('<svg','<svg style="width:56px;height:56px;stroke-width:2.2"')}</div>
+ <div style="position:absolute;left:40px;right:40px;top:170px;font:900 70px Inter;letter-spacing:-.05em;color:#fff;line-height:.95">${c.title}</div>
+ <div style="position:absolute;left:40px;right:40px;top:${c.subY||330}px;font:500 34px Inter;color:#AEB3E8">${c.sub||''}</div>
+ ${(c.rows||[]).map((r,i)=>`<div style="position:absolute;left:40px;right:40px;top:${(c.rowsY||420)+i*74}px;display:flex;align-items:center;gap:18px;font:700 34px Inter;color:#fff"><span style="width:40px;height:40px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center">${svg('check').replace('<svg','<svg style="width:26px;height:26px;stroke-width:3.4"')}</span>${r}</div>`).join('')}
+ ${c.price?`<div style="position:absolute;right:40px;bottom:40px;padding:14px 30px;border-radius:12px;background:#fff;color:#0B0D24;font:900 54px Inter;letter-spacing:-.04em">${c.price}</div>`:''}`;
+ if(c.kind==='product')return `<div style="position:absolute;inset:0;background:linear-gradient(160deg,#F4F5FF,#D9DCFF)"></div>
+ ${c.img?`<img src="${c.img}" style="position:absolute;left:0;right:0;top:0;width:100%;height:${c.imgH||300}px;object-fit:cover">`:''}
+ <div style="position:absolute;left:30px;right:30px;top:${(c.imgH||300)+26}px;font:900 50px Inter;letter-spacing:-.045em;color:#0B0D24;line-height:.98">${c.title}</div>
+ <div style="position:absolute;left:30px;top:${(c.imgH||300)+150}px;font:500 28px Inter;color:#4A4F80">${c.sub||''}</div>
+ ${c.price?`<div style="position:absolute;right:26px;bottom:26px;padding:12px 26px;border-radius:12px;background:var(--blue);color:#fff;font:900 46px Inter;letter-spacing:-.03em">${c.price}</div>`:''}`;
+ return ''}
+B.tracker=(o)=>{o.items=o.items.map((it,i)=>{const e=el('div','tr',null,`<div class="n">${i+1}</div><div class="t">${it.text}</div><div class="ck">${svg('check')}</div>`);
+  e.style.left=(o.x||70)+'px';e.style.top=(o.y+i*(o.gap||112))+'px';return {it,e}})};
+B.tracker.u=(o,t)=>{o.items.forEach(({it,e},i)=>{blurIn(e,t,it.t,{d:.32,x0:-80,s0:1,b0:12});const ck=e.querySelector('.ck');const done=(o.items[i+1]&&t>=o.items[i+1].it.t)||(o.doneT&&t>=o.doneT);
+  ck.style.opacity=done?1:0;ck.style.transform=`scale(${done?1:.4})`})};
+B.irows=(o)=>{o.rs=o.rows.map(r=>{const e=el('div','ir',null,`<div class="ic" style="background:${r.bad?'#E0483A':'var(--blue)'}">${svg(r.icon)}</div><div class="tx" style="font-size:${r.fs||58}px;text-shadow:0 4px 14px rgba(0,0,0,.5)">${r.html}</div>`);Object.assign(e.style,{left:(r.x||90)+'px',top:r.y+'px'});return {r,e}})};
+B.irows.u=(o,t)=>{o.rs.forEach(({r,e})=>blurIn(e,t,r.t,{d:.3,x0:-60,s0:1,b0:12}))};
+B.cta=(o)=>{const e=el('div','cta',null,o.text);e.style.top=(o.y-40)+'px';e.style.left='0';o.e=e;requestAnimationFrame(()=>{});const w=e.getBoundingClientRect().width;e.style.left=(540-w/2)+'px'};
+B.cta.u=(o,t)=>{blurIn(o.e,t,o.t0,{d:.25,s0:1.2});o.e.style.transform+=` scale(${t>o.t0+.5?1+.025*Math.max(0,Math.sin((t-o.t0)*4)):1})`};
+/* ---------- captions ---------- */
+let lastKey=null;
+function lines(words){const out=[];let cur=[],len=0;
+ words.forEach(w=>{const L=w.d.length;if(cur.length&&(len+L>11||w.h==1&&!cur.every(x=>x.h==1)||cur.some(x=>x.h==1)&&w.h!=1||w.h==2&&cur.some(x=>x.h!=2))){out.push(cur);cur=[];len=0}cur.push(w);len+=L+1});
+ if(cur.length)out.push(cur);return out}
+function caps(spec,t){const box=document.getElementById('caps');
+ const hide=spec.items.some(o=>o.hideCaps&&t>=o.t0&&t<o.t1);
+ let bi=-1;for(let i=0;i<spec.caps.length;i++){if(t>=spec.caps[i].t0-.03)bi=i;else break}
+ if(hide||bi<0){box.style.visibility='hidden';return}box.style.visibility='visible';
+ const ov=spec.items.find(o=>o.capY&&t>=o.t0&&t<o.t1);const capY=ov?ov.capY:spec.capY;
+ const b=spec.caps[bi];if(lastKey!==bi){lastKey=bi;box.innerHTML='';
+  lines(b.words).forEach(l=>{const ln=el('span','ln',box);l.forEach(w=>{const s=el('span','w'+(w.h==1?' box':w.h==2?' ser':''),ln,w.d);s.dataset.t=w.t;if(w.h==2)s.dataset.full=w.d})})}
+ box.style.top='0px';const hh=box.getBoundingClientRect().height;box.style.top=(capY*H-hh/2)+'px';
+ box.querySelectorAll('.w').forEach(s=>{if(s.dataset.full!=null){typeIn(s,t,+s.dataset.t,.3)}else blurIn(s,t,+s.dataset.t-.04,{d:.17,b0:18,s0:1.15})})}
+/* ---------- main ---------- */
+let SPEC=null;
+window.init=(spec)=>{SPEC=spec;spec.items.forEach(o=>B[o.type](o));const c=el('div','');c.id='caps';return true};
+window.seek=(t)=>{SPEC.items.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const nodes=[o.e,...(o.items||[]).map(x=>x.e),...(o.rs||[]).map(x=>x.e)].filter(Boolean);
+ nodes.forEach(n=>n.style.display=on?'':'none');if(on)B[o.type].u(o,t)});caps(SPEC,t);return true};
+</script></body></html>
