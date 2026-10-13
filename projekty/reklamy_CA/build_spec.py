@@ -125,7 +125,7 @@ SC8 = [
               dict(icon="compass", ang=90, t=26.32, label="Kierunek")])),
     # 3: krok 3+4 – strona sprzedażowa, zakup, treści i reklamy
     dict(type="phone", t0=32.2, t1=39.98, cap=dict(mode="dark", y=0.885), a=dict(
-        cy=780, buildT=33.85, buyT=35.72, notifT1=36.9,
+        cy=780, buildT=33.2, buyT=35.72, notifT1=36.9,
         ads=[dict(icon="clapperboard", x=175, y=560, t=37.5, rot=-8), dict(icon="megaphone", x=905, y=520, t=38.06, rot=7),
              dict(icon="video", x=905, y=1080, t=38.5, rot=-5)],
         people=[dict(x=170, y=1060, t=39.3), dict(x=250, y=1180, t=39.42)])),
@@ -189,8 +189,8 @@ SC9 = [
         sats=[dict(icon="wallet", ang=-140, t=20.22, label="Planer budżetu"),
               dict(icon="chef-hat", ang=-40, t=23.18, label="Proste przepisy"),
               dict(icon="file-user", ang=90, t=26.36, label="Szablon CV")])),
-    dict(type="checklist", t0=40.08, t1=49.46, cap=dict(mode="hide"), a=dict(cy=900, rowH=200, connector=True, items=[
-        dict(icon="lightbulb", text="Pomysł na produkt cyfrowy", t=41.62),
+    dict(type="checklist", t0=40.95, t1=49.46, cap=dict(mode="hide"), a=dict(cy=900, rowH=200, connector=True, items=[
+        dict(icon="lightbulb", text="Pomysł na produkt cyfrowy", t=41.26),
         dict(icon="sparkles", text="Stworzenie go z AI", t=43.32),
         dict(icon="layout-template", text="Cała strona sprzedażowa", t=44.96),
         dict(icon="trending-up", text="Sprzedaż z pomocą AI", t=47.96)])),
@@ -200,7 +200,7 @@ OV9 = [
     dict(type="pills", t0=34.9, t1=37.95, a=dict(items=[
         dict(text="Bez pisania od zera", icon="pen-line", x=540, y=1420, t=35.18, cls="white"),
         dict(text="Bez pokazywania twarzy", icon="user", x=540, y=1530, t=36.76, cls="white")])),
-    dict(type="brand", t0=39.0, t1=40.08, a=dict(y=1420)),
+    dict(type="brand", t0=39.0, t1=40.95, a=dict(y=1420)),
     dict(type="flow", t0=52.3, t1=54.85, a=dict(items=[
         dict(icon="message-square-dashed", x=290, y=1450, t=52.46, label="Pusty czat"),
         dict(x=540, y=1450, t=53.2), dict(icon="package", x=790, y=1450, t=53.52, label="Gotowy produkt", dark=True)])),
