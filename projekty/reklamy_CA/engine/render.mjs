@@ -20,7 +20,7 @@ async function worker(k) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   page.on('pageerror', e => console.error('PAGEERR', e.message));
   await page.addInitScript(ic => { window.ICONS = ic; }, icons);
-  await page.goto('file://' + path.join(here, 'overlay.html'));
+  await page.goto('file://' + (opt('--page') ? path.resolve(opt('--page')) : path.join(here, 'overlay.html')));
   await page.evaluate(async () => { await document.fonts.ready; });
   await page.evaluate(s => window.init(s), spec);
   await page.evaluate(async () => { await document.fonts.ready; });
