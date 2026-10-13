@@ -1,0 +1,209 @@
+<title>Video Review Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: editor review desk — player left, notes rail right; stacks on phones. */
+:root{
+  --bg:#F3F6F4; --panel:#FFFFFF; --line:#DCE5E0; --fg:#0D2119; --muted:#5B7268;
+  --accent:#0E4D3A; --accent-2:#1F7A5A; --accent-soft:#E2F0E9; --mark:#E0483A; --done:#7C8F86;
+  --stage:#0A120F;
+  --f-display:"Inter Tight",Inter,system-ui,sans-serif; --f-body:Inter,system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1411; --panel:#111D18; --line:#22332B; --fg:#E6F0EB; --muted:#8FA59B;
+  --accent:#4FC596; --accent-2:#79D8AE; --accent-soft:#16302A; --mark:#FF6B5C; --done:#5E7268; --stage:#050907; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1411; --panel:#111D18; --line:#22332B; --fg:#E6F0EB; --muted:#8FA59B;
+  --accent:#4FC596; --accent-2:#79D8AE; --accent-soft:#16302A; --mark:#FF6B5C; --done:#5E7268; --stage:#050907; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:20px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+h1{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;margin:0}
+.sub{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font:600 14px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:8px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.tab .n{font-family:var(--f-mono);font-size:11px;margin-left:6px;opacity:.75}
+.grid{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.player{display:flex;flex-direction:column;gap:10px;min-width:0}
+.stage{position:relative;background:var(--stage);border-radius:18px;overflow:hidden;aspect-ratio:9/16;max-width:100%;max-height:78vh;margin:0 auto;width:100%}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.hit{position:absolute;inset:0;cursor:crosshair}
+.dot{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;background:var(--mark);box-shadow:0 2px 10px rgba(0,0,0,.5);pointer-events:none;
+  display:flex;align-items:center;justify-content:center;font:700 11px var(--f-mono);color:#fff}
+.dot.pending{animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.25)}}
+@media (prefers-reduced-motion:reduce){.dot.pending{animation:none}}
+.empty-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9fb3aa;text-align:center;padding:24px;font-size:14px}
+.controls{display:flex;align-items:center;gap:10px}
+.btn{font:600 14px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:10px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.tab:focus-visible,textarea:focus-visible,.note:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+.time{font:500 13px var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums;min-width:96px}
+.bar{position:relative;height:30px;flex:1;cursor:pointer;touch-action:none}
+.bar .track{position:absolute;left:0;right:0;top:13px;height:4px;border-radius:4px;background:var(--line)}
+.bar .fill{position:absolute;left:0;top:13px;height:4px;border-radius:4px;background:var(--accent)}
+.bar .mk{position:absolute;top:6px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:var(--mark)}
+.bar .mk.done{background:var(--done)}
+.compose{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.compose .hint{font-size:13px;color:var(--muted)}
+.compose .hint b{color:var(--fg);font-family:var(--f-mono);font-weight:500}
+textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.notes{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.notes h2{font:700 16px var(--f-display);margin:0;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.notes h2 span{font:500 12px var(--f-mono);color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:8px}
+.note{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.note.active{border-color:var(--accent-2)}
+.note .tc{font:500 13px var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums;padding-top:1px}
+.note .txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.note .meta{grid-column:2;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+.chip{font:600 11px var(--f-display);letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 8px;background:var(--accent-soft);color:var(--accent)}
+.chip.open{background:color-mix(in srgb,var(--mark) 14%,transparent);color:var(--mark)}
+.reply{grid-column:2;border-left:3px solid var(--accent-2);padding:4px 0 4px 10px;font-size:14px;color:var(--fg)}
+.reply small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.note.done .txt{color:var(--muted);text-decoration:line-through}
+.link{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;padding:0;text-decoration:underline}
+.blank{color:var(--muted);font-size:14px;padding:12px 4px}
+.status{font-size:13px;color:var(--muted);min-height:18px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Video Review Studio</h1>
+      <div class="sub">Zatrzymaj w miejscu, kliknij w kadr i wpisz uwagę. Claude czyta uwagi razem z czasem i odpisuje pod każdą.</div>
+    </div>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Filmy"></div>
+  </header>
+
+  <div class="grid">
+    <section class="player">
+      <div class="stage" id="stage">
+        <video id="vid" playsinline preload="metadata"></video>
+        <div class="hit" id="hit" aria-label="Kliknij w kadr, żeby zaznaczyć miejsce uwagi"></div>
+        <div class="empty-stage" id="emptyStage">Tu pojawi się film do przeglądu, gdy Claude go wgra.</div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="play" aria-label="Odtwórz">▶</button>
+        <div class="bar" id="bar"><div class="track"></div><div class="fill" id="fill"></div><div id="marks"></div></div>
+        <span class="time" id="time">0:00.0 / 0:00</span>
+      </div>
+      <div class="compose">
+        <div class="hint" id="hint">Uwaga przy <b id="atTime">0:00.0</b>. Kliknięcie w kadr dodaje kropkę (opcjonalnie).</div>
+        <textarea id="txt" placeholder="Np. animacja za krótka, przytrzymaj ją do końca zdania"></textarea>
+        <div class="row">
+          <button class="btn primary" id="save">Zapisz uwagę</button>
+          <button class="btn" id="clearDot">Usuń kropkę</button>
+          <span class="status" id="status"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2>Uwagi <span id="count">0 otwartych</span></h2>
+      <div class="list" id="list"><div class="blank">Brak uwag do tego filmu. Pierwsza pojawi się tutaj po kliknięciu „Zapisz uwagę”.</div></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const vid=$('vid'), hit=$('hit'), stage=$('stage');
+let db=null, me=null, users=null;
+let videos=[], cur=null, notes=[], pending=null, activeId=null, unsubNotes=null;
+const fmt=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(1)};
+const fmtShort=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=Math.floor(t-m*60);return m+':'+(s<10?'0':'')+s};
+
+function renderTabs(){
+  const tabs=$('tabs');tabs.innerHTML='';
+  videos.forEach(v=>{const b=document.createElement('button');b.className='tab';b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',cur&&cur.id===v.id?'true':'false');b.textContent=v.title||v.id;
+    if(v.ver){const n=document.createElement('span');n.className='n';n.textContent='v'+v.ver;b.appendChild(n)}
+    b.onclick=()=>select(v.id);tabs.appendChild(b)});
+}
+function select(id){
+  cur=videos.find(v=>v.id===id)||null; renderTabs(); pending=null; activeId=null;
+  $('emptyStage').hidden=!!cur;
+  if(cur){const src=cur.url||('/_blob/'+cur.asset); if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}}
+  try{localStorage.setItem('vr-cur',id)}catch(e){}
+  if(unsubNotes){unsubNotes();unsubNotes=null}
+  notes=[];renderNotes();
+  if(db&&cur){unsubNotes=db.collection('notes').where('video','==',cur.id).onSnapshot(s=>{
+    notes=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.t-b.t);renderNotes()},e=>status('Nie udało się wczytać uwag: '+e.message))}
+}
+function renderMarks(){
+  const d=vid.duration||cur?.dur||0;const m=$('marks');m.innerHTML='';if(!d)return;
+  notes.forEach(n=>{const k=document.createElement('div');k.className='mk'+(n.status==='done'?' done':'');k.style.left=(n.t/d*100)+'%';m.appendChild(k)});
+}
+function renderDots(){
+  stage.querySelectorAll('.dot').forEach(e=>e.remove());
+  const t=vid.currentTime;
+  notes.forEach((n,i)=>{if(n.x==null)return;if(Math.abs(n.t-t)<0.6||n.id===activeId){const d=document.createElement('div');d.className='dot';d.style.left=(n.x*100)+'%';d.style.top=(n.y*100)+'%';d.textContent=i+1;stage.appendChild(d)}});
+  if(pending&&pending.x!=null){const d=document.createElement('div');d.className='dot pending';d.style.left=(pending.x*100)+'%';d.style.top=(pending.y*100)+'%';stage.appendChild(d)}
+}
+async function renderNotes(){
+  const list=$('list');list.innerHTML='';
+  const open=notes.filter(n=>n.status!=='done').length;$('count').textContent=open+(open===1?' otwarta':' otwartych');
+  if(!notes.length){list.innerHTML='<div class="blank">Brak uwag do tego filmu. Pierwsza pojawi się tutaj po kliknięciu „Zapisz uwagę”.</div>';renderMarks();renderDots();return}
+  let profiles={};try{if(users){const ids=[...new Set(notes.map(n=>n.author).filter(Boolean))];profiles=await users.profiles(ids)}}catch(e){}
+  notes.forEach((n,i)=>{
+    const el=document.createElement('div');el.className='note'+(n.status==='done'?' done':'')+(n.id===activeId?' active':'');el.tabIndex=0;
+    const tc=document.createElement('div');tc.className='tc';tc.textContent=(i+1)+'. '+fmt(n.t);
+    const tx=document.createElement('div');tx.className='txt';tx.textContent=n.text||'';
+    const meta=document.createElement('div');meta.className='meta';
+    const chip=document.createElement('span');chip.className='chip '+(n.status==='done'?'':'open');chip.textContent=n.status==='done'?'poprawione':'do poprawy';meta.appendChild(chip);
+    const who=document.createElement('span');who.textContent=(profiles[n.author]&&profiles[n.author].name)||'';if(who.textContent)meta.appendChild(who);
+    if(n.version){const v=document.createElement('span');v.textContent='wersja '+n.version;meta.appendChild(v)}
+    const tg=document.createElement('button');tg.className='link';tg.textContent=n.status==='done'?'Otwórz ponownie':'Oznacz jako poprawione';
+    tg.onclick=async ev=>{ev.stopPropagation();try{await db.collection('notes').doc(n.id).update({status:n.status==='done'?'open':'done'})}catch(e){status('Nie zapisano: '+e.message)}};meta.appendChild(tg);
+    const del=document.createElement('button');del.className='link';del.textContent='Usuń';
+    del.onclick=async ev=>{ev.stopPropagation();if(del.dataset.sure){try{await db.collection('notes').doc(n.id).delete()}catch(e){status('Nie usunięto: '+e.message)}}else{del.dataset.sure=1;del.textContent='Na pewno usunąć?'}};meta.appendChild(del);
+    el.append(tc,tx,meta);
+    if(n.reply){const r=document.createElement('div');r.className='reply';r.innerHTML='<small>Claude</small>';r.appendChild(document.createTextNode(n.reply));el.appendChild(r)}
+    const go=()=>{activeId=n.id;vid.pause();vid.currentTime=n.t;renderNotes()};
+    el.onclick=go;el.onkeydown=e=>{if(e.key==='Enter')go()};
+    list.appendChild(el)});
+  renderMarks();renderDots();
+}
+function status(s){$('status').textContent=s}
+function tick(){const d=vid.duration||0;$('time').textContent=fmt(vid.currentTime)+' / '+fmtShort(d);$('fill').style.width=(d?vid.currentTime/d*100:0)+'%';
+  $('atTime').textContent=fmt(pending?pending.t:vid.currentTime);$('play').textContent=vid.paused?'▶':'❚❚';$('play').setAttribute('aria-label',vid.paused?'Odtwórz':'Pauza');renderDots()}
+vid.addEventListener('timeupdate',tick);vid.addEventListener('play',tick);vid.addEventListener('pause',tick);vid.addEventListener('loadedmetadata',()=>{tick();renderMarks()});
+(function loop(){if(!vid.paused)tick();requestAnimationFrame(loop)})();
+$('play').onclick=()=>{vid.paused?vid.play():vid.pause()};
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA')return;if(e.code==='Space'){e.preventDefault();vid.paused?vid.play():vid.pause()}
+  if(e.key==='ArrowLeft'){vid.currentTime=Math.max(0,vid.currentTime-(e.shiftKey?1:1/30))}if(e.key==='ArrowRight'){vid.currentTime+=e.shiftKey?1:1/30}});
+const seekFrom=e=>{const r=$('bar').getBoundingClientRect();const p=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));if(vid.duration)vid.currentTime=p*vid.duration};
+$('bar').addEventListener('pointerdown',e=>{seekFrom(e);$('bar').setPointerCapture(e.pointerId)});
+$('bar').addEventListener('pointermove',e=>{if(e.buttons)seekFrom(e)});
+function videoBox(){const r=stage.getBoundingClientRect();const vw=vid.videoWidth||9,vh=vid.videoHeight||16;const s=Math.min(r.width/vw,r.height/vh);const w=vw*s,h=vh*s;return {r,x:(r.width-w)/2,y:(r.height-h)/2,w,h}}
+hit.addEventListener('click',e=>{if(!cur)return;vid.pause();const b=videoBox();const x=(e.clientX-b.r.left-b.x)/b.w,y=(e.clientY-b.r.top-b.y)/b.h;
+  if(x<0||x>1||y<0||y>1)return;pending={t:vid.currentTime,x:+x.toFixed(4),y:+y.toFixed(4)};tick();$('txt').focus()});
+$('clearDot').onclick=()=>{pending=null;tick()};
+$('save').onclick=async()=>{const text=$('txt').value.trim();if(!text){status('Wpisz treść uwagi.');return}
+  if(!db){status('Zapis niedostępny w tym widoku. Zaloguj się w claude.ai.');return}if(!cur)return;
+  const n={video:cur.id,t:+(pending?pending.t:vid.currentTime).toFixed(2),x:pending?pending.x:null,y:pending?pending.y:null,text,status:'open',version:cur.ver||1,created:new Date().toISOString(),author:me||null};
+  $('save').disabled=true;status('Zapisuję…');
+  try{await db.collection('notes').add(n);$('txt').value='';pending=null;status('Zapisano przy '+fmt(n.t)+'.');tick()}catch(e){status('Nie zapisano: '+(e.message||e.code))}
+  $('save').disabled=false};
+
+(async()=>{
+  db=await claude.use('db');
+  if(!db){$('emptyStage').textContent='Zaloguj się w claude.ai, żeby zobaczyć filmy i dodawać uwagi.';return}
+  try{users=await claude.use('user');if(users){me=await users.id()}}catch(e){}
+  db.collection('videos').onSnapshot(s=>{
+    videos=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));
+    let want=null;try{want=localStorage.getItem('vr-cur')}catch(e){}
+    const keep=cur&&videos.find(v=>v.id===cur.id);
+    if(keep){cur=keep;const src=cur.url||('/_blob/'+cur.asset);if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}renderTabs()}
+    else if(videos.length)select((videos.find(v=>v.id===want)||videos[0]).id);
+    else renderTabs();
+  },e=>status('Nie udało się wczytać filmów: '+e.message));
+})();
+</script>
