@@ -136,15 +136,15 @@ IT2 = [
         dict(t=30.12, y=1210, fs=70, html='<span style="font-family:Instrument Serif;font-style:italic;font-weight:400">miesięcznie</span>')]),
     dict(PL, t0=42.833, t1=45.033, bh=[dict(y=300, fs=80, words=pw([("Dlatego", 43.32, 0), ("stworzyłem", 43.64, 0)]))], cards=[
         dict(kind="brand", t=44.04, x=540, y=1000, w=860, h=640, title="Cyfrowy<br>Autopilot", sub="gotowy system z AI", subY=330, price="17 zł")]),
-    dict(type="tracker", t0=45.033, t1=57.5, x=70, y=1250, gap=104, doneT=56.9, items=[
+    dict(type="tracker", t0=45.033, t1=57.5, x=70, y=1390, gap=104, doneT=56.9, items=[
         dict(text="Pomysł, którego szukają", t=46.72), dict(text="Produkt z AI", t=49.62),
         dict(text="Strona sprzedażowa", t=50.98), dict(text="Filmiki i reklamy z AI", t=54.74)]),
     dict(type="irows", t0=58.6, t1=61.933, rows=[
-        dict(y=1200, t=58.66, icon="x", bad=True, html='bez bycia ekspertem'),
-        dict(y=1340, t=59.58, icon="x", bad=True, html='bez programowania'),
-        dict(y=1480, t=60.86, icon="x", bad=True, html='bez pokazywania twarzy')]),
+        dict(y=1390, t=58.66, icon="x", bad=True, html='bez bycia ekspertem'),
+        dict(y=1520, t=59.58, icon="x", bad=True, html='bez programowania'),
+        dict(y=1650, t=60.86, icon="x", bad=True, html='bez pokazywania twarzy')]),
     dict(type="cta", t0=62.48, t1=71.2, y=1500, text="Kliknij przycisk poniżej"),
 ]
 
 make("ads5", "ads5.mp4", "tr_ads5.json", FIX5, IT5, capY=0.5)
-make("ads2", "ads2.mp4", "tr_ads2.json", FIX2, IT2, extra_cuts=(4.167, 6.567), capY=0.5)
+make("ads2", "ads2.mp4", "tr_ads2.json", FIX2, IT2, extra_cuts=(4.167, 6.567), capY=0.6)

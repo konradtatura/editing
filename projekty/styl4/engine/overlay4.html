@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Style 4: plain caption layer after Konrad's reference (Poppins ExtraBold caps, 2-3 words, hard cuts, rare yellow emphasis) -->
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/poppins.css">
+<style>
+html,body{margin:0;background:transparent}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+#cap{position:absolute;left:50px;right:50px;text-align:center;transform:translateY(-50%);font-family:'Poppins',sans-serif;font-weight:800;
+ text-transform:uppercase;color:#fff;letter-spacing:-.005em;line-height:1.08;
+ text-shadow:0 0 3px rgba(0,0,0,.55),0 4px 10px rgba(0,0,0,.6),0 8px 30px rgba(0,0,0,.45)}
+#cap.n{font-size:64px}
+#cap.em{font-size:96px;color:#FFE600;line-height:1.02}
+</style></head><body><div id="stage"><div id="cap"></div></div>
+<script>
+let SPEC=null,last=-2;const H=1920;
+window.init=(s)=>{SPEC=s;return true};
+window.seek=(t)=>{const c=document.getElementById('cap');
+ const i=SPEC.caps.findIndex(b=>t>=b.t0-1e-3&&t<b.t1);
+ if(i!==last){last=i;if(i<0){c.style.visibility='hidden'}else{const b=SPEC.caps[i];c.className=b.em?'em':'n';c.innerHTML=b.html;c.style.visibility='visible'}}
+ if(i>=0){const ov=(SPEC.zones||[]).find(z=>t>=z.t0&&t<z.t1);c.style.top=((ov?ov.capY:SPEC.capY)*H)+'px'}
+ return true};
+</script></body></html>

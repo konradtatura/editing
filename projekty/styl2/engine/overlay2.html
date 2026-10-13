@@ -17,8 +17,11 @@ html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
 /* hero word */
 .hero{position:absolute;left:0;right:0;text-align:center}
 .hero .sm{font-weight:600;font-size:46px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)}
-.hero .bg{font-weight:900;letter-spacing:-.05em;line-height:.92;background:linear-gradient(180deg,#007A7C 0%,#9DC3F7 100%);
- -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.6)) drop-shadow(0 6px 20px rgba(0,0,0,.6))}
+.hero .bg{font-weight:900;letter-spacing:-.05em;line-height:.92}
+/* shadow lives on .bs (appear() owns .bg's filter); gradient restarts on every line via box-decoration-break */
+.hero .bs{filter:drop-shadow(0 0 2px rgba(0,0,0,.75)) drop-shadow(0 6px 10px rgba(0,0,0,.6)) drop-shadow(0 14px 44px rgba(0,0,0,.7))}
+.hero .bt{background:linear-gradient(180deg,var(--g1,#9DC3F7) 8%,var(--g2,#007A7C) 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;
+ -webkit-background-clip:text;background-clip:text;color:transparent}
 /* plansza */
 .pl{position:absolute;inset:0;background:var(--bg);overflow:hidden}
 .pl .c{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#D8F8FF 0%,#8FE2F0 30%,#3FB9D0 62%,#14879F 100%);filter:saturate(.85)}
@@ -65,7 +68,7 @@ function appear(e,t,t0,o={}){const d=o.d||.38,p=P(t,t0,d),pe=(o.ease||E.out)(p);
 /* ---------- builders ---------- */
 const B={};
 B.hero=(o)=>{const r=el('div','hero');r.style.top=(o.y*H)+'px';o.e=r;
- o.sm=o.small?el('div','sm',r,o.small):null;const b=el('div','bg',r,o.big);b.style.fontSize=o.size+'px';o.b=b;
+ o.sm=o.small?el('div','sm',r,o.small):null;const b=el('div','bg',r,`<div class="bs"><span class="bt">${o.big}</span></div>`);b.style.fontSize=o.size+'px';o.b=b;
  if(o.sub){o.s2=el('div','sm',r,o.sub)}};
 B.hero.u=(o,t)=>{if(o.sm)appear(o.sm,t,o.t0,{d:.25,y0:10});appear(o.b,t,o.bigT,{d:.45,s0:1.18,y0:0,b0:14,ease:E.out5});
  o.b.style.transform+=` scale(${1+.03*P(t,o.bigT,o.t1-o.bigT)})`;if(o.s2)appear(o.s2,t,o.subT||o.bigT+.2,{d:.3,y0:10})};
