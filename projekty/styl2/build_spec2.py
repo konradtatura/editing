@@ -164,7 +164,7 @@ IT10 = [
     step(2, 32.167, 34.6, [("Analiza", 33.38, 0), ("rynku", 33.94, 1), ("i", 34.1, 1), ("klientów", 34.2, 1)]),
     step(3, 37.633, 41.433, [("Produkt", 39.12, 0), ("cyfrowy", 39.40, 1)]),
     step(4, 41.433, 43.9, [("Strona", 42.48, 0), ("sprzedażowa", 43.40, 1)]),
-    dict(type="notif", t0=50.6, t1=52.733, y=330, title="Nowa sprzedaż", sub="Twój produkt cyfrowy", amount="+17 zł", icon="banknote"),
+    dict(type="notif", t0=50.6, t1=52.733, y=330, title="Nowa sprzedaż", sub="Twój produkt cyfrowy", amount="+79 zł", icon="banknote"),
     dict(type="hero", t0=57.4, t1=59.067, y=0.50, small="w najlepszym dniu", big="941", size=280, bigT=57.82, sub="e-booków", subT=58.3, hideCaps=True),
     dict(type="fan", t0=70.1, t1=73.4, x=300, y=1660, dx=230, w=270, h=370, cards=[
         dict(title="Moduł 1: Pomysł", sub="AI znajduje niszę", icon="lightbulb", bg="linear-gradient(160deg,#0F2A31,#0B1A1E)", ink="#fff", ink2="#8fb4bc", t=70.12),

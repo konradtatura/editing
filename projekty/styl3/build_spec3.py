@@ -48,6 +48,8 @@ def dur(p): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entrie
 def cuts(p): return json.loads(subprocess.run([sys.executable, os.path.join(HERE, "..", "reklamy_CA", "engine", "cuts.py"), p], capture_output=True, text=True).stdout)
 def pw(lst): return [{"d": w, "t": t, "h": h} for w, t, h in lst]
 STILL = lambda n: os.path.join(ST, "stills", n + ".jpg")
+def VID(n, vs=0.0):  # clip from Konrad's Drive, pre-extracted to a 30 fps JPG sequence in <WD>/../drive5/seq_<n>
+    d = os.path.join(os.path.dirname(WD), "drive5", "seq_" + n); return dict(vid=d, vn=len(os.listdir(d)), vs=vs)
 
 
 def make(name, src, trname, fixed, items, extra_cuts=(), capY=0.6, brolls=()):
@@ -112,14 +114,14 @@ FIX2 = ("~AI_slop.~ Na pewno widziałeś już te dziwne filmiki generowane przez
         "jak inni wykorzystują AI do zarabiania, zacznij wykorzystywać je ~dla_siebie.~")
 IT2 = [
     dict(PL, t0=0.8, t1=4.167, bh=[dict(y=300, fs=150, words=pw([("AI", 0.82, 0), ("slop", 0.9, 2)]))], reels=[
-        dict(img=STILL("aiimage_0"), x=250, y=1080, w=330, h=560, rot=-6, t=1.0),
-        dict(img=STILL("aiimage_1"), x=540, y=1020, w=330, h=560, rot=0, t=1.25),
-        dict(img=STILL("aiimage_2"), x=830, y=1080, w=330, h=560, rot=6, t=1.5)]),
+        dict(VID("aislop1"), x=250, y=1080, w=330, h=560, rot=-6, t=1.0),
+        dict(VID("aislop2"), x=540, y=1020, w=330, h=560, rot=0, t=1.25),
+        dict(VID("aislop3"), x=830, y=1080, w=330, h=560, rot=6, t=1.5)]),
     dict(PL, t0=12.367, t1=15.567, uh=dict(y=600, bar=820, words=pw([("Akurat", 12.48, 0), ("tutaj", 12.74, 0), ("chodzi", 13.04, 0), ("o", 13.26, 0), ("coś", 13.40, 0), ("prostszego:", 13.56, 0)])),
-         bh=[dict(y=820, fs=130, words=pw([("AI", 14.50, 0), ("+", 14.70, 0), ("produkty", 14.88, 1), ("cyfrowe", 15.14, 2)]))]),
+         bh=[dict(y=820, fs=130, words=pw([("AI", 14.30, 0), ("+", 14.42, 0), ("produkty", 14.54, 1), ("cyfrowe", 14.70, 2)]))]),
     dict(PL, t0=15.567, t1=22.5, uh=dict(y=110, bar=380, words=pw([("Na", 15.66, 0), ("przykład:", 15.78, 0)])), bh=[dict(y=230, fs=90, words=pw([("Postać", 16.26, 0), ("AI", 16.58, 1)])),
                                    dict(y=340, fs=90, words=pw([("triki", 18.60, 0), ("w", 19.34, 2), ("kuchni", 19.44, 2)]))],
-         reels=[dict(img=STILL("cooking_0"), x=330, y=1050, w=420, h=720, rot=-4, t=15.8)],
+         reels=[dict(VID("aikicthen"), x=330, y=1050, w=420, h=720, rot=-4, t=15.8)],
          cards=[dict(kind="product", t=20.44, x=770, y=1180, w=420, h=560, rot=5, img=STILL("cooking_1"), imgH=270,
                      title="Poradnik AI:<br>sekrety kuchni", sub="e-book PDF", price="49 zł")]),
     dict(PL, t0=22.5, t1=26.533, noFlash=True, uh=dict(y=420, bar=520, words=pw([("Teraz", 22.72, 0), ("sobie", 22.86, 0), ("policzmy:", 23.04, 0)])), eq=[
