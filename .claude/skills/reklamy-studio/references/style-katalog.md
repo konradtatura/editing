@@ -72,7 +72,7 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Lista po stronie bez twarzy (u Konrada po prawej, x 600). Teksty punktów od Konrada, pierwsza litera wielka (jak w oryginale).
 
 ## Styl 8: tierlista (format znajomego „AI SIDE HUSTLES TIER LIST”)
-- Kod: `projekty/styl8/`. Kompozycja: ciemne tło na całym kadrze (ffmpeg), wideo Konrada w zaokrąglonym kadrze 1032×560 (radius 40, maska PNG) na x 24, y 1150, wyżej niż dół ekranu (opis i konto na IG zasłaniają dół). Napis w połowie między tacką a kamerką (pigułka top 1054).
+- Kod: `projekty/styl8/`. Kompozycja: ciemne tło na całym kadrze (ffmpeg), wideo Konrada w zaokrąglonym kadrze 1032×560 (radius 40, maska PNG) na x 24, y 1150, wyżej niż dół ekranu (opis i konto na IG zasłaniają dół). Napis w połowie między tacką a kamerką (pigułka top 1054). Face tracking w kadrze: `facecrop.py IN OUT 1032 560 0.53` (YuNet, wygładzanie 0.6 s + martwa strefa 3%).
 - Góra (do 1212 px): ciemny panel `#29282D→#1D1C21`, biała pigułka z tytułem (Inter 900, czarne + niebieski gradient `#42BDFF→#0092FF`), rzędy S–F
   (etykiety `#FF8A7B #FFC079 #FFDA76 #FEF575 #B9F078 #73EA7B`, paski `#100F12`), tacka z kafelkami-ikonami (emoji Apple na białym kafelku).
 - Łapka przenosi kafelek do rzędu (0,6 s, ease), ląduje na słowie z poziomem, obok pojawia się podpis. Tacka się dosuwa.
