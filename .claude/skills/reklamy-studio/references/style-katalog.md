@@ -67,8 +67,8 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 
 ## Styl 7: „8 things you must keep PRIVATE” (format znajomego, „8 rzeczy”)
 - Kod: `projekty/styl7/` (`build_spec7.py`, `engine/overlay7.html`), kompozycja ffmpeg overlay. Konrad dostarcza film już w czarnym kadrze (pasek obrazu w środku).
-- Biały tytuł nad paskiem (Poppins 500, 54 px, wyrównany do lewej), np. „8 rzeczy, które zachowaj dla SIEBIE” (słowo-klucz wersalikami).
-- Lista 1.–8. na obrazie (Poppins 500: cyfry 46 px, tekst 38 px, co 72 px, lekki cień). Wszystkie numery od początku, tekst punktu pojawia się twardo na początku zdania.
+- Bez tytułu nad paskiem (Konrad kazał usunąć).
+- Lista 1.–8. na obrazie (Poppins 500: cyfry 32 px, tekst 27 px, co 68 px, lekki cień; Konrad: o 30% mniejsza niż 1:1). Wszystkie numery od początku, tekst punktu pojawia się twardo na początku zdania.
 - Lista po stronie bez twarzy (u Konrada po prawej, x 600). Teksty punktów od Konrada, pierwsza litera wielka (jak w oryginale).
 
 ## Wybór stylu do nowej reklamy
