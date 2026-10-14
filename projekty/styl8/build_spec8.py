@@ -37,8 +37,8 @@ for i, c in enumerate(ch):
     t1 = nxt if nxt - c[-1]["e"] < 0.7 else min(nxt, c[-1]["e"] + 0.35)
     caps.append(dict(t0=round(max(0, c[0]["t"] - 0.03), 3), t1=round(t1, 3), text=" ".join(w["d"] for w in c).rstrip(",.:")))
 # original 720x1280 x1.5: panel to y 808, title pill y 115-172, rows 64 px every 72 px from y 198, labels x 47-113, bars x 122-672, tray ~y 640
-layout = dict(panelH=1212, titleY=150, titleFs=56, rowsY=282, rowH=96, pitch=108, labX=70, labW=99, barX=183, marginR=72,
-              slot=84, nameFs=32, tray=72, trayGap=14, trayY=950, capY=1112, dragDur=0.6)
+layout = dict(panelH=0, titleY=150, titleFs=56, rowsY=282, rowH=96, pitch=108, labX=70, labW=99, barX=183, marginR=72,
+              slot=84, nameFs=32, tray=72, trayGap=14, trayY=950, capY=1054, dragDur=0.6)
 spec = dict(dur=round(dur, 3), fps=30, title="TIERLISTA <b>AI BIZNESÓW</b>", layout=layout, hand=os.path.join(EM, "1f446.png"),
             tiers=[dict(k=k, c=c) for k, c in TIERS], caps=caps,
             items=[dict(name=n, img=os.path.join(EM, e + ".png"), tier=tr, t=t, tray=o) for n, e, tr, t, o in ITEMS],
