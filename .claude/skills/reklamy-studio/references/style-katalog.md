@@ -65,6 +65,12 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Napisy (wersja Konrada): Inter Bold 64 px, biel, letter-spacing -50 (-0.05em), czarny cień, zwykła wielkość liter, 2–3 słowa, twarde przełączanie, nad siatką.
 - U Konrada: napisy na 1192 px, siatka od 1268 px (usta ok. 53% wysokości).
 
+## Styl 7: „8 things you must keep PRIVATE” (format znajomego, „8 rzeczy”)
+- Kod: `projekty/styl7/` (`build_spec7.py`, `engine/overlay7.html`), kompozycja ffmpeg overlay. Konrad dostarcza film już w czarnym kadrze (pasek obrazu w środku).
+- Biały tytuł nad paskiem (Poppins 500, 54 px, wyrównany do lewej), np. „8 rzeczy, które zachowaj dla SIEBIE” (słowo-klucz wersalikami).
+- Lista 1.–8. na obrazie (Poppins 500: cyfry 46 px, tekst 38 px, co 72 px, lekki cień). Wszystkie numery od początku, tekst punktu pojawia się twardo na początku zdania.
+- Lista po stronie bez twarzy (u Konrada po prawej, x 600). Teksty punktów od Konrada, pierwsza litera wielka (jak w oryginale).
+
 ## Wybór stylu do nowej reklamy
 Konrad zwykle mówi, który styl. Jeśli nie: gadająca głowa + framework/kroki → styl 3; gadająca głowa, ciepło, b-rolle → styl 2;
 prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4. Nowy wzór = nowy styl (`nowy-styl.md`).

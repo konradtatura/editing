@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Style 7: "8 things you must keep PRIVATE" (friend's reel). Black frame with the video band in the middle, white title above the band,
+     numbered list on the band: all numbers visible from the start, each item's text appears (hard cut) when its sentence starts. -->
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/fmt6.css">
+<style>
+html,body{margin:0;background:transparent}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:'Poppins',sans-serif;color:#fff}
+#title{position:absolute;font-weight:500;white-space:nowrap;letter-spacing:-.005em}
+.row{position:absolute;display:flex;align-items:baseline;white-space:nowrap;text-shadow:0 2px 6px rgba(0,0,0,.55)}
+.row .n{font-weight:500;margin-right:.18em}
+.row .t{font-weight:500}
+</style></head><body><div id="stage"><div id="title"></div></div>
+<script>
+let SPEC=null;
+window.init=(s)=>{SPEC=s;const L=s.layout,st=document.getElementById('stage'),ti=document.getElementById('title');
+ ti.innerHTML=s.title;Object.assign(ti.style,{left:L.titleX+'px',top:L.titleY+'px',fontSize:L.titleFs+'px'});
+ s.items.forEach((it,i)=>{const r=document.createElement('div');r.className='row';
+  r.innerHTML=`<span class="n" style="font-size:${L.numFs}px">${i+1}.</span><span class="t" style="font-size:${L.fs}px">${it.text}</span>`;
+  Object.assign(r.style,{left:L.listX+'px',top:(L.listY+i*L.pitch)+'px'});st.appendChild(r);it.t_el=r.children[1]});
+ return true};
+window.seek=(t)=>{SPEC.items.forEach(it=>it.t_el.style.visibility=t>=it.t-1e-3?'visible':'hidden');return true};
+</script></body></html>
