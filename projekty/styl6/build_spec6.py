@@ -8,7 +8,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 norm = lambda t: re.sub(r"[^\w]", "", t.lower())
 WEAK = {"i", "w", "z", "na", "do", "a", "o", "że", "się", "to", "nie", "co", "ale", "ten", "niż"}
 
-TITLE = "10/10 nawyków, których<br>nikt Cię nie uczy"
+TITLE = ""  # Konrad: no title pill
 SCRIPT = ("10 na 10 prostych nawyków, których nikt Cię nie uczy, a zmienią Twoje życie. "
           "Ustawiaj budzik na godzinę, o której masz iść spać, a nie wstawać. Przestań oglądać wiadomości. "
           "Naucz się mówić nie częściej niż tak. Przestań obserwować ludzi na Instagramie, z którymi nawet nie przywitałbyś się na ulicy. "
@@ -18,6 +18,8 @@ SCRIPT = ("10 na 10 prostych nawyków, których nikt Cię nie uczy, a zmienią T
 # point -> (emoji, first word of the point in SCRIPT order)  -- same emoji as the original where the habit matches
 POINTS = [("⏰", "Ustawiaj"), ("📺", "Przestań"), ("🚫", "Naucz"), ("📱", "Przestań"), ("💪", "Pamiętaj"),
           ("📈", "Inwestuj"), ("🤝", "Otaczaj"), ("📖", "Czytaj"), ("💡", "Zawsze"), ("😨", "Rób")]
+APPLE = os.path.join(HERE, "engine", "emoji_apple")  # Apple emoji PNGs (emoji-datasource-apple, 64 px), file = codepoint
+apple = lambda e: os.path.join(APPLE, "-".join(f"{ord(ch):x}" for ch in e if ord(ch) != 0xFE0F) + ".png")
 COLORS = ["#FFFFFF", "#FD0004", "#F9A901", "#ADFA01", "#03FC04", "#00FCAC", "#03A8F8", "#0500FA", "#A700FE", "#FC00A7"]
 
 
@@ -65,7 +67,7 @@ items, pos = [], next(i for i, t in enumerate(toks) if t["d"].rstrip(".,").lower
 for k, (emo, first) in enumerate(POINTS):
     j = next(i for i in range(pos, len(toks)) if toks[i]["d"].rstrip(".,") == first); pos = j + 1
     t = toks[j]["t"] - 0.05; c = [x for x in cuts if 0 <= t - x <= 0.3]
-    items.append(dict(emoji=emo, color=COLORS[k], t=round(c[-1] if c else t, 3)))
+    img = apple(emo); items.append(dict(emoji=emo, img=img if os.path.exists(img) else None, color=COLORS[k], t=round(c[-1] if c else t, 3)))
 # 1080x1920. Original (720x1280): title pill y 215-325, grid 534x164 at y 756, caption centre y 706. Here 6-7% lower (mouth sits lower).
 layout = dict(titleY=318, titleFs=50, gridY=1268, cellW=148, cellH=111, capY=1192)
 json.dump(dict(dur=round(dur, 3), fps=30, title=TITLE, layout=layout, items=items, caps=caps),

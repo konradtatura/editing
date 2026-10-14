@@ -2,6 +2,7 @@
 <!-- Style 6: "10/10" list format (friend's reel). White title pill on top, 2x5 grid of coloured numbers that turn into emoji
      when the point is said (number fades in 3 frames, emoji appears at full size), Anton caps captions above the grid. -->
 <link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/fmt6.css">
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
 <style>
 html,body{margin:0;background:transparent}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden}
@@ -16,18 +17,19 @@ html,body{margin:0;background:transparent}
 .cell .n{font-family:'Poppins',sans-serif;font-weight:600;font-size:76px;letter-spacing:-.03em;-webkit-text-stroke:3px #000;paint-order:stroke fill;
  text-shadow:0 4px 8px rgba(0,0,0,.55)}
 .cell .e{font-family:'Noto Color Emoji';font-size:76px;line-height:1}
+.cell .e img{width:68px;height:68px;image-rendering:auto}  /* Apple emoji PNG (64 px source) */
 .dia{position:absolute;width:14px;height:14px;background:#fff;transform:translate(-50%,-50%) rotate(45deg)}
-#cap{position:absolute;left:40px;right:40px;text-align:center;transform:translateY(-50%);font-family:'Anton',sans-serif;font-size:66px;
- color:#fff;text-transform:uppercase;letter-spacing:.005em;line-height:1.05;
+#cap{position:absolute;left:40px;right:40px;text-align:center;transform:translateY(-50%);font-family:'Inter',sans-serif;font-weight:700;font-size:64px;
+ color:#fff;letter-spacing:-.05em;line-height:1.05;
  text-shadow:0 0 4px rgba(0,0,0,.85),0 3px 8px rgba(0,0,0,.75),0 8px 26px rgba(0,0,0,.5)}
 </style></head><body><div id="stage"><div id="title"></div><div id="grid"></div><div id="cap"></div></div>
 <script>
 let SPEC=null,last=-2;const $=id=>document.getElementById(id);
 window.init=(s)=>{SPEC=s;const L=s.layout;
- const ti=$('title');ti.innerHTML=s.title;Object.assign(ti.style,{top:L.titleY+'px',fontSize:L.titleFs+'px'});
+ const ti=$('title');if(s.title){ti.innerHTML=s.title;Object.assign(ti.style,{top:L.titleY+'px',fontSize:L.titleFs+'px'})}else ti.style.display='none';
  const g=$('grid');Object.assign(g.style,{top:L.gridY+'px',gridTemplateColumns:`repeat(5,${L.cellW}px)`,gridTemplateRows:`repeat(2,${L.cellH}px)`});
  s.items.forEach((it,i)=>{const c=document.createElement('div');c.className='cell';
-  c.innerHTML=`<div class="n" style="color:${it.color}">${i+1}</div><div class="e">${it.emoji}</div>`;g.appendChild(c);it.n=c.children[0];it.e=c.children[1]});
+  c.innerHTML=`<div class="n" style="color:${it.color}">${i+1}</div><div class="e">${it.img?`<img src="${it.img}">`:it.emoji}</div>`;g.appendChild(c);it.n=c.children[0];it.e=c.children[1]});
  // little white diamonds where the inner lines cross the border and each other (as in the original)
  const st=$('stage');const W=5*L.cellW+4*8,x0=540-W/2,y0=L.gridY+7;
  for(let k=1;k<5;k++)for(const y of [y0,y0+L.cellH+4,y0+2*L.cellH+8]){const d=document.createElement('div');d.className='dia';
