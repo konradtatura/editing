@@ -71,6 +71,13 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Lista 1.–8. na obrazie (Poppins 500: cyfry 32 px, tekst 27 px, co 68 px, lekki cień; Konrad: o 30% mniejsza niż 1:1). Wszystkie numery od początku, tekst punktu pojawia się twardo na początku zdania.
 - Lista po stronie bez twarzy (u Konrada po prawej, x 600). Teksty punktów od Konrada, pierwsza litera wielka (jak w oryginale).
 
+## Styl 8: tierlista (format znajomego „AI SIDE HUSTLES TIER LIST”)
+- Kod: `projekty/styl8/` (`build_spec8.py`, `engine/overlay8.html`). Kompozycja: czarne tło, wideo Konrada wycięte 1080×708 (od y≈470) na dole od y 1212, warstwa na wierzchu.
+- Góra (do 1212 px): ciemny panel `#29282D→#1D1C21`, biała pigułka z tytułem (Inter 900, czarne + niebieski gradient `#42BDFF→#0092FF`), rzędy S–F
+  (etykiety `#FF8A7B #FFC079 #FFDA76 #FEF575 #B9F078 #73EA7B`, paski `#100F12`), tacka z kafelkami-ikonami (emoji Apple na białym kafelku).
+- Łapka przenosi kafelek do rzędu (0,6 s, ease), ląduje na słowie z poziomem, obok pojawia się podpis. Tacka się dosuwa.
+- Napisy: biała pigułka, Inter 800 40 px czarny, 2–3 słowa. Koniec: pole komentarza, wpisuje się słowo (np. „AI”), klik w „Post” → „Posted ✓”.
+
 ## Wybór stylu do nowej reklamy
 Konrad zwykle mówi, który styl. Jeśli nie: gadająca głowa + framework/kroki → styl 3; gadająca głowa, ciepło, b-rolle → styl 2;
 prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4. Nowy wzór = nowy styl (`nowy-styl.md`).
