@@ -78,6 +78,16 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Łapka przenosi kafelek do rzędu (0,6 s, ease), ląduje na słowie z poziomem, obok pojawia się podpis. Tacka się dosuwa.
 - Napisy: biała pigułka, Inter 800 40 px czarny, 2–3 słowa. Koniec: pole komentarza, wpisuje się słowo (np. „AI”), klik w „Post” → „Posted ✓”.
 
+## Styl 9: LEGO AI (reklama znajomego „Walmart”, ailego12)
+- Kod: `projekty/styl9/` (`build_spec9.py WORKDIR NAME`, `engine/overlay9.html`, `compose9.py`). Font `assets/fonts/montserrat.css`.
+- Napisy: Montserrat 700, 70 px, biały z czarnym obrysem 2,5 px i cieniem, 1–2 słowa, twarde przełączanie, jedna wysokość (capY 0.645).
+  Krótkie kawałki (<0,3 s) łączą się z sąsiadem, „79 zł” zawsze razem. Napisy nie przechodzą przez cięcia hooków (`HOOK_CUTS`).
+  `hideCaps`: wyłącza napisy tam, gdzie film ma już wtopiony tekst (u ailego12 scena 941).
+- Efekty (tylko tam, gdzie film Konrada nie ma już grafiki): czerwona ramka rysowana wokół elementu UI (`box`, `#FF2B2B`, 0,35 s),
+  deszcz pieniędzy (`rain`, emoji Noto, nie PNG), wybuch pieniędzy z punktu (`burst`), żółta 3D strzałka w dół przy CTA (`arrow`).
+- Rozmycie wejścia 0,27 s na cięciach zmiany sekcji (`blurCuts`, w `compose9.py`, gblur).
+- ailego12: deszcz przy „tysięcy złotych”, ramki na „link w bio” i „79 zł”, monety na „wielokrotnie”, wybuch na 941, strzałka na „Kliknij poniżej”.
+
 ## Wybór stylu do nowej reklamy
 Konrad zwykle mówi, który styl. Jeśli nie: gadająca głowa + framework/kroki → styl 3; gadająca głowa, ciepło, b-rolle → styl 2;
-prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4. Nowy wzór = nowy styl (`nowy-styl.md`).
+prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4 (same napisy) albo styl 9 (napisy + efekty jak w reklamie LEGO). Nowy wzór = nowy styl (`nowy-styl.md`).

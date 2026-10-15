@@ -22,7 +22,9 @@ body{font-family:var(--f-body);font-size:15px;line-height:1.45;padding-inline:16
 header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 h1{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;margin:0}
 .sub{color:var(--muted);font-size:13px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding-bottom:4px;scrollbar-width:thin}
+.tab{flex:none;white-space:nowrap}
+.tab .ok{color:var(--accent-2);margin-left:6px}
 .tab{font:600 14px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:8px 14px;border-radius:999px;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .tab .n{font-family:var(--f-mono);font-size:11px;margin-left:6px;opacity:.75}
@@ -71,6 +73,15 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
 .link{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;padding:0;text-decoration:underline}
 .blank{color:var(--muted);font-size:14px;padding:12px 4px}
 .status{font-size:13px;color:var(--muted);min-height:18px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:600 13px var(--f-mono);background:var(--panel);color:var(--fg);border:0;padding:7px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:var(--bg)}
+select.ver{font:600 13px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:10px;padding:7px 10px}
+.approve{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.approve .st{font-size:13px;color:var(--muted);flex:1;min-width:160px}
+.approve .st b{color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -94,6 +105,16 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
         <div class="bar" id="bar"><div class="track"></div><div class="fill" id="fill"></div><div id="marks"></div></div>
         <span class="time" id="time">0:00.0 / 0:00</span>
       </div>
+      <div class="tools">
+        <div class="seg" id="speed" aria-label="Prędkość"><button data-r="0.5">0.5×</button><button data-r="1" class="on">1×</button><button data-r="1.5">1.5×</button><button data-r="2">2×</button></div>
+        <div class="seg"><button id="fb" aria-label="Klatka wstecz">◀ klatka</button><button id="ff" aria-label="Klatka dalej">klatka ▶</button></div>
+        <select class="ver" id="ver" aria-label="Wersja filmu"></select>
+      </div>
+      <div class="approve">
+        <div class="st" id="apSt">Ta wersja czeka na Twoją decyzję.</div>
+        <button class="btn" id="send">Wyślij poprawki</button>
+        <button class="btn primary" id="approveBtn">Zatwierdź wersję</button>
+      </div>
       <div class="compose">
         <div class="hint" id="hint">Uwaga przy <b id="atTime">0:00.0</b>. Kliknięcie w kadr dodaje kropkę (opcjonalnie).</div>
         <textarea id="txt" placeholder="Np. animacja za krótka, przytrzymaj ją do końca zdania"></textarea>
@@ -116,7 +137,7 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
 const $=id=>document.getElementById(id);
 const vid=$('vid'), hit=$('hit'), stage=$('stage');
 let db=null, me=null, users=null;
-let videos=[], cur=null, notes=[], pending=null, activeId=null, unsubNotes=null;
+let videos=[], cur=null, notes=[], pending=null, activeId=null, unsubNotes=null, approvals={}, viewVer=null;
 const fmt=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(1)};
 const fmtShort=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=Math.floor(t-m*60);return m+':'+(s<10?'0':'')+s};
 
@@ -125,18 +146,27 @@ function renderTabs(){
   videos.forEach(v=>{const b=document.createElement('button');b.className='tab';b.setAttribute('role','tab');
     b.setAttribute('aria-selected',cur&&cur.id===v.id?'true':'false');b.textContent=v.title||v.id;
     if(v.ver){const n=document.createElement('span');n.className='n';n.textContent='v'+v.ver;b.appendChild(n)}
+    const ap=approvals[v.id];if(ap&&ap.ver===v.ver){const k=document.createElement('span');k.className='ok';k.textContent='✓';k.title='Zatwierdzone';b.appendChild(k)}
     b.onclick=()=>select(v.id);tabs.appendChild(b)});
 }
 function select(id){
   cur=videos.find(v=>v.id===id)||null; renderTabs(); pending=null; activeId=null;
   $('emptyStage').hidden=!!cur;
-  if(cur){const src=cur.url||('/_blob/'+cur.asset); if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}}
+  viewVer=null;loadSrc();renderVer();renderApprove();
   try{localStorage.setItem('vr-cur',id)}catch(e){}
   if(unsubNotes){unsubNotes();unsubNotes=null}
   notes=[];renderNotes();
   if(db&&cur){unsubNotes=db.collection('notes').where('video','==',cur.id).onSnapshot(s=>{
     notes=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.t-b.t);renderNotes()},e=>status('Nie udało się wczytać uwag: '+e.message))}
 }
+function versionsOf(v){const list=(v.versions||[]).slice();if(!list.some(x=>x.ver===v.ver))list.push({ver:v.ver||1,url:v.url||('/_blob/'+v.asset)});return list.sort((a,b)=>b.ver-a.ver)}
+function loadSrc(){if(!cur)return;const vs=versionsOf(cur);const pick=vs.find(x=>x.ver===viewVer)||vs[0];const src=pick.url;
+  if(vid.getAttribute('src')!==src){const t=vid.currentTime;vid.src=src;vid.load();if(viewVer!=null)vid.addEventListener('loadedmetadata',()=>{vid.currentTime=t},{once:true});vid.playbackRate=rate}}
+function renderVer(){const s=$('ver');s.innerHTML='';if(!cur)return;versionsOf(cur).forEach((x,i)=>{const o=document.createElement('option');o.value=x.ver;
+  o.textContent='Wersja '+x.ver+(i===0?' (najnowsza)':'');if((viewVer??versionsOf(cur)[0].ver)===x.ver)o.selected=true;s.appendChild(o)});s.hidden=versionsOf(cur).length<2}
+function renderApprove(){if(!cur)return;const ap=approvals[cur.id];const st=$('apSt');
+  if(ap&&ap.ver===cur.ver){st.innerHTML='<b>Zatwierdzone</b> (wersja '+ap.ver+'). Claude robi z tej wersji FINAL.';$('approveBtn').textContent='Cofnij zatwierdzenie'}
+  else{st.textContent=ap&&ap.sent===cur.ver?'Poprawki wysłane. Claude pracuje nad wersją '+(cur.ver+1)+'.':'Ta wersja czeka na Twoją decyzję.';$('approveBtn').textContent='Zatwierdź wersję'}}
 function renderMarks(){
   const d=vid.duration||cur?.dur||0;const m=$('marks');m.innerHTML='';if(!d)return;
   notes.forEach(n=>{const k=document.createElement('div');k.className='mk'+(n.status==='done'?' done':'');k.style.left=(n.t/d*100)+'%';m.appendChild(k)});
@@ -186,6 +216,13 @@ function videoBox(){const r=stage.getBoundingClientRect();const vw=vid.videoWidt
 hit.addEventListener('click',e=>{if(!cur)return;vid.pause();const b=videoBox();const x=(e.clientX-b.r.left-b.x)/b.w,y=(e.clientY-b.r.top-b.y)/b.h;
   if(x<0||x>1||y<0||y>1)return;pending={t:vid.currentTime,x:+x.toFixed(4),y:+y.toFixed(4)};tick();$('txt').focus()});
 $('clearDot').onclick=()=>{pending=null;tick()};
+let rate=1;$('speed').querySelectorAll('button').forEach(b=>b.onclick=()=>{rate=+b.dataset.r;vid.playbackRate=rate;$('speed').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))});
+$('fb').onclick=()=>{vid.pause();vid.currentTime=Math.max(0,vid.currentTime-1/30)};$('ff').onclick=()=>{vid.pause();vid.currentTime=vid.currentTime+1/30};
+$('ver').onchange=()=>{viewVer=+$('ver').value;loadSrc()};
+$('approveBtn').onclick=async()=>{if(!db||!cur)return;const ap=approvals[cur.id]||{};const on=!(ap.ver===cur.ver);
+  try{await db.collection('approvals').doc(cur.id).set({...ap,ver:on?cur.ver:null,at:new Date().toISOString(),by:me||null});status(on?'Zatwierdzono wersję '+cur.ver+'.':'Cofnięto zatwierdzenie.')}catch(e){status('Nie zapisano: '+(e.message||e.code))}};
+$('send').onclick=async()=>{if(!db||!cur)return;const open=notes.filter(n=>n.status!=='done').length;if(!open){status('Brak otwartych uwag do wysłania.');return}
+  try{await db.collection('approvals').doc(cur.id).set({...(approvals[cur.id]||{}),sent:cur.ver,sentAt:new Date().toISOString(),openNotes:open});status('Wysłano '+open+' uwag. Napisz Claude’owi „poprawki z review”.')}catch(e){status('Nie zapisano: '+(e.message||e.code))}};
 $('save').onclick=async()=>{const text=$('txt').value.trim();if(!text){status('Wpisz treść uwagi.');return}
   if(!db){status('Zapis niedostępny w tym widoku. Zaloguj się w claude.ai.');return}if(!cur)return;
   const n={video:cur.id,t:+(pending?pending.t:vid.currentTime).toFixed(2),x:pending?pending.x:null,y:pending?pending.y:null,text,status:'open',version:cur.ver||1,created:new Date().toISOString(),author:me||null};
@@ -201,9 +238,10 @@ $('save').onclick=async()=>{const text=$('txt').value.trim();if(!text){status('W
     videos=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));
     let want=null;try{want=localStorage.getItem('vr-cur')}catch(e){}
     const keep=cur&&videos.find(v=>v.id===cur.id);
-    if(keep){cur=keep;const src=cur.url||('/_blob/'+cur.asset);if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}renderTabs()}
+    if(keep){const newer=keep.ver!==cur.ver;cur=keep;if(newer)viewVer=null;loadSrc();renderVer();renderApprove();renderTabs()}
     else if(videos.length)select((videos.find(v=>v.id===want)||videos[0]).id);
     else renderTabs();
   },e=>status('Nie udało się wczytać filmów: '+e.message));
+  db.collection('approvals').onSnapshot(s=>{approvals={};s.docs.forEach(d=>approvals[d.id]=d.data());renderTabs();renderApprove()},()=>{});
 })();
 </script>
