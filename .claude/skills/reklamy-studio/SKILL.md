@@ -15,13 +15,13 @@ Często jest na telefonie, więc wysyłam gotowe pliki (SendUserFile), a nie śc
 
 ## Najpierw przeczytaj
 1. `references/zasady-konrada.md`: jego twarde wymagania i każdy feedback, który już dał. **Złamanie którejś = poprawka.**
-2. `references/style-katalog.md`: 4 gotowe style (kolory, fonty, rozmiary, ruch, który adsy w jakim stylu).
+2. `references/style-katalog.md`: 9 gotowych stylów (kolory, fonty, rozmiary, ruch, który adsy w jakim stylu).
 3. `references/pipeline.md`: komendy krok po kroku (transkrypcja, cięcia, spec, render, kompozycja, QA, eksport, Review).
 4. `references/bledy-i-lekcje.md`: błędy, które już raz wyszły. Sprawdź przed oddaniem.
 5. `references/nowy-styl.md`: jak odtworzyć nowy styl z filmu-wzoru.
 6. `references/audio.md`: muzyka i SFX (licencje, miks, ducking, -14 LUFS).
 
-Kod silników leży w repo w `projekty/` (styl 1: `reklamy_CA/`, styl 2: `styl2/`, styl 3: `styl3/`, styl 4: `styl4/`, audio: `audio/`).
+Kod silników leży w repo w `projekty/` (styl 1: `reklamy_CA/`, style 2–9: `styl2/` … `styl9/`, audio: `audio/`). Strona Video Review: `review/video-review.html`.
 W paczce zip (`paczka/reklamy-studio.zip`) ten sam kod jest w `silniki/` obok tego pliku. Ścieżki `projekty/...` = `silniki/...`.
 
 ## Przebieg pracy (zawsze w tej kolejności)

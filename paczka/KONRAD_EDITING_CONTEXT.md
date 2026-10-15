@@ -1,6 +1,11 @@
 # Konrad: kontekst montażu reklam i rolek (dla Claude Code)
 
-Wrzuć ten plik do projektu jako `CLAUDE.md` albo dołącz go jako kontekst. Zawiera cały warsztat z sesji 2026-10-12/14: proces, zasady Konrada, 8 stylów, komendy, błędy i audio. Kod silników leży w folderze `projekty/` w repo `konradtatura/editing` (albo w `silniki/` w `paczka/reklamy-studio.zip`). Odwołania do `references/*.md` poniżej to sekcje tego samego pliku.
+Wrzuć ten plik do projektu jako `CLAUDE.md` albo dołącz go jako kontekst. Zawiera cały warsztat z sesji 2026-10-12/15: proces, zasady Konrada, 9 stylów, komendy, błędy i audio. Kod silników leży w folderze `projekty/` w repo `konradtatura/editing` (albo w `silniki/` w `paczka/reklamy-studio.zip`). Odwołania do `references/*.md` poniżej to sekcje tego samego pliku.
+
+---
+name: reklamy-studio
+description: "Konrad's paid-ad editing studio for vertical 9:16 Meta ads (Cyfrowy Autopilot and similar). Recreates any reference ad style he sends (breakdown → style engine → captions, zooms on cuts, plansze, b-roll, CTA), then runs QA loops, a Video Review artifact with timestamped notes, music + SFX from free-licensed libraries, and 1080p finals under 30 MB. Four ready styles: styl 1 (white + dark green, Inter, plansze), styl 2 (teal gradient hero words, warm cinematic, b-roll), styl 3 (navy + electric indigo, big stacked captions, proof cards), styl 4 (captions only: Poppins ExtraBold caps for AI-animation ads). Use for: „zmontuj reklamę / adsa”, „taki styl jak w tym filmie”, „odwzoruj ten edit”, „dodaj napisy w stylu oryginału”, „dałem feedback w review”, „muzyka i sfx do reklam”, or when Konrad uploads ads + a reference video."
+---
 
 ## Reklamy Studio: montaż płatnych reklam w stylu z referencji
 
@@ -14,13 +19,13 @@ Często jest na telefonie, więc wysyłam gotowe pliki (SendUserFile), a nie śc
 
 ### Najpierw przeczytaj
 1. `references/zasady-konrada.md`: jego twarde wymagania i każdy feedback, który już dał. **Złamanie którejś = poprawka.**
-2. `references/style-katalog.md`: 4 gotowe style (kolory, fonty, rozmiary, ruch, który adsy w jakim stylu).
+2. `references/style-katalog.md`: 9 gotowych stylów (kolory, fonty, rozmiary, ruch, który adsy w jakim stylu).
 3. `references/pipeline.md`: komendy krok po kroku (transkrypcja, cięcia, spec, render, kompozycja, QA, eksport, Review).
 4. `references/bledy-i-lekcje.md`: błędy, które już raz wyszły. Sprawdź przed oddaniem.
 5. `references/nowy-styl.md`: jak odtworzyć nowy styl z filmu-wzoru.
 6. `references/audio.md`: muzyka i SFX (licencje, miks, ducking, -14 LUFS).
 
-Kod silników leży w repo w `projekty/` (styl 1: `reklamy_CA/`, styl 2: `styl2/`, styl 3: `styl3/`, styl 4: `styl4/`, audio: `audio/`).
+Kod silników leży w repo w `projekty/` (styl 1: `reklamy_CA/`, style 2–9: `styl2/` … `styl9/`, audio: `audio/`). Strona Video Review: `review/video-review.html`.
 W paczce zip (`paczka/reklamy-studio.zip`) ten sam kod jest w `silniki/` obok tego pliku. Ścieżki `projekty/...` = `silniki/...`.
 
 ### Przebieg pracy (zawsze w tej kolejności)
@@ -43,8 +48,6 @@ W paczce zip (`paczka/reklamy-studio.zip`) ten sam kod jest w `silniki/` obok te
 - Gdy Konrad powie „nie rób X” (np. „nie ucinaj hooków, sam to zrobię”): przerywam od razu i usuwam to, co zrobiłem.
 - Gdy feedback jest ogólny („gradient dalej niewidoczny”): szukam przyczyny w kodzie, nie tylko podkręcam wartości.
 - Podsumowanie po robocie: co poprawione per film, krótko, po polsku.
-
----
 
 ## Zasady Konrada (z feedbacku, 2026-10-12/13)
 
@@ -92,8 +95,6 @@ Każdy punkt to uwaga, którą Konrad już raz zgłosił. Nie powtarzamy.
 ### Czego nie robić bez pytania
 - Nie tnij hooków na osobne wersje, Konrad robi to sam. Pilnuj tylko, żeby żaden napis nie przechodził przez cięcie między hookami.
 - Nie ruszaj zaakceptowanych reklam przy okazji innych poprawek.
-
----
 
 ## Katalog stylów
 
@@ -175,11 +176,19 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 - Łapka przenosi kafelek do rzędu (0,6 s, ease), ląduje na słowie z poziomem, obok pojawia się podpis. Tacka się dosuwa.
 - Napisy: biała pigułka, Inter 800 40 px czarny, 2–3 słowa. Koniec: pole komentarza, wpisuje się słowo (np. „AI”), klik w „Post” → „Posted ✓”.
 
+### Styl 9: LEGO AI (reklama znajomego „Walmart”, ailego12)
+- Kod: `projekty/styl9/` (`build_spec9.py WORKDIR NAME`, `engine/overlay9.html`, `compose9.py`). Font `assets/fonts/montserrat.css`.
+- Napisy: Montserrat 700, 70 px, biały, czarny obrys 3 px + cień `0 0 4px .9, 0 3px 8px 1, 0 6px 30px .7` (Konrad: +50–60% vs v1), 1–2 słowa, twarde przełączanie, jedna wysokość (capY 0.645).
+  Krótkie kawałki (<0,3 s) łączą się z sąsiadem, „79 zł” zawsze razem. Napisy nie przechodzą przez cięcia hooków (`HOOK_CUTS`).
+  `hideCaps`: wyłącza napisy tam, gdzie film ma już wtopiony tekst (u ailego12 scena 941).
+- Efekty (tylko tam, gdzie film Konrada nie ma już grafiki): czerwona ramka rysowana wokół elementu UI (`box`, `#FF2B2B`, 0,35 s),
+  deszcz pieniędzy (`rain`, emoji Noto, nie PNG), wybuch pieniędzy z punktu (`burst`), żółta 3D strzałka w dół przy CTA (`arrow`).
+- Rozmycie wejścia 0,27 s na cięciach zmiany sekcji (`blurCuts`, w `compose9.py`, gblur).
+- ailego12: deszcz przy „tysięcy złotych”, ramki na „link w bio” i „79 zł”, monety na „wielokrotnie”, wybuch na 941, strzałka na „Kliknij poniżej”.
+
 ### Wybór stylu do nowej reklamy
 Konrad zwykle mówi, który styl. Jeśli nie: gadająca głowa + framework/kroki → styl 3; gadająca głowa, ciepło, b-rolle → styl 2;
-prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4. Nowy wzór = nowy styl (`nowy-styl.md`).
-
----
+prosty format z planszami → styl 1; animacja/lektor bez twarzy → styl 4 (same napisy) albo styl 9 (napisy + efekty jak w reklamie LEGO). Nowy wzór = nowy styl (`nowy-styl.md`).
 
 ## Pipeline: komendy krok po kroku
 
@@ -248,8 +257,6 @@ Dwuprzebiegowo z wyliczonym bitrate: `vb = MB*8192/dur - 128` kb/s.
 ### 9. Repo
 Kod i specy (`build_spec*.py`, `engine/*`, `zones`, `cues`) commit + push na branch sesji. Media, klucze (Pexels) nigdy.
 
----
-
 ## Błędy i lekcje (sprawdź przed oddaniem)
 
 ### Checklista QA (każda reklama, każda wersja)
@@ -288,8 +295,6 @@ Kod i specy (`build_spec*.py`, `engine/*`, `zones`, `cues`) commit + push na bra
 - Jedna klatka do akceptacji przed pełnym renderem oszczędza 20 minut.
 - Po każdym przesunięciu jednego elementu sprawdź, w co teraz wchodzi (napisy niżej → zderzenie z trackerem).
 
----
-
 ## Nowy styl z filmu-wzoru
 
 Konrad: „taki styl, tekst, zoomy, animacje (nie giga dużo, ale ważne)”. Cel: wierne odwzorowanie formuły, nie kopia 1:1 treści.
@@ -317,8 +322,6 @@ Przełożenie na Konrada (kolory i fonty pod markę, co od niego potrzeba).
 Pełny render → QA (2 przejścia) → Review → FINAL. Do opisu dla Konrada dodaj, co przełożyłeś ze wzoru i dlaczego.
 
 ### 5. Dopisz styl do `style-katalog.md` i zasady z feedbacku do `zasady-konrada.md`.
-
----
 
 ## Muzyka i SFX
 
@@ -350,10 +353,7 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
 - Na serwerze nie da się odsłuchać, więc zawsze wysyłam próbkę do akceptacji klimatu i głośności, zanim zrobię wszystkie reklamy.
 - Klimat per styl: styl 3 spokojny/premium, styl 2 ciepły i energiczny, styl 4 (animacje) elektroniczny/kosmiczny.
 
-
----
-
-## Historia: co zostało zrobione (2026-10-12 → 14)
+## Historia: co zostało zrobione (2026-10-12 → 15)
 
 | Film | Styl | Najważniejsze decyzje Konrada |
 |---|---|---|
@@ -365,8 +365,9 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
 | „10/10 nawyków” (1010) | 6 (siatka emoji) | emoji Apple, Inter Bold -50 z czarnym cieniem, bez tytułu |
 | „8 rzeczy” | 7 (lista) | lista po prawej, -30%, bez tytułu |
 | „Tierlista AI biznesów” | 8 (tierlista) | kamerka w zaokrąglonym kadrze wyżej (IG zasłania dół), napis w połowie między tacką a kamerką, face tracking |
+| AI LEGO 12 „Postacie AI” (ailego12) | 9 (LEGO AI: napisy + efekty) | efekty z oryginału tylko tam, gdzie film nie ma grafiki; napisy wyłączone na scenie 941; cień napisów +50–60% (v2); muzyka i SFX później |
 
-Narzędzia sesji: Video Review (artefakt z notatkami z czasem), Drive przez `gdown`, Pexels (klucz tylko lokalnie, nigdy w repo), Mixkit przez headless Chromium.
+Narzędzia sesji: Video Review (artefakt z notatkami z czasem; od 2026-10-15 także wersje, tempo 0,5–2×, klatka po klatce, „Wyślij poprawki” i „Zatwierdź wersję”), Drive przez `gdown`, Pexels (klucz tylko lokalnie, nigdy w repo), Mixkit przez headless Chromium.
 
 ---
 
@@ -568,13 +569,10 @@ Narracja jest zbudowana jak framework („in 3 ways”): numerowana lista krokó
 - Karty-dowody tylko z prawdziwymi faktami (941 e-booków itd.) lub makiety produktu; zero zmyślonych wyników.
 - Bez karty końcowej (jak we wzorze): koniec na twarzy z niebieskim CTA.
 
-
----
-
 ## Załącznik B: pełny kod silników
 
 Każdy plik poniżej odtwarzasz 1:1 pod podaną ścieżką (względem katalogu repo). Binaria, których tu nie ma, trzeba pobrać:
-- fonty woff2 → `projekty/reklamy_CA/engine/assets/fonts/` (Inter, Instrument Serif, Poppins 500/600/700/800, Anton z Google Fonts, podzbiory latin + latin-ext; pliki CSS `g.css`, `poppins.css`, `fmt6.css` są niżej),
+- fonty woff2 → `projekty/reklamy_CA/engine/assets/fonts/` (Inter, Instrument Serif, Poppins 500/600/700/800, Anton, Montserrat 700/800 z Google Fonts, podzbiory latin + latin-ext; pliki CSS `g.css`, `poppins.css`, `fmt6.css`, `montserrat.css` są niżej),
 - ikony lucide SVG → `projekty/reklamy_CA/engine/assets/icons/<nazwa>.svg` (lucide.dev),
 - emoji Apple PNG 64 px → `projekty/styl6/engine/emoji_apple/` i `projekty/styl8/engine/emoji_apple/` z `https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.1.2/img/apple/64/<kod>.png`,
 - model twarzy YuNet → `projekty/styl8/face_yunet.onnx` z `https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx`,
@@ -913,515 +911,21 @@ make(9, FIX9, SC9, OV9, True, 0.56)
 ````
 
 
-### `projekty/reklamy_CA/engine/assets/fonts/fmt6.css`
+### `projekty/reklamy_CA/run_all.sh`
 
-````css
-@font-face {
-  font-family: 'Anton';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(f6_1Ptgg87LROyAm3K9-C8QSw.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Anton';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(f6_1Ptgg87LROyAm3Kz-C8.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(f6_pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(f6_pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(f6_pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(f6_pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-````
-
-
-### `projekty/reklamy_CA/engine/assets/fonts/g.css`
-
-````css
-/* latin-ext */
-@font-face {
-  font-family: 'Instrument Serif';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url(b721f6676b.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Instrument Serif';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url(3dfbf70c14.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Instrument Serif';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(0f695a654c.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Instrument Serif';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(5884f5d073.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(390b907766.woff2) format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(d4047416a6.woff2) format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(a656acc858.woff2) format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(9f07a5502c.woff2) format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(0583c36d6d.woff2) format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(ba68014684.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url(1fab01e7b4.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-````
-
-
-### `projekty/reklamy_CA/engine/assets/fonts/poppins.css`
-
-````css
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(pop_pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(pop_pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(pop_pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(pop_pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+````bash
+#!/bin/bash
+# full render: overlays -> compose. usage: run_all.sh WORKDIR [ads...]
+set -e
+D=$1; shift; H=$(cd "$(dirname "$0")" && pwd)
+python3 $H/build_spec.py $D > /dev/null
+for n in ${@:-8 9}; do
+  rm -rf $D/frames$n
+  node $H/engine/render.mjs $D/spec_ad$n.json $D/frames$n --par 3
+  python3 $H/engine/compose.py $D/spec_ad$n.json $D/frames$n $D/AD${n}_EDIT.mp4
+  ffmpeg -v error -y -i $D/AD${n}_EDIT.mp4 -vf scale=540:-2 -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 96k -movflags +faststart $D/AD${n}_EDIT_tel.mp4
+  echo "DONE ad$n"
+done
 ````
 
 
@@ -2018,21 +1522,553 @@ json.dump({"src": sys.argv[2], "takes": takes}, open(sys.argv[3], "w"))
 ````
 
 
-### `projekty/reklamy_CA/run_all.sh`
+### `projekty/reklamy_CA/engine/assets/fonts/fmt6.css`
 
-````bash
-#!/bin/bash
-# full render: overlays -> compose. usage: run_all.sh WORKDIR [ads...]
-set -e
-D=$1; shift; H=$(cd "$(dirname "$0")" && pwd)
-python3 $H/build_spec.py $D > /dev/null
-for n in ${@:-8 9}; do
-  rm -rf $D/frames$n
-  node $H/engine/render.mjs $D/spec_ad$n.json $D/frames$n --par 3
-  python3 $H/engine/compose.py $D/spec_ad$n.json $D/frames$n $D/AD${n}_EDIT.mp4
-  ffmpeg -v error -y -i $D/AD${n}_EDIT.mp4 -vf scale=540:-2 -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 96k -movflags +faststart $D/AD${n}_EDIT_tel.mp4
-  echo "DONE ad$n"
-done
+````css
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(f6_1Ptgg87LROyAm3K9-C8QSw.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(f6_1Ptgg87LROyAm3Kz-C8.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(f6_pxiByp8kv8JHgFVrLGT9Z1JlFc-K.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(f6_pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(f6_pxiByp8kv8JHgFVrLEj6Z1JlFc-K.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(f6_pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+````
+
+
+### `projekty/reklamy_CA/engine/assets/fonts/g.css`
+
+````css
+/* latin-ext */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(b721f6676b.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(3dfbf70c14.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(0f695a654c.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(5884f5d073.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(390b907766.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(d4047416a6.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(a656acc858.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(9f07a5502c.woff2) format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(0583c36d6d.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(ba68014684.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(1fab01e7b4.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+````
+
+
+### `projekty/reklamy_CA/engine/assets/fonts/montserrat.css`
+
+````css
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(mont_JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(mont_JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(mont_JTUSjIg1_i6t8kCHKm459Wdhyzbi.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(mont_JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+````
+
+
+### `projekty/reklamy_CA/engine/assets/fonts/poppins.css`
+
+````css
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(pop_pxiByp8kv8JHgFVrLCz7Z1JlFc-K.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(pop_pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(pop_pxiByp8kv8JHgFVrLDD4Z1JlFc-K.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(pop_pxiByp8kv8JHgFVrLDD4Z1xlFQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 ````
 
 
@@ -2224,305 +2260,6 @@ BR10 = [dict(t0=8.48, t1=10.7, file="confused_1", ss=5.0), dict(t0=11.72, t1=13.
 
 make("ads7", "add7fixed.mp4", "tr_a7f.json", FIX7, IT7, BR7, 0.6, [], END)
 make("ads10", "ads10.mp4", "tr_ads10.json", FIX10, IT10, BR10, 0.6, [], END)
-````
-
-
-### `projekty/styl2/engine/compose2.py`
-
-````python
-#!/usr/bin/env python3
-"""Style 2 compositor: graded footage (+per-shot zoom) with b-roll inserts, overlay PNGs on top, end card tail.
-usage: compose2.py SPEC.json FRAMES_DIR OUT.mp4 [--preview]
-spec: src, dur (total incl. end card), srcDur, cuts, zooms [[t,scale]], zoomCenter, brolls [{t0,t1,file,ss}], grade (ffmpeg filter)"""
-import json, os, subprocess, sys
-import numpy as np, cv2
-a = sys.argv[1:]; spec = json.load(open(a[0])); fdir = a[1]; out = a[2]
-W, H, fps = 1080, 1920, spec.get("fps", 30)
-N = round(spec["dur"] * fps); NS = round(spec["srcDur"] * fps)
-grade = spec.get("grade", "")
-zooms = sorted(spec.get("zooms", [])); cx, cy = spec.get("zoomCenter", [0.5, 0.36])
-def scale_at(t):
-    s = 1.0
-    for zt, zs in zooms:
-        if zt <= t: s = zs
-    return s
-def dec(src, ss=0.0, vf=""):
-    chain = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={fps}" + ("," + vf if vf else "")
-    return subprocess.Popen(["ffmpeg", "-v", "error", "-ss", f"{ss:.3f}", "-i", src, "-vf", chain, "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], stdout=subprocess.PIPE)
-main = dec(spec["src"], 0, grade)
-brolls = sorted(spec.get("brolls", []), key=lambda b: b["t0"]); bdec = {}
-crf = "23" if "--preview" in a else "17"
-enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-r", str(fps), "-i", "-",
-                        "-i", spec["src"], "-map", "0:v", "-map", "1:a", "-af", f"apad,atrim=0:{spec['dur']:.3f}",
-                        "-c:v", "libx264", "-preset", "medium", "-crf", crf, "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
-                        "-t", f"{spec['dur']:.3f}", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
-fsz = W * H * 3; last = np.zeros((H, W, 3), np.uint8)
-for f in range(N):
-    t = f / fps
-    if f < NS:
-        buf = main.stdout.read(fsz)
-        fr = np.frombuffer(buf, np.uint8).reshape(H, W, 3) if len(buf) == fsz else last
-        last = fr
-        s = scale_at(t)
-        if s > 1.001:
-            w, h = W / s, H / s
-            x0 = min(max(cx * W - w / 2, 0), W - w); y0 = min(max(cy * H - h / 2, 0), H - h)
-            fr = cv2.warpAffine(fr, np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]]), (W, H), flags=cv2.INTER_LINEAR)
-    else:
-        fr = np.zeros((H, W, 3), np.uint8)
-    for k, b in enumerate(brolls):
-        if b["t0"] <= t < b["t1"]:
-            if k not in bdec: bdec[k] = dec(b["file"], b.get("ss", 0), grade)
-            if not bdec[k]: continue
-            bb = bdec[k].stdout.read(fsz)
-            if len(bb) == fsz:
-                fr = np.frombuffer(bb, np.uint8).reshape(H, W, 3)
-                ks = 1.04 + 0.05 * (t - b["t0"]) / max(.1, b["t1"] - b["t0"])          # slow push-in on b-roll
-                fr = cv2.warpAffine(fr, np.float32([[ks, 0, -(ks - 1) * W / 2], [0, ks, -(ks - 1) * H / 2]]), (W, H))
-        elif t >= b["t1"] and bdec.get(k):
-            bdec[k].terminate(); bdec[k] = False
-    p = os.path.join(fdir, f"f_{f:05d}.png")
-    ov = cv2.imread(p, cv2.IMREAD_UNCHANGED) if os.path.exists(p) else None
-    if ov is not None:
-        al = ov[:, :, 3:4].astype(np.float32) / 255.0 if ov.shape[2] == 4 else np.ones(ov.shape[:2] + (1,), np.float32)
-        if al.max() > 0:
-            fr = (ov[:, :, :3].astype(np.float32) * al + fr.astype(np.float32) * (1 - al)).astype(np.uint8)
-    enc.stdin.write(np.ascontiguousarray(fr).tobytes())
-enc.stdin.close(); enc.wait(); main.terminate()
-print("wrote", out)
-````
-
-
-### `projekty/styl2/engine/overlay2.html`
-
-````html
-<!doctype html>
-<html><head><meta charset="utf-8">
-<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
-<style>
-:root{--t1:#9EEBFF;--t2:#35C2DA;--t3:#0E8FA8;--bg:#0C1214;--ink:#0B1A1E}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
-#stage{position:absolute;inset:0;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
-.abs{position:absolute}
-/* captions */
-#caps{position:absolute;left:60px;right:60px;text-align:center;pointer-events:none}
-#caps .w{display:inline-block;margin:0 .12em;font-weight:600;font-size:50px;color:#fff;letter-spacing:-.015em;
- text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)}
-#caps .w.h{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:62px;color:var(--t1);letter-spacing:0;
- text-shadow:0 1px 2px rgba(0,0,0,.8),0 3px 12px rgba(0,0,0,.7),0 0 32px rgba(0,0,0,.45)}
-#caps.dark .w{text-shadow:none}
-/* hero word */
-.hero{position:absolute;left:0;right:0;text-align:center}
-.hero .sm{font-weight:600;font-size:46px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)}
-.hero .bg{font-weight:900;letter-spacing:-.05em;line-height:.92}
-/* shadow lives on .bs (appear() owns .bg's filter); gradient restarts on every line via box-decoration-break */
-.hero .bs{filter:drop-shadow(0 0 2px rgba(0,0,0,.75)) drop-shadow(0 6px 10px rgba(0,0,0,.6)) drop-shadow(0 14px 44px rgba(0,0,0,.7))}
-.hero .bt{background:linear-gradient(180deg,var(--g1,#9DC3F7) 8%,var(--g2,#007A7C) 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;
- -webkit-background-clip:text;background-clip:text;color:transparent}
-/* plansza */
-.pl{position:absolute;inset:0;background:var(--bg);overflow:hidden}
-.pl .c{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#D8F8FF 0%,#8FE2F0 30%,#3FB9D0 62%,#14879F 100%);filter:saturate(.85)}
-.pl .num{position:absolute;font-weight:900;color:#fff;letter-spacing:-.06em;line-height:.8}
-.pl .txt{position:absolute;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.08}
-.pl .txt .h{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--t1);letter-spacing:0;font-size:1.12em}
-.pl .wd{display:inline-block;margin-right:.24em}
-.pl .grain,.grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
- background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
-/* fan cards */
-.fan{position:absolute;perspective:1600px}
-.card{position:absolute;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.35);transform-origin:50% 100%}
-/* glass tile */
-.gt{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:30px;font-weight:900;color:#fff;
- background:linear-gradient(160deg,rgba(170,240,255,.85) 0%,rgba(53,194,218,.82) 45%,rgba(11,120,145,.88) 100%);
- box-shadow:inset 0 3px 0 rgba(255,255,255,.65),inset 0 -6px 14px rgba(0,50,70,.35),0 18px 40px rgba(0,40,55,.45),0 0 0 2px rgba(255,255,255,.35);
- text-shadow:0 3px 8px rgba(0,60,80,.5)}
-.gt svg{width:52%;height:52%;stroke-width:2.6}
-.gl{position:absolute;font-weight:700;color:#fff;font-size:30px;text-align:center;white-space:nowrap;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-/* notification */
-.nt{position:absolute;display:flex;gap:22px;align-items:center;padding:24px 30px;border-radius:36px;background:rgba(245,250,252,.92);
- box-shadow:0 24px 60px rgba(0,0,0,.35);color:#0B1A1E}
-.nt .ic{width:78px;height:78px;border-radius:20px;background:linear-gradient(160deg,#5FD3E6,#0E8FA8);display:flex;align-items:center;justify-content:center;color:#fff}
-.nt .ic svg{width:44px;height:44px;stroke-width:2.4}
-/* cta */
-.cta{position:absolute;display:flex;align-items:center;justify-content:center;gap:16px;border-radius:999px;font-weight:700;color:#04252D;
- background:linear-gradient(180deg,#BDF3FF 0%,#5FD3E6 50%,#22B4CC 100%);
- box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 16px 40px rgba(0,0,0,.4),0 0 40px rgba(53,194,218,.45)}
-.cta svg{width:40px;height:40px;stroke-width:2.8}
-/* end card */
-.end{position:absolute;inset:0;background:var(--bg)}
-</style></head>
-<body><div id="stage"></div>
-<script>
-const W=1080,H=1920;const ICONS=window.ICONS||{};
-const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),lerp=(a,b,p)=>a+(b-a)*p,P=(t,t0,d)=>cl((t-t0)/d);
-const E={out:t=>1-Math.pow(1-t,3),out5:t=>1-Math.pow(1-t,5),back:t=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
-const svg=n=>ICONS[n]||'';
-function el(tag,cls,parent,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;(parent||document.getElementById('stage')).appendChild(e);return e}
-function vis(e,on){e.style.display=on?'':'none'}
-function appear(e,t,t0,o={}){const d=o.d||.38,p=P(t,t0,d),pe=(o.ease||E.out)(p);
- e.style.opacity=E.out(P(t,t0,d*.6));e.style.filter=p<1?`blur(${(1-pe)*(o.b0??8)}px)`:'none';
- e.style.transform=`${e.dataset.base||''} translate(${(1-pe)*(o.x0||0)}px,${(1-pe)*(o.y0??20)}px) scale(${lerp(o.s0??.9,1,pe)})`;return p}
-/* ---------- builders ---------- */
-const B={};
-B.hero=(o)=>{const r=el('div','hero');r.style.top=(o.y*H)+'px';o.e=r;
- o.sm=o.small?el('div','sm',r,o.small):null;const b=el('div','bg',r,`<div class="bs"><span class="bt">${o.big}</span></div>`);b.style.fontSize=o.size+'px';o.b=b;
- if(o.sub){o.s2=el('div','sm',r,o.sub)}};
-B.hero.u=(o,t)=>{if(o.sm)appear(o.sm,t,o.t0,{d:.25,y0:10});appear(o.b,t,o.bigT,{d:.45,s0:1.18,y0:0,b0:14,ease:E.out5});
- o.b.style.transform+=` scale(${1+.03*P(t,o.bigT,o.t1-o.bigT)})`;if(o.s2)appear(o.s2,t,o.subT||o.bigT+.2,{d:.3,y0:10})};
-B.plansza=(o)=>{const p=el('div','pl');o.e=p;
- const c1=el('div','c',p);Object.assign(c1.style,{width:'760px',height:'760px',right:'-330px',top:'-330px'});
- const c2=el('div','c',p);Object.assign(c2.style,{width:'680px',height:'680px',left:'-300px',bottom:'-300px'});o.cs=[c1,c2];
- el('div','grain',p);
- o.rows=o.rows.map((r,i)=>{const y=r.y??(o.y0+i*(o.gap||230));let n=null;
-  if(r.num!=null){n=el('div','num',p,r.num+'.');Object.assign(n.style,{left:'90px',top:(y-10)+'px',fontSize:(o.numSize||190)+'px'})}
-  const tx=el('div','txt',p);Object.assign(tx.style,{left:(r.num!=null?(o.textX||330):90)+'px',right:'80px',top:y+'px',fontSize:(r.fs||o.fs||60)+'px'});
-  r.words.forEach(w=>{const s=el('span','wd'+(w.h?' h':''),tx,w.d);s.dataset.t=w.t});return {r,n,tx}})};
-B.plansza.u=(o,t)=>{const life=P(t,o.t0,o.t1-o.t0);o.cs[0].style.transform=`translate(${-20*life}px,${20*life}px) scale(${1+.04*life})`;o.cs[1].style.transform=`translate(${20*life}px,${-20*life}px)`;
- o.rows.forEach(({r,n,tx})=>{if(n)appear(n,t,r.t,{d:.35,y0:30,s0:.8});tx.querySelectorAll('.wd').forEach(s=>appear(s,t,+s.dataset.t-.04,{d:.22,y0:10,s0:1,b0:6}))})};
-function bookCard(c){return `<div style="position:absolute;inset:0;background:${c.bg||'linear-gradient(160deg,#F4FBFD,#DDF2F7)'}"></div>
- <div style="position:absolute;left:26px;right:26px;top:30px;font:800 ${c.fs||40}px Inter;letter-spacing:-.03em;line-height:1.02;color:${c.ink||'#0B1A1E'}">${c.title}</div>
- ${c.sub?`<div style="position:absolute;left:26px;right:26px;top:${c.subY||150}px;font:500 22px Inter;color:${c.ink2||'#44626a'}">${c.sub}</div>`:''}
- ${c.icon?`<div style="position:absolute;left:50%;bottom:${c.iconB||70}px;width:120px;height:120px;margin-left:-60px;border-radius:30px;background:linear-gradient(160deg,#5FD3E6,#0E8FA8);display:flex;align-items:center;justify-content:center;color:#fff">${svg(c.icon).replace('<svg','<svg style="width:66px;height:66px;stroke-width:2.2"')}</div>`:''}
- ${c.price?`<div style="position:absolute;right:20px;bottom:20px;padding:10px 20px;border-radius:999px;background:#0B1A1E;color:#9EEBFF;font:800 30px Inter">${c.price}</div>`:''}`}
-B.fan=(o)=>{const f=el('div','fan');Object.assign(f.style,{left:0,top:0,width:W+'px',height:H+'px'});o.e=f;
- o.cards=o.cards.map((c,i)=>{const e=el('div','card',f,bookCard(c));const w=o.w||260,h=o.h||360;
-  Object.assign(e.style,{width:w+'px',height:h+'px',left:(o.x+i*(o.dx||200)-w/2)+'px',top:(o.y-h)+'px'});
-  e.dataset.base=`rotateY(${o.ry??-18}deg) rotateZ(${(i-(o.cards.length-1)/2)*(o.rz??5)}deg)`;return {c,e,i}})};
-B.fan.u=(o,t)=>{o.cards.forEach(({c,e,i})=>{const t0=(c.t??o.t0)+i*(c.t!=null?0:.09);appear(e,t,t0,{d:.5,x0:-520,y0:60,s0:.9,b0:10,ease:E.out5});
- e.style.transform+=` translateY(${Math.sin(t*1.6+i)*5}px)`})};
-B.tiles=(o)=>{const n=o.items.length,s=o.size||150,gap=o.gap||34,x0=540-((n*s+(n-1)*gap)/2)+s/2;
- o.items=o.items.map((it,i)=>{const e=el('div','gt',null,it.icon?svg(it.icon):it.num);const x=x0+i*(s+gap);
-  Object.assign(e.style,{width:s+'px',height:s+'px',left:(x-s/2)+'px',top:(o.y-s/2)+'px',fontSize:(s*.55)+'px'});
-  let lb=null;if(it.label){lb=el('div','gl',null,it.label);Object.assign(lb.style,{left:(x-200)+'px',width:'400px',top:(o.y+s/2+14)+'px'})}
-  return {it,e,lb,i}})};
-B.tiles.u=(o,t)=>{o.items.forEach(({it,e,lb,i})=>{appear(e,t,it.t,{d:.42,y0:40,s0:.6,b0:8,ease:E.back});e.style.transform+=` translateY(${Math.sin(t*2+i)*5}px) rotate(${Math.sin(t*1.3+i)*3}deg)`;if(lb)appear(lb,t,it.t+.1,{d:.3,y0:10})})};
-B.notif=(o)=>{const e=el('div','nt',null,`<div class="ic">${svg(o.icon||'circle-dollar-sign')}</div><div><div style="font:700 30px Inter">${o.title}</div><div style="font:500 26px Inter;color:#46646c">${o.sub}</div></div>
- <div style="margin-left:auto;font:800 40px Inter;color:#0E8FA8">${o.amount||''}</div>`);Object.assign(e.style,{left:'90px',right:'90px',top:(o.y-70)+'px'});o.e=e};
-B.notif.u=(o,t)=>{appear(o.e,t,o.t0,{d:.45,y0:-80,s0:.92,ease:E.out5})};
-B.cta=(o)=>{const b=el('div','cta',null,`<span>${o.text}</span>${svg('arrow-down')}`);Object.assign(b.style,{fontSize:'42px',height:'112px',width:(o.w||560)+'px',left:(540-(o.w||560)/2)+'px',top:(o.y-56)+'px'});o.e=b};
-B.cta.u=(o,t)=>{appear(o.e,t,o.t0,{d:.4,y0:30,s0:.7,ease:E.back});o.e.style.transform+=` scale(${t>o.t0+.6?1+.03*Math.max(0,Math.sin((t-o.t0)*4)):1})`};
-B.end=(o)=>{const e=el('div','end');o.e=e;const c1=el('div','c',e);el('div','grain',e);
- Object.assign(c1.style,{position:'absolute',borderRadius:'50%',width:'900px',height:'900px',left:'90px',top:'480px',background:'radial-gradient(circle,rgba(53,194,218,.22),transparent 65%)'});
- e.insertAdjacentHTML('beforeend',`<div style="position:absolute;left:0;right:0;top:720px;text-align:center;font:800 92px Inter;letter-spacing:-.045em;color:#fff">${o.brand}<span style="color:#35C2DA">.</span></div>
- <div style="position:absolute;left:0;right:0;top:850px;text-align:center;font:500 34px Inter;color:#9fb6bb"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#35C2DA;margin-right:14px;vertical-align:middle"></span>${o.tag}</div>`);
- const b=el('div','cta',e,`<span>${o.button}</span>`);Object.assign(b.style,{fontSize:'40px',height:'104px',width:'520px',left:'280px',top:'1000px'});o.b=b};
-B.end.u=(o,t)=>{appear(o.b,t,o.t0+.35,{d:.4,y0:20,s0:.85,ease:E.back})};
-/* ---------- captions ---------- */
-let lastKey='';
-function caps(spec,t){const box=document.getElementById('caps');
- const hide=spec.items.some(o=>o.hideCaps&&t>=o.t0&&t<o.t1)||spec.capHide.some(([a,b])=>t>=a&&t<b);
- let bi=-1;for(let i=0;i<spec.caps.length;i++){if(t>=spec.caps[i].t0-.03)bi=i;else break}
- if(hide||bi<0){box.style.visibility='hidden';return}box.style.visibility='visible';
- const capY=(spec.items.find(o=>o.capY&&t>=o.t0&&t<o.t1)||{}).capY||spec.capY;
- const b=spec.caps[bi];if(lastKey!==bi){lastKey=bi;box.innerHTML='';b.words.forEach(w=>{const s=el('span','w'+(w.h?' h':''),box,w.d);s.dataset.t=w.t})}
- box.style.top='0px';const hh=box.getBoundingClientRect().height;box.style.top=(capY*H-hh/2)+'px';
- box.querySelectorAll('.w').forEach(s=>{const p=P(t,+s.dataset.t-.04,.14);s.style.opacity=E.out(p);s.style.filter=p<1?`blur(${(1-p)*7}px)`:'none'})}
-/* ---------- main ---------- */
-let SPEC=null;
-window.init=(spec)=>{SPEC=spec;spec.items.forEach(o=>B[o.type](o));const c=el('div','');c.id='caps';return true};
-window.seek=(t)=>{SPEC.items.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const nodes=[o.e,...(o.type==='tiles'?o.items.flatMap(x=>[x.e,x.lb]):[])].filter(Boolean);
- nodes.forEach(n=>vis(n,on));if(on)B[o.type].u(o,t)});caps(SPEC,t);return true};
-</script></body></html>
-````
-
-
-### `projekty/styl2/engine/pexels.py`
-
-````python
-#!/usr/bin/env python3
-"""Fetch portrait stock clips from Pexels. Key from $PEXELS_API_KEY.
-usage: pexels.py OUTDIR "name=query" ...   -> OUTDIR/<name>_<n>.mp4 (up to 3 per query) + OUTDIR/index.json"""
-import json, os, sys, urllib.parse, urllib.request
-key = os.environ["PEXELS_API_KEY"]; out = sys.argv[1]; os.makedirs(out, exist_ok=True)
-idxp = os.path.join(out, "index.json"); idx = json.load(open(idxp)) if os.path.exists(idxp) else {}
-def get(url):
-    return json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"Authorization": key, "User-Agent": "Mozilla/5.0"})))
-for arg in sys.argv[2:]:
-    name, q = arg.split("=", 1)
-    d = get("https://api.pexels.com/videos/search?" + urllib.parse.urlencode({"query": q, "orientation": "portrait", "per_page": 8, "size": "medium"}))
-    n = 0
-    for v in d.get("videos", []):
-        if v["duration"] < 3: continue
-        fs = [f for f in v["video_files"] if (f.get("height") or 0) >= 1280 and (f.get("width") or 0) < (f.get("height") or 0)]
-        if not fs: continue
-        f = min(fs, key=lambda f: abs((f.get("height") or 0) - 1920))
-        p = os.path.join(out, f"{name}_{n}.mp4")
-        req = urllib.request.Request(f["link"], headers={"User-Agent": "Mozilla/5.0"})
-        open(p, "wb").write(urllib.request.urlopen(req).read())
-        idx[f"{name}_{n}"] = {"id": v["id"], "url": v["url"], "author": v["user"]["name"], "dur": v["duration"], "w": f["width"], "h": f["height"]}
-        print(name, n, v["url"], v["duration"], f["width"], f["height"], flush=True)
-        n += 1
-        if n >= 3: break
-json.dump(idx, open(idxp, "w"), indent=1)
-````
-
-
-### `projekty/styl2/engine/qa.py`
-
-````python
-#!/usr/bin/env python3
-"""QA sheet from a FINAL video: frames just before/after every cut, b-roll edge and overlay start/end.
-usage: qa.py SPEC.json FINAL.mp4 OUT_prefix   -> OUT_prefix_1.jpg, _2.jpg ... (pairs: before | after)"""
-import json, subprocess, sys
-import numpy as np, cv2
-spec = json.load(open(sys.argv[1])); vid = sys.argv[2]; pre = sys.argv[3]
-ev = [("cut", c) for c in spec.get("cuts", [])]
-ev += [("broll+", b["t0"]) for b in spec.get("brolls", [])] + [("broll-", b["t1"]) for b in spec.get("brolls", [])]
-ev += [(o["type"] + "+", o["t0"]) for o in spec.get("items", spec.get("scenes", []))] + [(o["type"] + "-", o["t1"]) for o in spec.get("items", spec.get("scenes", [])) if o["t1"] < spec["dur"]]
-ev = sorted(ev, key=lambda x: x[1])
-def frame(t):
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{max(0, t):.3f}", "-i", vid, "-frames:v", "1", "-vf", "scale=180:320", "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], capture_output=True).stdout
-    return np.frombuffer(raw, np.uint8).reshape(320, 180, 3).copy() if len(raw) == 180 * 320 * 3 else np.zeros((320, 180, 3), np.uint8)
-tiles = []
-for name, t in ev:
-    a, b = frame(t - 0.067), frame(t + 0.034)
-    pair = np.hstack([a, np.full((320, 4, 3), 255, np.uint8), b])
-    cv2.putText(pair, f"{name} {t:.2f}", (4, 16), cv2.FONT_HERSHEY_SIMPLEX, .45, (0, 0, 255), 1)
-    tiles.append(pair)
-cols, rows = 6, 4
-for k in range(0, len(tiles), cols * rows):
-    ch = tiles[k:k + cols * rows]
-    while len(ch) % cols: ch.append(np.zeros_like(tiles[0]))
-    cv2.imwrite(f"{pre}_{k // (cols * rows) + 1}.jpg", np.vstack([np.hstack(ch[i:i + cols]) for i in range(0, len(ch), cols)]))
-print(len(tiles), "events")
-````
-
-
-### `projekty/styl2/engine/sheet2.py`
-
-````python
-#!/usr/bin/env python3
-"""Contact sheet for style-2 specs: graded footage/b-roll + zoom + overlay PNG at each rendered frame. usage: sheet2.py SPEC FRAMES OUT.jpg [cols]"""
-import json, os, subprocess, sys, glob
-import numpy as np, cv2
-spec = json.load(open(sys.argv[1])); fd = sys.argv[2]; out = sys.argv[3]; cols = int(sys.argv[4]) if len(sys.argv) > 4 else 6
-W, H = 1080, 1920
-def grab(src, t, grade):
-    vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H}" + ("," + grade if grade else "")
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", src, "-frames:v", "1", "-vf", vf, "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], capture_output=True).stdout
-    return np.frombuffer(raw, np.uint8).reshape(H, W, 3).copy() if len(raw) == W * H * 3 else np.zeros((H, W, 3), np.uint8)
-tiles = []
-for p in sorted(glob.glob(os.path.join(fd, "f_*.png"))):
-    f = int(os.path.basename(p)[2:7]); t = f / spec.get("fps", 30)
-    b = next((b for b in spec.get("brolls", []) if b["t0"] <= t < b["t1"]), None)
-    if b: fr = grab(b["file"], b.get("ss", 0) + t - b["t0"], spec["grade"])
-    elif t < spec["srcDur"]:
-        fr = grab(spec["src"], t, spec["grade"]); s = 1.0
-        for zt, zs in spec["zooms"]:
-            if zt <= t: s = zs
-        if s > 1.001:
-            cx, cy = spec["zoomCenter"]; w, h = W / s, H / s
-            x0 = min(max(cx * W - w / 2, 0), W - w); y0 = min(max(cy * H - h / 2, 0), H - h)
-            fr = cv2.warpAffine(fr, np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]]), (W, H))
-    else: fr = np.zeros((H, W, 3), np.uint8)
-    ov = cv2.imread(p, cv2.IMREAD_UNCHANGED).astype(np.float32)
-    al = ov[:, :, 3:4] / 255 if ov.shape[2] == 4 else np.ones_like(ov[:, :, :1])
-    im = (ov[:, :, :3] * al + fr.astype(np.float32) * (1 - al)).astype(np.uint8)
-    im = cv2.resize(im, (360, 640), interpolation=cv2.INTER_AREA)
-    cv2.putText(im, f"{t:.1f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, .9, (0, 0, 255), 2); tiles.append(im)
-while len(tiles) % cols: tiles.append(np.zeros_like(tiles[0]))
-cv2.imwrite(out, np.vstack([np.hstack(tiles[i:i + cols]) for i in range(0, len(tiles), cols)]), [cv2.IMWRITE_JPEG_QUALITY, 85]); print(out)
 ````
 
 
@@ -2861,6 +2598,305 @@ done
   "h": 1920
  }
 }
+````
+
+
+### `projekty/styl2/engine/compose2.py`
+
+````python
+#!/usr/bin/env python3
+"""Style 2 compositor: graded footage (+per-shot zoom) with b-roll inserts, overlay PNGs on top, end card tail.
+usage: compose2.py SPEC.json FRAMES_DIR OUT.mp4 [--preview]
+spec: src, dur (total incl. end card), srcDur, cuts, zooms [[t,scale]], zoomCenter, brolls [{t0,t1,file,ss}], grade (ffmpeg filter)"""
+import json, os, subprocess, sys
+import numpy as np, cv2
+a = sys.argv[1:]; spec = json.load(open(a[0])); fdir = a[1]; out = a[2]
+W, H, fps = 1080, 1920, spec.get("fps", 30)
+N = round(spec["dur"] * fps); NS = round(spec["srcDur"] * fps)
+grade = spec.get("grade", "")
+zooms = sorted(spec.get("zooms", [])); cx, cy = spec.get("zoomCenter", [0.5, 0.36])
+def scale_at(t):
+    s = 1.0
+    for zt, zs in zooms:
+        if zt <= t: s = zs
+    return s
+def dec(src, ss=0.0, vf=""):
+    chain = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},fps={fps}" + ("," + vf if vf else "")
+    return subprocess.Popen(["ffmpeg", "-v", "error", "-ss", f"{ss:.3f}", "-i", src, "-vf", chain, "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], stdout=subprocess.PIPE)
+main = dec(spec["src"], 0, grade)
+brolls = sorted(spec.get("brolls", []), key=lambda b: b["t0"]); bdec = {}
+crf = "23" if "--preview" in a else "17"
+enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-r", str(fps), "-i", "-",
+                        "-i", spec["src"], "-map", "0:v", "-map", "1:a", "-af", f"apad,atrim=0:{spec['dur']:.3f}",
+                        "-c:v", "libx264", "-preset", "medium", "-crf", crf, "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
+                        "-t", f"{spec['dur']:.3f}", "-movflags", "+faststart", out], stdin=subprocess.PIPE)
+fsz = W * H * 3; last = np.zeros((H, W, 3), np.uint8)
+for f in range(N):
+    t = f / fps
+    if f < NS:
+        buf = main.stdout.read(fsz)
+        fr = np.frombuffer(buf, np.uint8).reshape(H, W, 3) if len(buf) == fsz else last
+        last = fr
+        s = scale_at(t)
+        if s > 1.001:
+            w, h = W / s, H / s
+            x0 = min(max(cx * W - w / 2, 0), W - w); y0 = min(max(cy * H - h / 2, 0), H - h)
+            fr = cv2.warpAffine(fr, np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]]), (W, H), flags=cv2.INTER_LINEAR)
+    else:
+        fr = np.zeros((H, W, 3), np.uint8)
+    for k, b in enumerate(brolls):
+        if b["t0"] <= t < b["t1"]:
+            if k not in bdec: bdec[k] = dec(b["file"], b.get("ss", 0), grade)
+            if not bdec[k]: continue
+            bb = bdec[k].stdout.read(fsz)
+            if len(bb) == fsz:
+                fr = np.frombuffer(bb, np.uint8).reshape(H, W, 3)
+                ks = 1.04 + 0.05 * (t - b["t0"]) / max(.1, b["t1"] - b["t0"])          # slow push-in on b-roll
+                fr = cv2.warpAffine(fr, np.float32([[ks, 0, -(ks - 1) * W / 2], [0, ks, -(ks - 1) * H / 2]]), (W, H))
+        elif t >= b["t1"] and bdec.get(k):
+            bdec[k].terminate(); bdec[k] = False
+    p = os.path.join(fdir, f"f_{f:05d}.png")
+    ov = cv2.imread(p, cv2.IMREAD_UNCHANGED) if os.path.exists(p) else None
+    if ov is not None:
+        al = ov[:, :, 3:4].astype(np.float32) / 255.0 if ov.shape[2] == 4 else np.ones(ov.shape[:2] + (1,), np.float32)
+        if al.max() > 0:
+            fr = (ov[:, :, :3].astype(np.float32) * al + fr.astype(np.float32) * (1 - al)).astype(np.uint8)
+    enc.stdin.write(np.ascontiguousarray(fr).tobytes())
+enc.stdin.close(); enc.wait(); main.terminate()
+print("wrote", out)
+````
+
+
+### `projekty/styl2/engine/overlay2.html`
+
+````html
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
+<style>
+:root{--t1:#9EEBFF;--t2:#35C2DA;--t3:#0E8FA8;--bg:#0C1214;--ink:#0B1A1E}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+#stage{position:absolute;inset:0;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased}
+.abs{position:absolute}
+/* captions */
+#caps{position:absolute;left:60px;right:60px;text-align:center;pointer-events:none}
+#caps .w{display:inline-block;margin:0 .12em;font-weight:600;font-size:50px;color:#fff;letter-spacing:-.015em;
+ text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)}
+#caps .w.h{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:62px;color:var(--t1);letter-spacing:0;
+ text-shadow:0 1px 2px rgba(0,0,0,.8),0 3px 12px rgba(0,0,0,.7),0 0 32px rgba(0,0,0,.45)}
+#caps.dark .w{text-shadow:none}
+/* hero word */
+.hero{position:absolute;left:0;right:0;text-align:center}
+.hero .sm{font-weight:600;font-size:46px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)}
+.hero .bg{font-weight:900;letter-spacing:-.05em;line-height:.92}
+/* shadow lives on .bs (appear() owns .bg's filter); gradient restarts on every line via box-decoration-break */
+.hero .bs{filter:drop-shadow(0 0 2px rgba(0,0,0,.75)) drop-shadow(0 6px 10px rgba(0,0,0,.6)) drop-shadow(0 14px 44px rgba(0,0,0,.7))}
+.hero .bt{background:linear-gradient(180deg,var(--g1,#9DC3F7) 8%,var(--g2,#007A7C) 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;
+ -webkit-background-clip:text;background-clip:text;color:transparent}
+/* plansza */
+.pl{position:absolute;inset:0;background:var(--bg);overflow:hidden}
+.pl .c{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#D8F8FF 0%,#8FE2F0 30%,#3FB9D0 62%,#14879F 100%);filter:saturate(.85)}
+.pl .num{position:absolute;font-weight:900;color:#fff;letter-spacing:-.06em;line-height:.8}
+.pl .txt{position:absolute;font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.08}
+.pl .txt .h{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--t1);letter-spacing:0;font-size:1.12em}
+.pl .wd{display:inline-block;margin-right:.24em}
+.pl .grain,.grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+/* fan cards */
+.fan{position:absolute;perspective:1600px}
+.card{position:absolute;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.35);transform-origin:50% 100%}
+/* glass tile */
+.gt{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:30px;font-weight:900;color:#fff;
+ background:linear-gradient(160deg,rgba(170,240,255,.85) 0%,rgba(53,194,218,.82) 45%,rgba(11,120,145,.88) 100%);
+ box-shadow:inset 0 3px 0 rgba(255,255,255,.65),inset 0 -6px 14px rgba(0,50,70,.35),0 18px 40px rgba(0,40,55,.45),0 0 0 2px rgba(255,255,255,.35);
+ text-shadow:0 3px 8px rgba(0,60,80,.5)}
+.gt svg{width:52%;height:52%;stroke-width:2.6}
+.gl{position:absolute;font-weight:700;color:#fff;font-size:30px;text-align:center;white-space:nowrap;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+/* notification */
+.nt{position:absolute;display:flex;gap:22px;align-items:center;padding:24px 30px;border-radius:36px;background:rgba(245,250,252,.92);
+ box-shadow:0 24px 60px rgba(0,0,0,.35);color:#0B1A1E}
+.nt .ic{width:78px;height:78px;border-radius:20px;background:linear-gradient(160deg,#5FD3E6,#0E8FA8);display:flex;align-items:center;justify-content:center;color:#fff}
+.nt .ic svg{width:44px;height:44px;stroke-width:2.4}
+/* cta */
+.cta{position:absolute;display:flex;align-items:center;justify-content:center;gap:16px;border-radius:999px;font-weight:700;color:#04252D;
+ background:linear-gradient(180deg,#BDF3FF 0%,#5FD3E6 50%,#22B4CC 100%);
+ box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 16px 40px rgba(0,0,0,.4),0 0 40px rgba(53,194,218,.45)}
+.cta svg{width:40px;height:40px;stroke-width:2.8}
+/* end card */
+.end{position:absolute;inset:0;background:var(--bg)}
+</style></head>
+<body><div id="stage"></div>
+<script>
+const W=1080,H=1920;const ICONS=window.ICONS||{};
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),lerp=(a,b,p)=>a+(b-a)*p,P=(t,t0,d)=>cl((t-t0)/d);
+const E={out:t=>1-Math.pow(1-t,3),out5:t=>1-Math.pow(1-t,5),back:t=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
+const svg=n=>ICONS[n]||'';
+function el(tag,cls,parent,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;(parent||document.getElementById('stage')).appendChild(e);return e}
+function vis(e,on){e.style.display=on?'':'none'}
+function appear(e,t,t0,o={}){const d=o.d||.38,p=P(t,t0,d),pe=(o.ease||E.out)(p);
+ e.style.opacity=E.out(P(t,t0,d*.6));e.style.filter=p<1?`blur(${(1-pe)*(o.b0??8)}px)`:'none';
+ e.style.transform=`${e.dataset.base||''} translate(${(1-pe)*(o.x0||0)}px,${(1-pe)*(o.y0??20)}px) scale(${lerp(o.s0??.9,1,pe)})`;return p}
+/* ---------- builders ---------- */
+const B={};
+B.hero=(o)=>{const r=el('div','hero');r.style.top=(o.y*H)+'px';o.e=r;
+ o.sm=o.small?el('div','sm',r,o.small):null;const b=el('div','bg',r,`<div class="bs"><span class="bt">${o.big}</span></div>`);b.style.fontSize=o.size+'px';o.b=b;
+ if(o.sub){o.s2=el('div','sm',r,o.sub)}};
+B.hero.u=(o,t)=>{if(o.sm)appear(o.sm,t,o.t0,{d:.25,y0:10});appear(o.b,t,o.bigT,{d:.45,s0:1.18,y0:0,b0:14,ease:E.out5});
+ o.b.style.transform+=` scale(${1+.03*P(t,o.bigT,o.t1-o.bigT)})`;if(o.s2)appear(o.s2,t,o.subT||o.bigT+.2,{d:.3,y0:10})};
+B.plansza=(o)=>{const p=el('div','pl');o.e=p;
+ const c1=el('div','c',p);Object.assign(c1.style,{width:'760px',height:'760px',right:'-330px',top:'-330px'});
+ const c2=el('div','c',p);Object.assign(c2.style,{width:'680px',height:'680px',left:'-300px',bottom:'-300px'});o.cs=[c1,c2];
+ el('div','grain',p);
+ o.rows=o.rows.map((r,i)=>{const y=r.y??(o.y0+i*(o.gap||230));let n=null;
+  if(r.num!=null){n=el('div','num',p,r.num+'.');Object.assign(n.style,{left:'90px',top:(y-10)+'px',fontSize:(o.numSize||190)+'px'})}
+  const tx=el('div','txt',p);Object.assign(tx.style,{left:(r.num!=null?(o.textX||330):90)+'px',right:'80px',top:y+'px',fontSize:(r.fs||o.fs||60)+'px'});
+  r.words.forEach(w=>{const s=el('span','wd'+(w.h?' h':''),tx,w.d);s.dataset.t=w.t});return {r,n,tx}})};
+B.plansza.u=(o,t)=>{const life=P(t,o.t0,o.t1-o.t0);o.cs[0].style.transform=`translate(${-20*life}px,${20*life}px) scale(${1+.04*life})`;o.cs[1].style.transform=`translate(${20*life}px,${-20*life}px)`;
+ o.rows.forEach(({r,n,tx})=>{if(n)appear(n,t,r.t,{d:.35,y0:30,s0:.8});tx.querySelectorAll('.wd').forEach(s=>appear(s,t,+s.dataset.t-.04,{d:.22,y0:10,s0:1,b0:6}))})};
+function bookCard(c){return `<div style="position:absolute;inset:0;background:${c.bg||'linear-gradient(160deg,#F4FBFD,#DDF2F7)'}"></div>
+ <div style="position:absolute;left:26px;right:26px;top:30px;font:800 ${c.fs||40}px Inter;letter-spacing:-.03em;line-height:1.02;color:${c.ink||'#0B1A1E'}">${c.title}</div>
+ ${c.sub?`<div style="position:absolute;left:26px;right:26px;top:${c.subY||150}px;font:500 22px Inter;color:${c.ink2||'#44626a'}">${c.sub}</div>`:''}
+ ${c.icon?`<div style="position:absolute;left:50%;bottom:${c.iconB||70}px;width:120px;height:120px;margin-left:-60px;border-radius:30px;background:linear-gradient(160deg,#5FD3E6,#0E8FA8);display:flex;align-items:center;justify-content:center;color:#fff">${svg(c.icon).replace('<svg','<svg style="width:66px;height:66px;stroke-width:2.2"')}</div>`:''}
+ ${c.price?`<div style="position:absolute;right:20px;bottom:20px;padding:10px 20px;border-radius:999px;background:#0B1A1E;color:#9EEBFF;font:800 30px Inter">${c.price}</div>`:''}`}
+B.fan=(o)=>{const f=el('div','fan');Object.assign(f.style,{left:0,top:0,width:W+'px',height:H+'px'});o.e=f;
+ o.cards=o.cards.map((c,i)=>{const e=el('div','card',f,bookCard(c));const w=o.w||260,h=o.h||360;
+  Object.assign(e.style,{width:w+'px',height:h+'px',left:(o.x+i*(o.dx||200)-w/2)+'px',top:(o.y-h)+'px'});
+  e.dataset.base=`rotateY(${o.ry??-18}deg) rotateZ(${(i-(o.cards.length-1)/2)*(o.rz??5)}deg)`;return {c,e,i}})};
+B.fan.u=(o,t)=>{o.cards.forEach(({c,e,i})=>{const t0=(c.t??o.t0)+i*(c.t!=null?0:.09);appear(e,t,t0,{d:.5,x0:-520,y0:60,s0:.9,b0:10,ease:E.out5});
+ e.style.transform+=` translateY(${Math.sin(t*1.6+i)*5}px)`})};
+B.tiles=(o)=>{const n=o.items.length,s=o.size||150,gap=o.gap||34,x0=540-((n*s+(n-1)*gap)/2)+s/2;
+ o.items=o.items.map((it,i)=>{const e=el('div','gt',null,it.icon?svg(it.icon):it.num);const x=x0+i*(s+gap);
+  Object.assign(e.style,{width:s+'px',height:s+'px',left:(x-s/2)+'px',top:(o.y-s/2)+'px',fontSize:(s*.55)+'px'});
+  let lb=null;if(it.label){lb=el('div','gl',null,it.label);Object.assign(lb.style,{left:(x-200)+'px',width:'400px',top:(o.y+s/2+14)+'px'})}
+  return {it,e,lb,i}})};
+B.tiles.u=(o,t)=>{o.items.forEach(({it,e,lb,i})=>{appear(e,t,it.t,{d:.42,y0:40,s0:.6,b0:8,ease:E.back});e.style.transform+=` translateY(${Math.sin(t*2+i)*5}px) rotate(${Math.sin(t*1.3+i)*3}deg)`;if(lb)appear(lb,t,it.t+.1,{d:.3,y0:10})})};
+B.notif=(o)=>{const e=el('div','nt',null,`<div class="ic">${svg(o.icon||'circle-dollar-sign')}</div><div><div style="font:700 30px Inter">${o.title}</div><div style="font:500 26px Inter;color:#46646c">${o.sub}</div></div>
+ <div style="margin-left:auto;font:800 40px Inter;color:#0E8FA8">${o.amount||''}</div>`);Object.assign(e.style,{left:'90px',right:'90px',top:(o.y-70)+'px'});o.e=e};
+B.notif.u=(o,t)=>{appear(o.e,t,o.t0,{d:.45,y0:-80,s0:.92,ease:E.out5})};
+B.cta=(o)=>{const b=el('div','cta',null,`<span>${o.text}</span>${svg('arrow-down')}`);Object.assign(b.style,{fontSize:'42px',height:'112px',width:(o.w||560)+'px',left:(540-(o.w||560)/2)+'px',top:(o.y-56)+'px'});o.e=b};
+B.cta.u=(o,t)=>{appear(o.e,t,o.t0,{d:.4,y0:30,s0:.7,ease:E.back});o.e.style.transform+=` scale(${t>o.t0+.6?1+.03*Math.max(0,Math.sin((t-o.t0)*4)):1})`};
+B.end=(o)=>{const e=el('div','end');o.e=e;const c1=el('div','c',e);el('div','grain',e);
+ Object.assign(c1.style,{position:'absolute',borderRadius:'50%',width:'900px',height:'900px',left:'90px',top:'480px',background:'radial-gradient(circle,rgba(53,194,218,.22),transparent 65%)'});
+ e.insertAdjacentHTML('beforeend',`<div style="position:absolute;left:0;right:0;top:720px;text-align:center;font:800 92px Inter;letter-spacing:-.045em;color:#fff">${o.brand}<span style="color:#35C2DA">.</span></div>
+ <div style="position:absolute;left:0;right:0;top:850px;text-align:center;font:500 34px Inter;color:#9fb6bb"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#35C2DA;margin-right:14px;vertical-align:middle"></span>${o.tag}</div>`);
+ const b=el('div','cta',e,`<span>${o.button}</span>`);Object.assign(b.style,{fontSize:'40px',height:'104px',width:'520px',left:'280px',top:'1000px'});o.b=b};
+B.end.u=(o,t)=>{appear(o.b,t,o.t0+.35,{d:.4,y0:20,s0:.85,ease:E.back})};
+/* ---------- captions ---------- */
+let lastKey='';
+function caps(spec,t){const box=document.getElementById('caps');
+ const hide=spec.items.some(o=>o.hideCaps&&t>=o.t0&&t<o.t1)||spec.capHide.some(([a,b])=>t>=a&&t<b);
+ let bi=-1;for(let i=0;i<spec.caps.length;i++){if(t>=spec.caps[i].t0-.03)bi=i;else break}
+ if(hide||bi<0){box.style.visibility='hidden';return}box.style.visibility='visible';
+ const capY=(spec.items.find(o=>o.capY&&t>=o.t0&&t<o.t1)||{}).capY||spec.capY;
+ const b=spec.caps[bi];if(lastKey!==bi){lastKey=bi;box.innerHTML='';b.words.forEach(w=>{const s=el('span','w'+(w.h?' h':''),box,w.d);s.dataset.t=w.t})}
+ box.style.top='0px';const hh=box.getBoundingClientRect().height;box.style.top=(capY*H-hh/2)+'px';
+ box.querySelectorAll('.w').forEach(s=>{const p=P(t,+s.dataset.t-.04,.14);s.style.opacity=E.out(p);s.style.filter=p<1?`blur(${(1-p)*7}px)`:'none'})}
+/* ---------- main ---------- */
+let SPEC=null;
+window.init=(spec)=>{SPEC=spec;spec.items.forEach(o=>B[o.type](o));const c=el('div','');c.id='caps';return true};
+window.seek=(t)=>{SPEC.items.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const nodes=[o.e,...(o.type==='tiles'?o.items.flatMap(x=>[x.e,x.lb]):[])].filter(Boolean);
+ nodes.forEach(n=>vis(n,on));if(on)B[o.type].u(o,t)});caps(SPEC,t);return true};
+</script></body></html>
+````
+
+
+### `projekty/styl2/engine/pexels.py`
+
+````python
+#!/usr/bin/env python3
+"""Fetch portrait stock clips from Pexels. Key from $PEXELS_API_KEY.
+usage: pexels.py OUTDIR "name=query" ...   -> OUTDIR/<name>_<n>.mp4 (up to 3 per query) + OUTDIR/index.json"""
+import json, os, sys, urllib.parse, urllib.request
+key = os.environ["PEXELS_API_KEY"]; out = sys.argv[1]; os.makedirs(out, exist_ok=True)
+idxp = os.path.join(out, "index.json"); idx = json.load(open(idxp)) if os.path.exists(idxp) else {}
+def get(url):
+    return json.load(urllib.request.urlopen(urllib.request.Request(url, headers={"Authorization": key, "User-Agent": "Mozilla/5.0"})))
+for arg in sys.argv[2:]:
+    name, q = arg.split("=", 1)
+    d = get("https://api.pexels.com/videos/search?" + urllib.parse.urlencode({"query": q, "orientation": "portrait", "per_page": 8, "size": "medium"}))
+    n = 0
+    for v in d.get("videos", []):
+        if v["duration"] < 3: continue
+        fs = [f for f in v["video_files"] if (f.get("height") or 0) >= 1280 and (f.get("width") or 0) < (f.get("height") or 0)]
+        if not fs: continue
+        f = min(fs, key=lambda f: abs((f.get("height") or 0) - 1920))
+        p = os.path.join(out, f"{name}_{n}.mp4")
+        req = urllib.request.Request(f["link"], headers={"User-Agent": "Mozilla/5.0"})
+        open(p, "wb").write(urllib.request.urlopen(req).read())
+        idx[f"{name}_{n}"] = {"id": v["id"], "url": v["url"], "author": v["user"]["name"], "dur": v["duration"], "w": f["width"], "h": f["height"]}
+        print(name, n, v["url"], v["duration"], f["width"], f["height"], flush=True)
+        n += 1
+        if n >= 3: break
+json.dump(idx, open(idxp, "w"), indent=1)
+````
+
+
+### `projekty/styl2/engine/qa.py`
+
+````python
+#!/usr/bin/env python3
+"""QA sheet from a FINAL video: frames just before/after every cut, b-roll edge and overlay start/end.
+usage: qa.py SPEC.json FINAL.mp4 OUT_prefix   -> OUT_prefix_1.jpg, _2.jpg ... (pairs: before | after)"""
+import json, subprocess, sys
+import numpy as np, cv2
+spec = json.load(open(sys.argv[1])); vid = sys.argv[2]; pre = sys.argv[3]
+ev = [("cut", c) for c in spec.get("cuts", [])]
+ev += [("broll+", b["t0"]) for b in spec.get("brolls", [])] + [("broll-", b["t1"]) for b in spec.get("brolls", [])]
+ev += [(o["type"] + "+", o["t0"]) for o in spec.get("items", spec.get("scenes", []))] + [(o["type"] + "-", o["t1"]) for o in spec.get("items", spec.get("scenes", [])) if o["t1"] < spec["dur"]]
+ev = sorted(ev, key=lambda x: x[1])
+def frame(t):
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{max(0, t):.3f}", "-i", vid, "-frames:v", "1", "-vf", "scale=180:320", "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], capture_output=True).stdout
+    return np.frombuffer(raw, np.uint8).reshape(320, 180, 3).copy() if len(raw) == 180 * 320 * 3 else np.zeros((320, 180, 3), np.uint8)
+tiles = []
+for name, t in ev:
+    a, b = frame(t - 0.067), frame(t + 0.034)
+    pair = np.hstack([a, np.full((320, 4, 3), 255, np.uint8), b])
+    cv2.putText(pair, f"{name} {t:.2f}", (4, 16), cv2.FONT_HERSHEY_SIMPLEX, .45, (0, 0, 255), 1)
+    tiles.append(pair)
+cols, rows = 6, 4
+for k in range(0, len(tiles), cols * rows):
+    ch = tiles[k:k + cols * rows]
+    while len(ch) % cols: ch.append(np.zeros_like(tiles[0]))
+    cv2.imwrite(f"{pre}_{k // (cols * rows) + 1}.jpg", np.vstack([np.hstack(ch[i:i + cols]) for i in range(0, len(ch), cols)]))
+print(len(tiles), "events")
+````
+
+
+### `projekty/styl2/engine/sheet2.py`
+
+````python
+#!/usr/bin/env python3
+"""Contact sheet for style-2 specs: graded footage/b-roll + zoom + overlay PNG at each rendered frame. usage: sheet2.py SPEC FRAMES OUT.jpg [cols]"""
+import json, os, subprocess, sys, glob
+import numpy as np, cv2
+spec = json.load(open(sys.argv[1])); fd = sys.argv[2]; out = sys.argv[3]; cols = int(sys.argv[4]) if len(sys.argv) > 4 else 6
+W, H = 1080, 1920
+def grab(src, t, grade):
+    vf = f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H}" + ("," + grade if grade else "")
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", src, "-frames:v", "1", "-vf", vf, "-f", "rawvideo", "-pix_fmt", "bgr24", "-"], capture_output=True).stdout
+    return np.frombuffer(raw, np.uint8).reshape(H, W, 3).copy() if len(raw) == W * H * 3 else np.zeros((H, W, 3), np.uint8)
+tiles = []
+for p in sorted(glob.glob(os.path.join(fd, "f_*.png"))):
+    f = int(os.path.basename(p)[2:7]); t = f / spec.get("fps", 30)
+    b = next((b for b in spec.get("brolls", []) if b["t0"] <= t < b["t1"]), None)
+    if b: fr = grab(b["file"], b.get("ss", 0) + t - b["t0"], spec["grade"])
+    elif t < spec["srcDur"]:
+        fr = grab(spec["src"], t, spec["grade"]); s = 1.0
+        for zt, zs in spec["zooms"]:
+            if zt <= t: s = zs
+        if s > 1.001:
+            cx, cy = spec["zoomCenter"]; w, h = W / s, H / s
+            x0 = min(max(cx * W - w / 2, 0), W - w); y0 = min(max(cy * H - h / 2, 0), H - h)
+            fr = cv2.warpAffine(fr, np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]]), (W, H))
+    else: fr = np.zeros((H, W, 3), np.uint8)
+    ov = cv2.imread(p, cv2.IMREAD_UNCHANGED).astype(np.float32)
+    al = ov[:, :, 3:4] / 255 if ov.shape[2] == 4 else np.ones_like(ov[:, :, :1])
+    im = (ov[:, :, :3] * al + fr.astype(np.float32) * (1 - al)).astype(np.uint8)
+    im = cv2.resize(im, (360, 640), interpolation=cv2.INTER_AREA)
+    cv2.putText(im, f"{t:.1f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, .9, (0, 0, 255), 2); tiles.append(im)
+while len(tiles) % cols: tiles.append(np.zeros_like(tiles[0]))
+cv2.imwrite(out, np.vstack([np.hstack(tiles[i:i + cols]) for i in range(0, len(tiles), cols)]), [cv2.IMWRITE_JPEG_QUALITY, 85]); print(out)
 ````
 
 
@@ -3244,6 +3280,13 @@ for c in caps: print(f'{c["t0"]:6.2f}-{c["t1"]:6.2f} {"*" if c["em"] else " "} {
 ````
 
 
+### `projekty/styl4/zones_ad11.json`
+
+````json
+[]
+````
+
+
 ### `projekty/styl4/engine/overlay4.html`
 
 ````html
@@ -3268,13 +3311,6 @@ window.seek=(t)=>{const c=document.getElementById('cap');
  if(i>=0){const ov=(SPEC.zones||[]).find(z=>t>=z.t0&&t<z.t1);c.style.top=((ov?ov.capY:SPEC.capY)*H)+'px'}
  return true};
 </script></body></html>
-````
-
-
-### `projekty/styl4/zones_ad11.json`
-
-````json
-[]
 ````
 
 
@@ -3567,6 +3603,47 @@ for c in caps: print(f'{c["t0"]:6.2f} {c["text"]}')
 ````
 
 
+### `projekty/styl8/facecrop.py`
+
+````python
+#!/usr/bin/env python3
+"""Face-tracked crop for the rounded video card.  usage: facecrop.py IN.mp4 OUT.mp4 W H [face_y=0.42]
+Scales the source to width W, detects the face every frame (OpenCV YuNet), smooths the centre (centred moving average,
+dead-zone so small head moves don't wobble the frame) and crops a W x H window so the face sits at face_y of the card."""
+import subprocess, sys
+import numpy as np, cv2
+src, out, W, H = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]); fy = float(sys.argv[5]) if len(sys.argv) > 5 else 0.42
+cap = cv2.VideoCapture(src); fps = cap.get(cv2.CAP_PROP_FPS)
+import os
+det = None  # YuNet face detector (opencv_zoo), created on the first frame
+frames, cy, cx = [], [], []
+while True:
+    ok, f = cap.read()
+    if not ok: break
+    f = cv2.resize(f, (W, int(round(f.shape[0] * W / f.shape[1] / 2)) * 2)); frames.append(f)
+    g = cv2.resize(f, None, fx=.4, fy=.4)
+    if det is None: det = cv2.FaceDetectorYN.create(os.path.join(os.path.dirname(os.path.abspath(__file__)), "face_yunet.onnx"), "", (g.shape[1], g.shape[0]), 0.6)
+    _, d = det.detect(g)
+    if d is not None and len(d): x, y, w, h = max(d[:, :4], key=lambda r: r[2] * r[3]); cy.append((y + h / 2) / .4); cx.append((x + w / 2) / .4)
+    else: cy.append(np.nan); cx.append(np.nan)
+FH = frames[0].shape[0]; cy = np.array(cy)
+idx = np.arange(len(cy)); ok = ~np.isnan(cy)
+cy = np.interp(idx, idx[ok], cy[ok]) if ok.any() else np.full(len(cy), FH * .4)
+k = int(fps * 0.6) | 1; pad = np.pad(cy, k // 2, mode="edge"); cy = np.convolve(pad, np.ones(k) / k, mode="valid")   # smooth ~0.6 s
+# dead-zone: follow only when the face drifts > 3% of the card
+ys, cur = [], cy[0]
+for v in cy:
+    if abs(v - cur) > H * .03: cur += (v - cur) - np.sign(v - cur) * H * .03
+    ys.append(cur)
+top = np.clip(np.array(ys) - fy * H, 0, FH - H).astype(int)
+p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-r", str(fps), "-i", "-",
+                      "-i", src, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "14", "-preset", "fast", "-c:a", "copy", out], stdin=subprocess.PIPE)
+for f, t in zip(frames, top): p.stdin.write(f[t:t + H].tobytes())
+p.stdin.close(); p.wait()
+print("face found in", int(ok.sum()), "/", len(ok), "frames; crop top range", top.min(), "-", top.max())
+````
+
+
 ### `projekty/styl8/engine/overlay8.html`
 
 ````html
@@ -3657,44 +3734,148 @@ window.seek=(t)=>{const L=SPEC.layout,s=SPEC,items=s.items;let handPos=null,hand
 ````
 
 
-### `projekty/styl8/facecrop.py`
+### `projekty/styl9/build_spec9.py`
 
 ````python
 #!/usr/bin/env python3
-"""Face-tracked crop for the rounded video card.  usage: facecrop.py IN.mp4 OUT.mp4 W H [face_y=0.42]
-Scales the source to width W, detects the face every frame (OpenCV YuNet), smooths the centre (centred moving average,
-dead-zone so small head moves don't wobble the frame) and crops a W x H window so the face sits at face_y of the card."""
-import subprocess, sys
-import numpy as np, cv2
-src, out, W, H = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]); fy = float(sys.argv[5]) if len(sys.argv) > 5 else 0.42
-cap = cv2.VideoCapture(src); fps = cap.get(cv2.CAP_PROP_FPS)
-import os
-det = None  # YuNet face detector (opencv_zoo), created on the first frame
-frames, cy, cx = [], [], []
-while True:
-    ok, f = cap.read()
-    if not ok: break
-    f = cv2.resize(f, (W, int(round(f.shape[0] * W / f.shape[1] / 2)) * 2)); frames.append(f)
-    g = cv2.resize(f, None, fx=.4, fy=.4)
-    if det is None: det = cv2.FaceDetectorYN.create(os.path.join(os.path.dirname(os.path.abspath(__file__)), "face_yunet.onnx"), "", (g.shape[1], g.shape[0]), 0.6)
-    _, d = det.detect(g)
-    if d is not None and len(d): x, y, w, h = max(d[:, :4], key=lambda r: r[2] * r[3]); cy.append((y + h / 2) / .4); cx.append((x + w / 2) / .4)
-    else: cy.append(np.nan); cx.append(np.nan)
-FH = frames[0].shape[0]; cy = np.array(cy)
-idx = np.arange(len(cy)); ok = ~np.isnan(cy)
-cy = np.interp(idx, idx[ok], cy[ok]) if ok.any() else np.full(len(cy), FH * .4)
-k = int(fps * 0.6) | 1; pad = np.pad(cy, k // 2, mode="edge"); cy = np.convolve(pad, np.ones(k) / k, mode="valid")   # smooth ~0.6 s
-# dead-zone: follow only when the face drifts > 3% of the card
-ys, cur = [], cy[0]
-for v in cy:
-    if abs(v - cur) > H * .03: cur += (v - cur) - np.sign(v - cur) * H * .03
-    ys.append(cur)
-top = np.clip(np.array(ys) - fy * H, 0, FH - H).astype(int)
-p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-r", str(fps), "-i", "-",
-                      "-i", src, "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-crf", "14", "-preset", "fast", "-c:a", "copy", out], stdin=subprocess.PIPE)
-for f, t in zip(frames, top): p.stdin.write(f[t:t + H].tobytes())
-p.stdin.close(); p.wait()
-print("face found in", int(ok.sum()), "/", len(ok), "frames; crop top range", top.min(), "-", top.max())
+"""Style 9 (LEGO AI ad) spec.  usage: build_spec9.py WORKDIR NAME   (WORKDIR/NAME.mp4 + WORKDIR/tr_NAME.json)
+Captions from the script aligned onto whisper times (1-2 words, hard cuts), never crossing a hook boundary cut;
+plus the original's extra layer (red boxes, money rain/burst, CTA arrow) and blur-in on a few section cuts (done in compose)."""
+import difflib, json, os, re, subprocess, sys
+WD, NAME = sys.argv[1], sys.argv[2]
+HERE = os.path.dirname(os.path.abspath(__file__)); EM = os.path.join(HERE, "engine", "emoji_apple")
+norm = lambda t: re.sub(r"[^\w]", "", t.lower())
+WEAK = {"i", "w", "z", "na", "do", "a", "o", "że", "się", "to", "nie", "co", "ale", "ten", "niż", "go", "za", "tam", "bo", "od", "ci"}
+s6 = open(os.path.join(HERE, "..", "styl6", "build_spec6.py")).read()
+exec(s6[s6.index("def align"):s6.index("src = os.path.join")])      # align() + chunk() from style 6
+
+SCRIPT = ("Otwórz TikToka. Zobaczysz tam dziesiątki postaci wygenerowanych przez sztuczną inteligencję. Ale najciekawsze jest to, "
+          "że takie postacie są wykorzystywane do zarabiania tysięcy złotych miesięcznie. I nie, nie chodzi o pieniądze z wyświetleń. "
+          "Otwórz TikToka i znajdź dowolną postać stworzoną przez AI. Teraz sprawdź jedną rzecz. Link w jej bio, bo właśnie tam może "
+          "kryć się cały biznes, o którym większość ludzi nie ma pojęcia. Za takimi profilami często może stać coś znacznie ciekawszego "
+          "niż same filmiki. Wyobraź sobie postać AI, która codziennie pokazuje proste przepisy kulinarne. A w swoim bio sprzedaje "
+          "poradnik z przepisami za 79 złotych. Ktoś ogląda filmik, klika link i kupuje produkt. Bez magazynu. Bez wysyłania paczek. A ten "
+          "sam produkt można sprzedawać wielokrotnie. I tutaj robi się naprawdę ciekawie. Bo AI może pomóc Ci nie tylko stworzyć taką "
+          "postać. Może również znaleźć pomysł na produkt, przeanalizować rynek, stworzyć sam produkt, zbudować stronę sprzedażową "
+          "i przygotować marketing. Czyli wykonać dużą część pracy, do której kiedyś potrzebowałeś kilku różnych umiejętności. "
+          "Konrad, twórca Cyfrowego Autopilota, sprzedaje produkty cyfrowe od ponad 3 lat. W swoim najlepszym dniu sprzedał aż 941 "
+          "e-booków. I na podstawie swojego doświadczenia stworzył system, który pokazuje, jak wykorzystać AI do budowania własnego "
+          "biznesu cyfrowego. Od pomysłu do produktu i strony gotowej do sprzedaży w 48 godzin. Kliknij poniżej i zobacz, jak zacząć "
+          "budować własny biznes cyfrowy z AI.")
+HOOK_CUTS = (12.767, 23.133)        # hook 1 | hook 2 | body: no caption may straddle these (Konrad cuts the variants himself)
+src = os.path.join(WD, NAME + ".mp4")
+dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src], capture_output=True, text=True).stdout)
+words = [w for s in json.load(open(os.path.join(WD, "tr_" + NAME + ".json"))) for w in s["words"]]
+toks = align(words, SCRIPT)
+for a, b in zip(toks, toks[1:]):                     # show "79 zł" although "79 złotych" is said
+    if a["d"] == "79" and b["d"].startswith("złotych"): b["d"] = "zł" + b["d"][7:]
+ch = chunk(toks, maxw=2, maxc=14)
+merged = []                                          # no flash chunks: anything under 0.3 s joins its neighbour
+for c in ch:
+    if merged and (c[0]["t"] - merged[-1][0]["t"] < 0.3 or merged[-1][-1]["d"] == "79") and len(" ".join(w["d"] for w in merged[-1] + c)) <= 20 \
+            and not merged[-1][-1]["d"].endswith((".", "?", "!")):
+        merged[-1] = merged[-1] + c
+    else: merged.append(c)
+ch = merged
+caps = []
+for i, c in enumerate(ch):
+    nxt = ch[i + 1][0]["t"] - 0.03 if i + 1 < len(ch) else dur
+    t1 = nxt if nxt - c[-1]["e"] < 0.6 else min(nxt, c[-1]["e"] + 0.3)
+    caps.append(dict(t0=round(max(0, c[0]["t"] - 0.03), 3), t1=round(t1, 3), text=" ".join(w["d"] for w in c).rstrip(",")))
+for cut in HOOK_CUTS:
+    for cp in caps:
+        if cp["t0"] < cut < cp["t1"]:
+            if cut - cp["t0"] > cp["t1"] - cut: cp["t1"] = cut
+            else: cp["t0"] = cut
+I = lambda c: os.path.join(EM, c + ".png")
+MONEY, COINS = ["💵", "💵", "💸", "💵", "💰"], ["💰", "💵"]
+FX = [dict(type="rain", t0=8.15, t1=10.43, emo=MONEY, n=26, spawn=1.3, seed=11),                 # "zarabiania tysięcy złotych miesięcznie"
+      dict(type="box", t0=18.1, t1=18.66, x=350, y=1000, w=565, h=140, rot=3, r=34),              # "Link w jej bio"
+      dict(type="box", t0=35.85, t1=37.36, x=595, y=1345, w=275, h=150, r=22),                     # "79 zł"
+      dict(type="rain", t0=43.4, t1=44.75, emo=COINS, n=14, spawn=.8, seed=5),                   # "sprzedawać wielokrotnie"
+      dict(type="burst", t0=68.84, t1=70.9, x=540, y=760, emo=MONEY, n=30, seed=9),              # "941"
+      dict(type="arrow", t0=84.05, t1=dur, x=540, y=1560, size=170)]                              # CTA
+BLUR_CUTS = [12.767, 23.133, 28.4, 62.067, 78.033]  # section changes: 0.2 s blur-in like the original
+HIDE = [[66.7, 70.86]]                               # 941 scene already shows "e-booków w najlepszym dniu"
+spec = dict(dur=round(dur, 3), fps=30, capY=0.645, caps=caps, fx=FX, blurCuts=BLUR_CUTS, hideCaps=HIDE)
+json.dump(spec, open(os.path.join(WD, f"spec9_{NAME}.json"), "w"), ensure_ascii=False, indent=1)
+for c in caps: print(f'{c["t0"]:6.2f} {c["text"]}')
+````
+
+
+### `projekty/styl9/compose9.py`
+
+````python
+#!/usr/bin/env python3
+"""Style 9 compositor: source video + 0.2 s blur-in on spec["blurCuts"] + overlay PNG frames (+ original audio).
+usage: compose9.py SPEC.json SRC.mp4 FRAMES_DIR OUT.mp4"""
+import json, subprocess, sys
+spec, src, frames, out = json.load(open(sys.argv[1])), sys.argv[2], sys.argv[3], sys.argv[4]
+win = lambda a, b: "+".join(f"between(t,{c + a:.3f},{c + b:.3f})" for c in spec.get("blurCuts", [])) or "0"
+vf = (f"[0:v]gblur=sigma=22:enable='{win(0, .1)}',gblur=sigma=9:enable='{win(.1, .2)}',gblur=sigma=3:enable='{win(.2, .27)}'[v];"
+      f"[v][1]overlay=format=auto:eof_action=pass,format=yuv420p")
+subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-framerate", str(spec.get("fps", 30)), "-i", f"{frames}/f_%05d.png",
+                "-filter_complex", vf, "-map", "0:a", "-c:v", "libx264", "-crf", "16", "-preset", "medium", "-c:a", "aac", "-b:a", "192k", out], check=True)
+print("wrote", out)
+````
+
+
+### `projekty/styl9/engine/overlay9.html`
+
+````html
+<!doctype html><html><head><meta charset="utf-8">
+<!-- Style 9: LEGO AI ad (friend's "Walmart" reel). Montserrat Bold captions (1-3 words, hard cuts, ~64% height) plus the
+     original's extra layer: red highlight box drawn around a UI element, money rain, money burst, bouncing yellow arrow. -->
+<link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/montserrat.css">
+<style>
+html,body{margin:0;background:transparent}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+#cap{position:absolute;left:40px;right:40px;text-align:center;transform:translateY(-50%);font-family:'Montserrat',sans-serif;font-weight:700;
+ font-size:70px;color:#fff;letter-spacing:-.01em;line-height:1.05;white-space:nowrap;
+ -webkit-text-stroke:3px rgba(0,0,0,.95);paint-order:stroke fill;
+ text-shadow:0 0 4px rgba(0,0,0,.9),0 3px 8px rgba(0,0,0,1),0 6px 30px rgba(0,0,0,.7)}  /* Konrad: cień +50-60% */
+svg.fx{position:absolute;left:0;top:0;overflow:visible}
+.p{position:absolute;will-change:transform}
+</style></head><body><div id="stage"><div id="cap"></div></div>
+<script>
+let SPEC=null,last=-2;const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const cl=x=>Math.max(0,Math.min(1,x)),E=t=>1-Math.pow(1-t,3);
+function rnd(seed){let s=seed>>>0||1;return()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+const B={};
+// red rounded box drawn around a UI element (stroke animates on), optional rotation to follow a tilted phone
+B.box=o=>{const s=document.createElementNS(NS,'svg');s.setAttribute('class','fx');s.setAttribute('width',1080);s.setAttribute('height',1920);
+ const r=document.createElementNS(NS,'rect');Object.entries({x:o.x,y:o.y,width:o.w,height:o.h,rx:o.r||18,fill:'none',stroke:o.color||'#FF2B2B','stroke-width':o.sw||9,
+  'stroke-linecap':'round',transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`}).forEach(([k,v])=>r.setAttribute(k,v));
+ r.style.filter='drop-shadow(0 4px 10px rgba(0,0,0,.35))';s.appendChild(r);$('stage').appendChild(s);o.e=s;o.r=r;o.len=2*(o.w+o.h)};
+B.box.u=(o,t)=>{const p=E(cl((t-o.t0)/(o.draw||.35)));o.r.setAttribute('stroke-dasharray',o.len);o.r.setAttribute('stroke-dashoffset',o.len*(1-p))};
+// money rain: bills + coins fall from above the frame with spin and a touch of motion blur
+B.rain=o=>{const R=rnd(o.seed||7),n=o.n||34;o.ps=[];for(let i=0;i<n;i++){const im=document.createElement('div');im.className='p';
+ im.textContent=o.emo[i%o.emo.length];const sz=110+R()*90;Object.assign(im.style,{fontSize:sz+'px',lineHeight:1,fontFamily:'Noto Color Emoji'});$('stage').appendChild(im);
+ o.ps.push({im,x:R()*1080,delay:R()*(o.spawn||1.2),v:900+R()*700,rot0:R()*360,vr:(R()-.5)*400,sway:20+R()*40,ph:R()*6,sz})}o.e=o.ps.map(p=>p.im)};
+B.rain.u=(o,t)=>{const dt=t-o.t0;o.ps.forEach(p=>{const a=dt-p.delay;const y=-160+a*p.v;
+ if(a<0||y>2000){p.im.style.display='none';return}p.im.style.display='block';
+ p.im.style.transform=`translate(${p.x+Math.sin(a*3+p.ph)*p.sway-p.sz/2}px,${y}px) rotate(${p.rot0+a*p.vr}deg)`;p.im.style.filter=`blur(${Math.min(2.5,p.v/700)}px)`})};
+// money burst: bills fly outward from a point, then fall
+B.burst=o=>{const R=rnd(o.seed||3),n=o.n||26;o.ps=[];for(let i=0;i<n;i++){const im=document.createElement('div');im.className='p';im.textContent=o.emo[i%o.emo.length];
+ const sz=110+R()*80;Object.assign(im.style,{fontSize:sz+'px',lineHeight:1,fontFamily:'Noto Color Emoji'});$('stage').appendChild(im);
+ const ang=R()*Math.PI*2,sp=900+R()*1300;o.ps.push({im,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp-600,rot0:R()*360,vr:(R()-.5)*700,sz})}o.e=o.ps.map(p=>p.im)};
+B.burst.u=(o,t)=>{const a=t-o.t0;o.ps.forEach(p=>{const x=o.x+p.vx*a,y=o.y+p.vy*a+1400*a*a;
+ if(a<0||y>2050){p.im.style.display='none';return}p.im.style.display='block';
+ p.im.style.transform=`translate(${x-p.sz/2}px,${y-p.sz/2}px) rotate(${p.rot0+p.vr*a}deg) scale(${.4+.6*E(cl(a/.25))})`})};
+// yellow 3D arrow pointing down, bouncing (CTA)
+B.arrow=o=>{const d=document.createElement('div');d.className='p';
+ d.innerHTML=`<svg width="${o.size||170}" height="${(o.size||170)*1.15}" viewBox="0 0 100 115"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFE45C"/><stop offset=".55" stop-color="#FFD21F"/><stop offset="1" stop-color="#E5A800"/></linearGradient></defs>
+ <path d="M33 6h34v52h24L50 109 9 58h24z" fill="#B88400" transform="translate(4 5)"/><path d="M33 6h34v52h24L50 109 9 58h24z" fill="url(#ag)" stroke="#fff3" stroke-width="2"/></svg>`;
+ d.style.filter='drop-shadow(0 8px 14px rgba(0,0,0,.45))';$('stage').appendChild(d);o.e=d};
+B.arrow.u=(o,t)=>{const a=t-o.t0,s=o.size||170;const pop=E(cl(a/.25));const b=Math.abs(Math.sin(a*Math.PI*2.2))*26;
+ o.e.style.transform=`translate(${o.x-s/2}px,${o.y-s*.575+b}px) scale(${.6+.4*pop})`;o.e.style.opacity=cl(a/.12)};
+window.init=s=>{SPEC=s;s.fx.forEach(o=>B[o.type](o));return true};
+window.seek=t=>{SPEC.fx.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const els=Array.isArray(o.e)?o.e:[o.e];
+  if(!on){els.forEach(e=>e.style.display='none');return}if(!Array.isArray(o.e))o.e.style.display='block';B[o.type].u(o,t)});
+ const c=$('cap');const hid=(SPEC.hideCaps||[]).some(h=>t>=h[0]&&t<h[1]);const i=hid?-1:SPEC.caps.findIndex(b=>t>=b.t0-1e-3&&t<b.t1);
+ if(i!==last){last=i;if(i<0)c.style.visibility='hidden';else{c.textContent=SPEC.caps[i].text;c.style.visibility='visible'}}
+ c.style.top=(SPEC.capY*1920)+'px';return true};
+</script></body></html>
 ````
 
 
@@ -3725,7 +3906,9 @@ body{font-family:var(--f-body);font-size:15px;line-height:1.45;padding-inline:16
 header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 h1{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;margin:0}
 .sub{color:var(--muted);font-size:13px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding-bottom:4px;scrollbar-width:thin}
+.tab{flex:none;white-space:nowrap}
+.tab .ok{color:var(--accent-2);margin-left:6px}
 .tab{font:600 14px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:8px 14px;border-radius:999px;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .tab .n{font-family:var(--f-mono);font-size:11px;margin-left:6px;opacity:.75}
@@ -3774,6 +3957,15 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
 .link{background:none;border:0;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;padding:0;text-decoration:underline}
 .blank{color:var(--muted);font-size:14px;padding:12px 4px}
 .status{font-size:13px;color:var(--muted);min-height:18px}
+.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:600 13px var(--f-mono);background:var(--panel);color:var(--fg);border:0;padding:7px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:var(--bg)}
+select.ver{font:600 13px var(--f-display);border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:10px;padding:7px 10px}
+.approve{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.approve .st{font-size:13px;color:var(--muted);flex:1;min-width:160px}
+.approve .st b{color:var(--accent)}
 </style>
 
 <div class="wrap">
@@ -3797,6 +3989,16 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
         <div class="bar" id="bar"><div class="track"></div><div class="fill" id="fill"></div><div id="marks"></div></div>
         <span class="time" id="time">0:00.0 / 0:00</span>
       </div>
+      <div class="tools">
+        <div class="seg" id="speed" aria-label="Prędkość"><button data-r="0.5">0.5×</button><button data-r="1" class="on">1×</button><button data-r="1.5">1.5×</button><button data-r="2">2×</button></div>
+        <div class="seg"><button id="fb" aria-label="Klatka wstecz">◀ klatka</button><button id="ff" aria-label="Klatka dalej">klatka ▶</button></div>
+        <select class="ver" id="ver" aria-label="Wersja filmu"></select>
+      </div>
+      <div class="approve">
+        <div class="st" id="apSt">Ta wersja czeka na Twoją decyzję.</div>
+        <button class="btn" id="send">Wyślij poprawki</button>
+        <button class="btn primary" id="approveBtn">Zatwierdź wersję</button>
+      </div>
       <div class="compose">
         <div class="hint" id="hint">Uwaga przy <b id="atTime">0:00.0</b>. Kliknięcie w kadr dodaje kropkę (opcjonalnie).</div>
         <textarea id="txt" placeholder="Np. animacja za krótka, przytrzymaj ją do końca zdania"></textarea>
@@ -3819,7 +4021,7 @@ textarea{width:100%;min-height:72px;resize:vertical;font:inherit;color:var(--fg)
 const $=id=>document.getElementById(id);
 const vid=$('vid'), hit=$('hit'), stage=$('stage');
 let db=null, me=null, users=null;
-let videos=[], cur=null, notes=[], pending=null, activeId=null, unsubNotes=null;
+let videos=[], cur=null, notes=[], pending=null, activeId=null, unsubNotes=null, approvals={}, viewVer=null;
 const fmt=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(1)};
 const fmtShort=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=Math.floor(t-m*60);return m+':'+(s<10?'0':'')+s};
 
@@ -3828,18 +4030,27 @@ function renderTabs(){
   videos.forEach(v=>{const b=document.createElement('button');b.className='tab';b.setAttribute('role','tab');
     b.setAttribute('aria-selected',cur&&cur.id===v.id?'true':'false');b.textContent=v.title||v.id;
     if(v.ver){const n=document.createElement('span');n.className='n';n.textContent='v'+v.ver;b.appendChild(n)}
+    const ap=approvals[v.id];if(ap&&ap.ver===v.ver){const k=document.createElement('span');k.className='ok';k.textContent='✓';k.title='Zatwierdzone';b.appendChild(k)}
     b.onclick=()=>select(v.id);tabs.appendChild(b)});
 }
 function select(id){
   cur=videos.find(v=>v.id===id)||null; renderTabs(); pending=null; activeId=null;
   $('emptyStage').hidden=!!cur;
-  if(cur){const src=cur.url||('/_blob/'+cur.asset); if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}}
+  viewVer=null;loadSrc();renderVer();renderApprove();
   try{localStorage.setItem('vr-cur',id)}catch(e){}
   if(unsubNotes){unsubNotes();unsubNotes=null}
   notes=[];renderNotes();
   if(db&&cur){unsubNotes=db.collection('notes').where('video','==',cur.id).onSnapshot(s=>{
     notes=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.t-b.t);renderNotes()},e=>status('Nie udało się wczytać uwag: '+e.message))}
 }
+function versionsOf(v){const list=(v.versions||[]).slice();if(!list.some(x=>x.ver===v.ver))list.push({ver:v.ver||1,url:v.url||('/_blob/'+v.asset)});return list.sort((a,b)=>b.ver-a.ver)}
+function loadSrc(){if(!cur)return;const vs=versionsOf(cur);const pick=vs.find(x=>x.ver===viewVer)||vs[0];const src=pick.url;
+  if(vid.getAttribute('src')!==src){const t=vid.currentTime;vid.src=src;vid.load();if(viewVer!=null)vid.addEventListener('loadedmetadata',()=>{vid.currentTime=t},{once:true});vid.playbackRate=rate}}
+function renderVer(){const s=$('ver');s.innerHTML='';if(!cur)return;versionsOf(cur).forEach((x,i)=>{const o=document.createElement('option');o.value=x.ver;
+  o.textContent='Wersja '+x.ver+(i===0?' (najnowsza)':'');if((viewVer??versionsOf(cur)[0].ver)===x.ver)o.selected=true;s.appendChild(o)});s.hidden=versionsOf(cur).length<2}
+function renderApprove(){if(!cur)return;const ap=approvals[cur.id];const st=$('apSt');
+  if(ap&&ap.ver===cur.ver){st.innerHTML='<b>Zatwierdzone</b> (wersja '+ap.ver+'). Claude robi z tej wersji FINAL.';$('approveBtn').textContent='Cofnij zatwierdzenie'}
+  else{st.textContent=ap&&ap.sent===cur.ver?'Poprawki wysłane. Claude pracuje nad wersją '+(cur.ver+1)+'.':'Ta wersja czeka na Twoją decyzję.';$('approveBtn').textContent='Zatwierdź wersję'}}
 function renderMarks(){
   const d=vid.duration||cur?.dur||0;const m=$('marks');m.innerHTML='';if(!d)return;
   notes.forEach(n=>{const k=document.createElement('div');k.className='mk'+(n.status==='done'?' done':'');k.style.left=(n.t/d*100)+'%';m.appendChild(k)});
@@ -3889,6 +4100,13 @@ function videoBox(){const r=stage.getBoundingClientRect();const vw=vid.videoWidt
 hit.addEventListener('click',e=>{if(!cur)return;vid.pause();const b=videoBox();const x=(e.clientX-b.r.left-b.x)/b.w,y=(e.clientY-b.r.top-b.y)/b.h;
   if(x<0||x>1||y<0||y>1)return;pending={t:vid.currentTime,x:+x.toFixed(4),y:+y.toFixed(4)};tick();$('txt').focus()});
 $('clearDot').onclick=()=>{pending=null;tick()};
+let rate=1;$('speed').querySelectorAll('button').forEach(b=>b.onclick=()=>{rate=+b.dataset.r;vid.playbackRate=rate;$('speed').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))});
+$('fb').onclick=()=>{vid.pause();vid.currentTime=Math.max(0,vid.currentTime-1/30)};$('ff').onclick=()=>{vid.pause();vid.currentTime=vid.currentTime+1/30};
+$('ver').onchange=()=>{viewVer=+$('ver').value;loadSrc()};
+$('approveBtn').onclick=async()=>{if(!db||!cur)return;const ap=approvals[cur.id]||{};const on=!(ap.ver===cur.ver);
+  try{await db.collection('approvals').doc(cur.id).set({...ap,ver:on?cur.ver:null,at:new Date().toISOString(),by:me||null});status(on?'Zatwierdzono wersję '+cur.ver+'.':'Cofnięto zatwierdzenie.')}catch(e){status('Nie zapisano: '+(e.message||e.code))}};
+$('send').onclick=async()=>{if(!db||!cur)return;const open=notes.filter(n=>n.status!=='done').length;if(!open){status('Brak otwartych uwag do wysłania.');return}
+  try{await db.collection('approvals').doc(cur.id).set({...(approvals[cur.id]||{}),sent:cur.ver,sentAt:new Date().toISOString(),openNotes:open});status('Wysłano '+open+' uwag. Napisz Claude’owi „poprawki z review”.')}catch(e){status('Nie zapisano: '+(e.message||e.code))}};
 $('save').onclick=async()=>{const text=$('txt').value.trim();if(!text){status('Wpisz treść uwagi.');return}
   if(!db){status('Zapis niedostępny w tym widoku. Zaloguj się w claude.ai.');return}if(!cur)return;
   const n={video:cur.id,t:+(pending?pending.t:vid.currentTime).toFixed(2),x:pending?pending.x:null,y:pending?pending.y:null,text,status:'open',version:cur.ver||1,created:new Date().toISOString(),author:me||null};
@@ -3904,10 +4122,11 @@ $('save').onclick=async()=>{const text=$('txt').value.trim();if(!text){status('W
     videos=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.order||0)-(b.order||0));
     let want=null;try{want=localStorage.getItem('vr-cur')}catch(e){}
     const keep=cur&&videos.find(v=>v.id===cur.id);
-    if(keep){cur=keep;const src=cur.url||('/_blob/'+cur.asset);if(vid.getAttribute('src')!==src){vid.src=src;vid.load()}renderTabs()}
+    if(keep){const newer=keep.ver!==cur.ver;cur=keep;if(newer)viewVer=null;loadSrc();renderVer();renderApprove();renderTabs()}
     else if(videos.length)select((videos.find(v=>v.id===want)||videos[0]).id);
     else renderTabs();
   },e=>status('Nie udało się wczytać filmów: '+e.message));
+  db.collection('approvals').onSnapshot(s=>{approvals={};s.docs.forEach(d=>approvals[d.id]=d.data());renderTabs();renderApprove()},()=>{});
 })();
 </script>
 ````

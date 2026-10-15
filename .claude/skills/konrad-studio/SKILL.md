@@ -83,11 +83,26 @@ Ręczne polecenia poniżej nadal działają (to te same narzędzia).
    x264 slow CRF 16; `--upto SEC` na szybki fragment). Nie pisz już własnego `final_vN.py` dla projektu.
    Styl face-first („Ciężka praca” v2): `--index index.json --reedit edit/reedit.json --zooms auto [--zoom 114] --audio comp`
    (zbliżenia 100↔114% na początkach zdań, karty bez zbliżenia, przycięte b-rolle, wyciszenia kart — plan identyczny z final_v2.py).
-7c. **Video Review (uwagi Konrada z timestampami):** `$PY review/review.py PROJ` → http://127.0.0.1:8765 (tylko lokalnie).
-   Konrad ogląda podgląd, wpisuje uwagi (klik w kadr = kropka z komentarzem w tym miejscu; pasek animacji pod filmem), klika „WYŚLIJ POPRAWKI”. Przy każdej uwadze jest screenshot z kropką (review/shots) i numer animacji — obejrzyj go przed poprawką. Gdy pisze „poprawki z review”: `$PY review/review.py PROJ --notes`
-   („wytnij od X do Y” → `$PY $K/cut_span.py PROJ X Y …`, czasy z osi wersji, na której pisał — edl.json musi być tej wersji)
-   (lista z czasem i tym, co mówi), wprowadź je zwykłymi narzędziami, potem `--reply ID "co zrobione"`. Nowy podgląd/FINAL
-   pojawia się tam sam jako kolejna wersja. „ZATWIERDŹ CIĘCIE” robi też `ks.py PROJ approve cut`. Nic się nie wykonuje samo.
+7c. **Video Review = dashboard montażu jak Frame.io** (`review/`): `$PY review/review.py PROJ` → http://127.0.0.1:8765 (lokalnie).
+   Odpalaj go od razu po pierwszym podglądzie i zostaw w tle. Każdy nowy plik w PROJ (CUT_preview → cięcie, FINAL → finał)
+   staje się sam kolejną wersją (v1, v2…; stare zostają jako twarde linki). Po restarcie sesji: odpal ponownie (port 8765).
+   - Układ: **lewa kolumna** = lista animacji z `anim/scenes.json` (miniatura, czas, typ, co mówi, liczba uwag; klik = skok),
+     **środek** = film (klik = start/pauza, szybkość 0,5–2×, pasek animacji pod osią), **prawa** = uwagi + pole komentarza.
+   - Uwagi: Enter = uwaga w tym momencie; „◎ Zaznacz na kadrze” → klik w kadr = kropka z numerem w tym miejscu;
+     „＋ Zdjęcie” / Cmd+V / przeciągnięcie = zdjęcie przy uwadze (wzór, screen). Każda uwaga sama zna numer animacji.
+   - Przełączniki: „pokaż zaznaczenia” (kropki), „oryginał bez animacji” (ten sam moment z ostatniego cięcia).
+   - Gdy Konrad pisze „wysłałem poprawki / poprawki z review”: `$PY review/review.py PROJ --notes` → lista z czasem, animacją,
+     punktem na kadrze, tym co mówi, **screenshotem z kropką** (`review/shots/ID.jpg`) i **jego zdjęciami** (`review/attach/`).
+     Obejrzyj każdy obrazek (Read) przed poprawką. „wytnij od X do Y” → `$PY $K/cut_span.py PROJ X Y …` (oś wersji, na której pisał).
+     Po poprawce: przelicz (ks.py run / build + render.sh + assemble.py) i `--reply ID "co zrobione"`.
+   - „ZATWIERDŹ CIĘCIE” robi też `ks.py PROJ approve cut`. Nic nie wykonuje się samo — poprawki robisz Ty.
+7d. **Animacje longform (aktualny silnik, od 2026-10-10): HyperFrames, biały Apple v2** — `templates/hyperframes_apple_v2/`
+   (README tam). Skopiuj do `PROJ/anim/`, pisz `buildN.py` partiami ~25 scen (wzór: `examples/longform_3modele/` — 78 scen
+   + PLAN_ANIMACJI.md), `chk.sh` = szkic + arkusz, `sheet_batch.py` = arkusz partii dla Konrada, `render.sh` = finalna
+   jakość, `sfx.py` = dźwięki z kodu scen, potem `assemble.py --scenes anim/scenes.json --sfx SFX.wav --settle 0.3 --zooms auto`.
+   Partię pokaż też w Video Review: `assemble.py … --upto SEC --profile vt` (szybki podgląd).
+7e. **Muzyka bez pracy Konrada:** 3 utwory z vidIQ (napięcie/środek/finał) + `examples/music_bed_longform.py`
+   (drop na słowie, cisze na puentach, pod głosem ~−30 LUFS). Zasady: `references/muzyka.md`. Oddaj FINAL (z muzyką) + _bez-muzyki.
 8. **Oddanie:**
    - `check.py tel FULL.mp4` i wysłanie przez SendUserFile,
    - raport po polsku: pliki, liczby scen, a na pierwszym miejscu rzeczy do sprawdzenia
