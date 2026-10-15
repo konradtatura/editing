@@ -80,7 +80,7 @@ Wszystkie: 1080×1920, 30 fps, twarde cięcia, zoom tylko na cięciach, CTA z pr
 
 ## Styl 9: LEGO AI (reklama znajomego „Walmart”, ailego12)
 - Kod: `projekty/styl9/` (`build_spec9.py WORKDIR NAME`, `engine/overlay9.html`, `compose9.py`). Font `assets/fonts/montserrat.css`.
-- Napisy: Montserrat 700, 70 px, biały z czarnym obrysem 2,5 px i cieniem, 1–2 słowa, twarde przełączanie, jedna wysokość (capY 0.645).
+- Napisy: Montserrat 700, 70 px, biały, czarny obrys 3 px + cień `0 0 4px .9, 0 3px 8px 1, 0 6px 30px .7` (Konrad: +50–60% vs v1), 1–2 słowa, twarde przełączanie, jedna wysokość (capY 0.645).
   Krótkie kawałki (<0,3 s) łączą się z sąsiadem, „79 zł” zawsze razem. Napisy nie przechodzą przez cięcia hooków (`HOOK_CUTS`).
   `hideCaps`: wyłącza napisy tam, gdzie film ma już wtopiony tekst (u ailego12 scena 941).
 - Efekty (tylko tam, gdzie film Konrada nie ma już grafiki): czerwona ramka rysowana wokół elementu UI (`box`, `#FF2B2B`, 0,35 s),
