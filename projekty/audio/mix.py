@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Music + SFX mix for a finished ad.  usage: mix.py CUES.json IN.mp4 OUT.mp4
-CUES = {"music": path, "musicStart": s, "musicDb": dB (gain before ducking), "fadeOut": s,
-        "sfx": [{"t": s, "f": path, "db": dB, "peak": true}]}   peak=true aligns the loudest point of the sound to t.
-Voice ducks the music (sidechain), everything is normalised to -14 LUFS / -1.5 dBTP for Meta."""
+CUES = {"music": path (optional: SFX-only mix without it), "musicStart": s, "musicDb": dB (gain before ducking), "fadeOut": s,
+        "sfx": [{"t": s, "f": path, "db": dB, "peak": true, "dur": s}]}
+peak=true aligns the loudest point of the sound to t; dur trims the sound (with a 30 ms fade) so it never crosses a hook cut.
+Voice ducks the music (sidechain). Measured static gain to -14 LUFS + limiter at -2.5 dBFS (≈ -1.5 dBTP after AAC) for Meta (no pumping on SFX)."""
 import json, subprocess, sys
 import numpy as np
 
 cues, src, out = json.load(open(sys.argv[1])), sys.argv[2], sys.argv[3]
 dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src], capture_output=True, text=True).stdout)
 _peaks = {}
+ST = "aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo"
 
 
 def peak(f):  # seconds from file start to its loudest sample
@@ -18,16 +20,29 @@ def peak(f):  # seconds from file start to its loudest sample
     return _peaks[f]
 
 
-ins = ["-i", src, "-i", cues["music"]]
-fc = [f"[0:a]aresample=48000,asplit=2[vo][sc]",
-      f"[1:a]aresample=48000,atrim=start={cues.get('musicStart', 0)},asetpts=PTS-STARTPTS,atrim=0:{dur},volume={cues.get('musicDb', -18)}dB,"
-      f"afade=t=in:d=0.4,afade=t=out:st={dur - cues.get('fadeOut', 1.5):.3f}:d={cues.get('fadeOut', 1.5)}[mu]",
-      "[mu][sc]sidechaincompress=threshold=0.02:ratio=5:attack=15:release=350:makeup=1[duck]"]
-mixin = ["[vo]", "[duck]"]
-for k, s in enumerate(cues.get("sfx", [])):
+ins, mixin = ["-i", src], ["[vo]"]
+fc = [f"[0:a]{ST},asplit=2[vo][sc]"]
+if cues.get("music"):
+    ins += ["-i", cues["music"]]
+    fc += [f"[1:a]{ST},atrim=start={cues.get('musicStart', 0)},asetpts=PTS-STARTPTS,atrim=0:{dur},volume={cues.get('musicDb', -18)}dB,"
+           f"afade=t=in:d=0.4,afade=t=out:st={dur - cues.get('fadeOut', 1.5):.3f}:d={cues.get('fadeOut', 1.5)}[mu]",
+           "[mu][sc]sidechaincompress=threshold=0.02:ratio=5:attack=15:release=350:makeup=1[duck]"]
+    mixin.append("[duck]")
+else:
+    fc.append("[sc]anullsink")
+for s in cues.get("sfx", []):
+    k = len(ins) // 2
     ins += ["-i", s["f"]]; t = max(0.0, s["t"] - (peak(s["f"]) if s.get("peak") else 0.0))
-    fc.append(f"[{k + 2}:a]aresample=48000,volume={s.get('db', -10)}dB,adelay={int(t * 1000)}:all=1[s{k}]"); mixin.append(f"[s{k}]")
-fc.append("".join(mixin) + f"amix=inputs={len(mixin)}:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
-subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(fc), "-map", "0:v", "-map", "[a]",
-                "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", "-ar", "48000", "-movflags", "+faststart", out], check=True)
+    trim = f",atrim=0:{s['dur']:.3f},afade=t=out:st={max(0, s['dur'] - .03):.3f}:d=0.03" if s.get("dur") else ""
+    fc.append(f"[{k}:a]{ST}{trim},volume={s.get('db', -10)}dB,adelay={int(t * 1000)}:all=1[s{k}]"); mixin.append(f"[s{k}]")
+fc.append("".join(mixin) + f"amix=inputs={len(mixin)}:normalize=0:duration=first[m]")
+graph = ";".join(fc)
+meas = subprocess.run(["ffmpeg", "-hide_banner", "-y", *ins, "-filter_complex", graph + ";[m]loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json[a]",
+                       "-map", "[a]", "-f", "null", "-"], capture_output=True, text=True).stderr
+m = json.loads(meas[meas.rindex("{"):meas.rindex("}") + 1])
+enc = "aac_at" if "aac_at" in subprocess.run(["ffmpeg", "-hide_banner", "-encoders"], capture_output=True, text=True).stdout else "aac"
+# ffmpeg 8.1 native aac overshoots limited material by up to +5 dB; Apple AudioToolbox (aac_at) keeps the ceiling
+gain = -14 - float(m["input_i"])                     # static gain to -14 LUFS, then a brickwall limiter for the peaks
+subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", graph + f";[m]volume={gain:.2f}dB,alimiter=limit=-2.5dB:attack=2:release=60:level=0[a]", "-map", "0:v", "-map", "[a]",
+                "-c:v", "copy", "-c:a", enc, "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], check=True)
 print("wrote", out)

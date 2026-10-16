@@ -35,3 +35,7 @@
 - „Dalej niewidoczne” zwykle oznacza bug, a nie za słabe wartości. Najpierw sprawdź, czy efekt w ogóle się renderuje (pojedyncza klatka, crop 1:1).
 - Jedna klatka do akceptacji przed pełnym renderem oszczędza 20 minut.
 - Po każdym przesunięciu jednego elementu sprawdź, w co teraz wchodzi (napisy niżej → zderzenie z trackerem).
+
+## Audio: natywny koder AAC w ffmpeg 8.1 (2026-10-15)
+- Po limiterze -2,5 dBFS wbudowany `aac` dawał szczyty +2,5…+6 dBFS (przester). Apple `aac_at` trzyma -2,4. `mix.py` sam wybiera `aac_at`, jeśli jest.
+- loudnorm w trybie dynamicznym pompuje przy SFX; używaj pomiaru + stałego gainu.
