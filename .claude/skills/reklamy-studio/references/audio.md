@@ -35,6 +35,9 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
   ka-ching na 79 zł, klik na „klika link”, powiadomienie na „kupuje”, monety na „wielokrotnie”, odwrócony talerz + boom przed „Bo AI”,
   boom + pieniądze na 941, klocki LEGO na kroki 1-2-3 i rząd ikon, klik na „Kliknij”, pop na strzałkę CTA.
   Na cięciach hooków (12,767 / 23,133) dźwięk startuje na cięciu, nic sprzed cięcia nie wybrzmiewa za nie.
+- Ad13 (film 13, styl 9, „gadający ziemniak”): `cues_ad13.py SFXDIR MUSIC OUT.json`. Ta sama paleta co ad12, poziomy przesunięte o różnicę
+  głośności głosu (`VO_SHIFT`). Muzyka 173 w segmentach (`musicSegments`): hooki od 0, body od 0 na cięciu body (utwór krótszy niż film).
+  Biblioteka SFX odtwarza się z `sources_ad12.json`: `fetch_sfx.py sources_ad12.json SFXDIR`.
 
 ## Zasady
 - SFX oszczędnie: ma brzmieć dopracowanie, nie efekciarsko.

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Music + SFX mix for a finished ad.  usage: mix.py CUES.json IN.mp4 OUT.mp4
 CUES = {"music": path (optional: SFX-only mix without it), "musicStart": s, "musicDb": dB (gain before ducking), "fadeOut": s,
+        "musicSegments": [[video_start, video_end, track_offset], ...] (restart the track per section, hard 20-30 ms joins on cuts),
         "duckThreshold": sidechain threshold (default 0.02; lower it for a quiet voice track),
         "sfx": [{"t": s, "f": path, "db": dB, "peak": true, "dur": s}]}
 peak=true aligns the loudest point of the sound to t; dur trims the sound (with a 30 ms fade) so it never crosses a hook cut.
@@ -25,8 +26,14 @@ ins, mixin = ["-i", src], ["[vo]"]
 fc = [f"[0:a]{ST},asplit=2[vo][sc]"]
 if cues.get("music"):
     ins += ["-i", cues["music"]]
-    fc += [f"[1:a]{ST},atrim=start={cues.get('musicStart', 0)},asetpts=PTS-STARTPTS,atrim=0:{dur},volume={cues.get('musicDb', -18)}dB,"
-           f"afade=t=in:d=0.4,afade=t=out:st={dur - cues.get('fadeOut', 1.5):.3f}:d={cues.get('fadeOut', 1.5)}[mu]",
+    segs = cues.get("musicSegments") or [[0, dur, cues.get("musicStart", 0)]]   # [video_start, video_end, track_offset]
+    fc.append(f"[1:a]{ST},asplit={len(segs)}" + "".join(f"[m{i}]" for i in range(len(segs))))
+    for i, (v0, v1, off) in enumerate(segs):
+        v1 = min(v1, dur); fin = 0.4 if i == 0 else 0.02
+        fc.append(f"[m{i}]atrim=start={off}:end={off + v1 - v0:.3f},asetpts=PTS-STARTPTS,afade=t=in:d={fin},"
+                  f"afade=t=out:st={max(0, v1 - v0 - .03):.3f}:d=0.03,adelay={int(v0 * 1000)}:all=1[ms{i}]")
+    fc += ["".join(f"[ms{i}]" for i in range(len(segs))) + f"amix=inputs={len(segs)}:normalize=0:duration=longest,atrim=0:{dur},"
+           f"volume={cues.get('musicDb', -18)}dB,afade=t=out:st={dur - cues.get('fadeOut', 1.5):.3f}:d={cues.get('fadeOut', 1.5)}[mu]",
            f"[mu][sc]sidechaincompress=threshold={cues.get('duckThreshold', 0.02)}:ratio=5:attack=15:release=350:makeup=1[duck]"]
     mixin.append("[duck]")
 else:
