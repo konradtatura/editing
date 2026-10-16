@@ -5,7 +5,7 @@
 <style>
 html,body{margin:0;background:transparent}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden}
-#cap{position:absolute;left:40px;right:40px;text-align:center;transform:translateY(-50%);font-family:'Montserrat',sans-serif;font-weight:700;
+#cap{position:absolute;z-index:10;left:40px;right:40px;text-align:center;transform:translateY(-50%);font-family:'Montserrat',sans-serif;font-weight:700;
  font-size:70px;color:#fff;letter-spacing:-.01em;line-height:1.05;white-space:nowrap;
  -webkit-text-stroke:3px rgba(0,0,0,.95);paint-order:stroke fill;
  text-shadow:0 0 4px rgba(0,0,0,.9),0 3px 8px rgba(0,0,0,1),0 6px 30px rgba(0,0,0,.7)}  /* Konrad: cień +50-60% */
@@ -22,7 +22,10 @@ B.box=o=>{const s=document.createElementNS(NS,'svg');s.setAttribute('class','fx'
  const r=document.createElementNS(NS,'rect');Object.entries({x:o.x,y:o.y,width:o.w,height:o.h,rx:o.r||18,fill:'none',stroke:o.color||'#FF2B2B','stroke-width':o.sw||9,
   'stroke-linecap':'round',transform:`rotate(${o.rot||0} ${o.x+o.w/2} ${o.y+o.h/2})`}).forEach(([k,v])=>r.setAttribute(k,v));
  r.style.filter='drop-shadow(0 4px 10px rgba(0,0,0,.35))';s.appendChild(r);$('stage').appendChild(s);o.e=s;o.r=r;o.len=2*(o.w+o.h)};
-B.box.u=(o,t)=>{const p=E(cl((t-o.t0)/(o.draw||.35)));o.r.setAttribute('stroke-dasharray',o.len);o.r.setAttribute('stroke-dashoffset',o.len*(1-p))};
+B.box.u=(o,t)=>{const p=E(cl((t-o.t0)/(o.draw||.35)));o.r.setAttribute('stroke-dasharray',o.len);o.r.setAttribute('stroke-dashoffset',o.len*(1-p));
+ if(o.kf){let k=o.kf,j=0;while(j<k.length-2&&k[j+1][0]<=t)j++;const a=k[j],b=k[Math.min(j+1,k.length-1)],u=b[0]>a[0]?cl((t-a[0])/(b[0]-a[0])):0;  // follow a tracked element
+  const x=a[1]+(b[1]-a[1])*u+(o.dx||0),y=a[2]+(b[2]-a[2])*u+(o.dy||0);o.r.setAttribute('x',x);o.r.setAttribute('y',y);
+  o.r.setAttribute('transform',`rotate(${o.rot||0} ${x+o.w/2} ${y+o.h/2})`)}};
 // money rain: bills + coins fall from above the frame with spin and a touch of motion blur
 B.rain=o=>{const R=rnd(o.seed||7),n=o.n||34;o.ps=[];for(let i=0;i<n;i++){const im=document.createElement('div');im.className='p';
  im.textContent=o.emo[i%o.emo.length];const sz=110+R()*90;Object.assign(im.style,{fontSize:sz+'px',lineHeight:1,fontFamily:'Noto Color Emoji'});$('stage').appendChild(im);
@@ -49,5 +52,5 @@ window.seek=t=>{SPEC.fx.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const els=Arra
   if(!on){els.forEach(e=>e.style.display='none');return}if(!Array.isArray(o.e))o.e.style.display='block';B[o.type].u(o,t)});
  const c=$('cap');const hid=(SPEC.hideCaps||[]).some(h=>t>=h[0]&&t<h[1]);const i=hid?-1:SPEC.caps.findIndex(b=>t>=b.t0-1e-3&&t<b.t1);
  if(i!==last){last=i;if(i<0)c.style.visibility='hidden';else{c.textContent=SPEC.caps[i].text;c.style.visibility='visible'}}
- c.style.top=(SPEC.capY*1920)+'px';return true};
+ const z=(SPEC.capZones||[]).find(z=>t>=z[0]-1e-3&&t<z[1]);c.style.top=((z?z[2]:SPEC.capY)*1920)+'px';return true};  // capZones: per-shot height, switches only on cuts
 </script></body></html>
