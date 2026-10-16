@@ -74,7 +74,7 @@ FX = [TB("pot", 18.88, 20.233, 480, 900, pad=10, r=70),                     # "T
       TB("17b", 112.0, 113.133, 315, 110, r=24, rot=-3),                    # "17 zł"
       dict(type="arrow", t0=113.46, t1=dur, x=540, y=1690, size=170)]      # "kliknij przycisk poniżej"
 BLUR_CUTS = [11.3, 23.933, 40.233, 55.2, 82.667, 92.967, 107.133]          # hook starts + section changes
-spec = dict(dur=round(dur, 3), fps=30, capY=0.40,  # Konrad: one fixed height, no per-shot zones (ZONES kept as a fallback idea)
+spec = dict(dur=round(dur, 3), fps=30, capY=0.61, capSize=28,  # Konrad v2: 39 % from the bottom, text 60 % smaller (70 -> 28 px)
             caps=caps, fx=FX, blurCuts=BLUR_CUTS, hideCaps=[])
 json.dump(spec, open(os.path.join(WD, f"spec9_{NAME}.json"), "w"), ensure_ascii=False, indent=1)
 for c in caps: print(f'{c["t0"]:6.2f}-{c["t1"]:6.2f} {c["text"]}')

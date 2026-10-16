@@ -47,7 +47,10 @@ B.arrow=o=>{const d=document.createElement('div');d.className='p';
  d.style.filter='drop-shadow(0 8px 14px rgba(0,0,0,.45))';$('stage').appendChild(d);o.e=d};
 B.arrow.u=(o,t)=>{const a=t-o.t0,s=o.size||170;const pop=E(cl(a/.25));const b=Math.abs(Math.sin(a*Math.PI*2.2))*26;
  o.e.style.transform=`translate(${o.x-s/2}px,${o.y-s*.575+b}px) scale(${.6+.4*pop})`;o.e.style.opacity=cl(a/.12)};
-window.init=s=>{SPEC=s;s.fx.forEach(o=>B[o.type](o));return true};
+window.init=s=>{SPEC=s;s.fx.forEach(o=>B[o.type](o));
+ if(s.capSize){const k=s.capSize/70,c=$('cap');c.style.fontSize=s.capSize+'px';c.style.webkitTextStroke=`${Math.max(1.2,3*k)}px rgba(0,0,0,.95)`;  // smaller captions: scale stroke + shadow
+  c.style.textShadow=`0 0 ${Math.max(2,4*k)}px rgba(0,0,0,.9),0 ${Math.max(1,3*k)}px ${Math.max(3,8*k)}px rgba(0,0,0,1),0 ${Math.max(2,6*k)}px ${Math.max(10,30*k)}px rgba(0,0,0,.7)`}
+ return true};
 window.seek=t=>{SPEC.fx.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const els=Array.isArray(o.e)?o.e:[o.e];
   if(!on){els.forEach(e=>e.style.display='none');return}if(!Array.isArray(o.e))o.e.style.display='block';B[o.type].u(o,t)});
  const c=$('cap');const hid=(SPEC.hideCaps||[]).some(h=>t>=h[0]&&t<h[1]);const i=hid?-1:SPEC.caps.findIndex(b=>t>=b.t0-1e-3&&t<b.t1);
