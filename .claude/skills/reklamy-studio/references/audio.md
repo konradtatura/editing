@@ -9,6 +9,7 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
   - muzyka: `https://assets.mixkit.co/music/<id>/<id>.mp3`
   - SFX: `https://assets.mixkit.co/active_storage/sfx/<id>/<id>-preview.mp3`
 - Alternatywa tylko na FB/IG: Meta Sound Collection (licencja tylko w obrębie platform Mety).
+- Lokalnie (Mac) mixkit.co działa zwykłym curl; lista utworów jest w JSON-LD strony (`/free-stock-music/mood/playful/` itd.), pole `license` musi kończyć się `#musicFree`.
 - Pixabay i Freesound z serwera dają 403.
 
 ## Źródło 2: Openverse (od ailego12, 2026-10-15)
@@ -18,7 +19,7 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
 - Lista użytych plików z linkami: `projekty/audio/sources_ad12.json`. Fajny motyw do filmów LEGO: „LEGO Click” / „LEGO Brick Fall” (CC0).
 
 ## Użyte pliki (ID)
-- Muzyka: 140 „Cyberpunk City” (ad11, kosmos/tech, 1:40), 134 „Deep Techno Ambience”, 175 „Digital Clouds”, 184 „Vastness”.
+- Muzyka: 173 „Better Times are Coming” (ad12/ailego12, pozytywny synthpop, Konrad wybrał z 3 próbek), 140 „Cyberpunk City” (ad11, kosmos/tech, 1:40), 134 „Deep Techno Ambience”, 175 „Digital Clouds”, 184 „Vastness”.
 - SFX: whoosh 1492 / 1490 / 1489, sweep 166, pop_whoosh 3005, pop_msg 2354, click_select 1109, click_tech 3124, coins 1993, coin_prize 1999.
 
 ## Miks: `projekty/audio/mix.py CUES.json IN.mp4 OUT.mp4`

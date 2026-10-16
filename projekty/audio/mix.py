@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Music + SFX mix for a finished ad.  usage: mix.py CUES.json IN.mp4 OUT.mp4
 CUES = {"music": path (optional: SFX-only mix without it), "musicStart": s, "musicDb": dB (gain before ducking), "fadeOut": s,
+        "duckThreshold": sidechain threshold (default 0.02; lower it for a quiet voice track),
         "sfx": [{"t": s, "f": path, "db": dB, "peak": true, "dur": s}]}
 peak=true aligns the loudest point of the sound to t; dur trims the sound (with a 30 ms fade) so it never crosses a hook cut.
 Voice ducks the music (sidechain). Measured static gain to -14 LUFS + limiter at -2.5 dBFS (≈ -1.5 dBTP after AAC) for Meta (no pumping on SFX)."""
@@ -26,7 +27,7 @@ if cues.get("music"):
     ins += ["-i", cues["music"]]
     fc += [f"[1:a]{ST},atrim=start={cues.get('musicStart', 0)},asetpts=PTS-STARTPTS,atrim=0:{dur},volume={cues.get('musicDb', -18)}dB,"
            f"afade=t=in:d=0.4,afade=t=out:st={dur - cues.get('fadeOut', 1.5):.3f}:d={cues.get('fadeOut', 1.5)}[mu]",
-           "[mu][sc]sidechaincompress=threshold=0.02:ratio=5:attack=15:release=350:makeup=1[duck]"]
+           f"[mu][sc]sidechaincompress=threshold={cues.get('duckThreshold', 0.02)}:ratio=5:attack=15:release=350:makeup=1[duck]"]
     mixin.append("[duck]")
 else:
     fc.append("[sc]anullsink")

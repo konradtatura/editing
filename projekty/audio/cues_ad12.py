@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Sound design cues for ailego12 (style 9, LEGO AI, voice-over, SFX only, no music).  usage: cues_ad12.py SFXDIR OUT.json
+"""Sound design cues for ailego12 (style 9, LEGO AI, voice-over).  usage: cues_ad12.py SFXDIR OUT.json [MUSIC.mp3]
+Music (v4, chosen by Konrad from 3 samples): Mixkit 173 "Better Times are Coming" (synthpop, -12.3 LUFS) at -28.2 dB = ~13 LU under the
+voice (-27.5 LUFS), ducked with threshold 0.01 (quiet voice track). Without MUSIC: SFX only (v3).
 SFX are CC0 from Openverse (Freesound), peak-normalised to -1 dBFS; list + links in SFXDIR/SOURCES.json.
 Hook cuts 12.767 / 23.133: sounds there start ON the cut (no pre-roll) and nothing before a hook cut rings past it,
 so Konrad can cut the hook variants himself."""
 import json, os, sys
-SD, OUT = sys.argv[1:3]
+SD, OUT = sys.argv[1], sys.argv[2]
 S = lambda n: os.path.join(SD, n + ".wav")
 HOOK_CUTS = (12.767, 23.133)
 CUTS = [0.867, 4.767, 10.367, 12.767, 16.467, 17.8, 18.667, 23.133, 27.333, 28.4, 32.667, 37.367, 38.467, 40.067, 42.167, 44.733,
@@ -56,6 +58,7 @@ for s in sfx:                                         # trim anything that would
     st = s["t"] - (pk[s["f"]] if s["peak"] else 0)
     for hc in HOOK_CUTS:
         if st < hc < st + dur(s["f"]): s["dur"] = round(hc - st - 0.01, 3)
-json.dump(dict(sfx=sorted(sfx, key=lambda s: s["t"])), open(OUT, "w"), indent=1)
+mus = dict(music=sys.argv[3], musicStart=0, musicDb=-28.2, fadeOut=2.0, duckThreshold=0.01) if len(sys.argv) > 3 else {}
+json.dump(dict(mus, sfx=sorted(sfx, key=lambda s: s["t"])), open(OUT, "w"), indent=1)
 print(len(sfx), "sfx cues")
 for s in sorted(sfx, key=lambda s: s["t"]): print(f'{s["t"]:6.2f} {os.path.basename(s["f"]):16s} {s["db"]:4d} dB' + (f' trim {s["dur"]}' if "dur" in s else ""))
