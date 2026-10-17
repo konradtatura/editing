@@ -50,7 +50,7 @@ for s in sfx:                                         # trim anything that would
     for hc in HOOK_CUTS:
         if st < hc < st + dur(s["f"]): s["dur"] = round(hc - st - 0.01, 3)
 cues = dict(music=MUSIC, musicStart=float(sys.argv[4]) if len(sys.argv) > 4 else 0, musicDb=float(sys.argv[5]) if len(sys.argv) > 5 else -18,
-            fadeOut=2.0, duckThreshold=0.02, sfx=sorted(sfx, key=lambda s: s["t"]))   # music chosen from 3 samples
+            fadeOut=2.0, duckThreshold=0.02, sfx=sorted(sfx, key=lambda s: s["t"]))   # music: Konrad picked A = Mixkit 678 "Epical Drums 03" (start 2.5, -15.0 dB)
 json.dump(cues, open(OUT, "w"), indent=1)
 print(len(sfx), "sfx cues, music", cues["musicDb"], "dB")
 for s in cues["sfx"]: print(f'{s["t"]:7.2f} {os.path.basename(s["f"]):16s} {s["db"]:5.1f} dB' + (f' trim {s["dur"]}' if "dur" in s else ""))
