@@ -19,7 +19,7 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
 - Lista użytych plików z linkami: `projekty/audio/sources_ad12.json`. Fajny motyw do filmów LEGO: „LEGO Click” / „LEGO Brick Fall” (CC0).
 
 ## Użyte pliki (ID)
-- Muzyka: 173 „Better Times are Coming” (ad12/ailego12, pozytywny synthpop, Konrad wybrał z 3 próbek), 140 „Cyberpunk City” (ad11, kosmos/tech, 1:40), 134 „Deep Techno Ambience”, 175 „Digital Clouds”, 184 „Vastness”.
+- Muzyka: 322 „Life's a Movie” (ad14, filmowa, od 4,5 s; Konrad wybrał z 3 próbek, „Hip Hop 02” 738 mu nie siadł), 173 „Better Times are Coming” (ad12/ailego12, pozytywny synthpop, Konrad wybrał z 3 próbek), 140 „Cyberpunk City” (ad11, kosmos/tech, 1:40), 134 „Deep Techno Ambience”, 175 „Digital Clouds”, 184 „Vastness”.
 - SFX: whoosh 1492 / 1490 / 1489, sweep 166, pop_whoosh 3005, pop_msg 2354, click_select 1109, click_tech 3124, coins 1993, coin_prize 1999.
 
 ## Miks: `projekty/audio/mix.py CUES.json IN.mp4 OUT.mp4`
@@ -41,5 +41,6 @@ Konrad nie ma Artlist ani Epidemic, więc muzykę i SFX biorę z darmowej biblio
 
 ## Zasady
 - SFX oszczędnie: ma brzmieć dopracowanie, nie efekciarsko.
+- Wybór muzyki w ciemno nie działa: zawsze 3 próbki po 30 s w różnych klimatach i Konrad wybiera. Nie powtarzaj tego samego utworu w kolejnej reklamie, chyba że poprosi.
 - Na serwerze nie da się odsłuchać, więc zawsze wysyłam próbkę do akceptacji klimatu i głośności, zanim zrobię wszystkie reklamy.
 - Klimat per styl: styl 3 spokojny/premium, styl 2 ciepły i energiczny, styl 4 (animacje) elektroniczny/kosmiczny.
