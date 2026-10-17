@@ -7,6 +7,7 @@ function appear(e, t, t0, o = {}) { const d = o.d || .24, p = P(t, t0, d), pe = 
 const BL = '#3B3BFF', BL2 = '#5B5BFF', RED = '#FF4D5E';
 function abs(parent, css, html) { const d = el('div', '', parent, html || ''); d.style.cssText = 'position:absolute;' + css; return d; }
 function ico(name, px, col) { const h = svg(name); return `<span style="display:inline-flex;width:${px}px;height:${px}px;color:${col || 'currentColor'}">${h.replace('<svg', `<svg style="width:100%;height:100%;stroke-width:2.4"`)}</span>`; }
+function icoC(name, px, col, sw) { return `<span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:block;width:${px}px;height:${px}px;color:${col || 'currentColor'}">${svg(name).replace('<svg', `<svg style="display:block;width:100%;height:100%;stroke-width:${sw || 2.4}"`)}</span>` }
 function blobs(p) { return [['#3B3BFF', 520, 120, 300], ['#1B1BB0', 620, 620, 1300], ['#5B5BFF', 380, 760, 620]].map(([c, s, x, y]) => abs(p, `width:${s}px;height:${s}px;left:${x - s / 2}px;top:${y - s / 2}px;border-radius:50%;background:${c};filter:blur(110px);opacity:.75`)); }
 function moveBlobs(bs, t) { bs.forEach((b, i) => b.style.transform = `translate(${Math.sin(t * .5 + i * 2) * 60}px,${Math.cos(t * .4 + i) * 50}px)`); }
 const tileCss = (x, y, s) => `left:${x - s / 2}px;top:${y - s / 2}px;width:${s}px;height:${s}px;border-radius:${s * .26}px;display:flex;align-items:center;justify-content:center;
@@ -16,8 +17,8 @@ const tileCss = (x, y, s) => `left:${x - s / 2}px;top:${y - s / 2}px;width:${s}p
 B.locks = o => {
   const r = abs(null, `left:0;top:${o.y}px;width:1080px;height:420px`); o.e = r;
   o.items.forEach((it, i) => { const x = 220 + i * 320;
-    it.e = abs(r, tileCss(x, 130, 210), ico(it.icon, 104));
-    it.lk = abs(r, `left:${x + 40}px;top:150px;width:96px;height:96px;border-radius:50%;background:${RED};display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 26px rgba(120,0,20,.5)`, ico('x', 54));
+    it.e = abs(r, tileCss(x, 130, 210), icoC(it.icon, 104));
+    it.lk = abs(r, `left:${x + 40}px;top:150px;width:96px;height:96px;border-radius:50%;background:${RED};display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 26px rgba(120,0,20,.5)`, icoC('x', 54));
     it.lb = abs(r, `left:${x - 160}px;width:320px;top:265px;text-align:center;font:800 40px Inter;color:#fff;letter-spacing:-.02em;text-shadow:0 4px 14px rgba(0,0,0,.6)`, it.text); });
 };
 B.locks.u = (o, t) => {
@@ -35,7 +36,7 @@ B.locks.u = (o, t) => {
 /* 2. "kiedyś": three skills to learn — progress bars that crawl and never finish */
 B.bars = o => {
   const r = abs(null, `left:80px;top:${o.y}px;width:920px`); o.e = r;
-  o.h = abs(r, `left:0;top:0;font:400 italic 64px 'Instrument Serif';color:#fff;text-shadow:0 4px 14px rgba(0,0,0,.6)`, o.head);
+  o.h = abs(r, `left:0;top:0;font:400 italic 64px 'Instrument Serif';color:#fff;text-shadow:0 4px 14px rgba(0,0,0,.6)`, o.head || ''); if (!o.head) o.h.style.display = 'none';
   o.items.forEach((it, i) => { const y = 100 + i * 120;
     it.e = abs(r, `left:0;right:0;top:${y}px;height:96px;border-radius:18px;background:rgba(5,7,26,.82);box-shadow:0 14px 40px rgba(0,0,30,.45);overflow:hidden`);
     it.f = abs(it.e, `left:0;top:0;bottom:0;background:linear-gradient(90deg,${BL},${BL2})`);
@@ -43,7 +44,7 @@ B.bars = o => {
     it.p = abs(it.e, 'right:30px;top:0;bottom:0;display:flex;align-items:center;font:700 34px Inter;color:#c9ccff'); });
 };
 B.bars.u = (o, t) => {
-  appear(o.h, t, o.t0, { y0: 20 });
+  if (o.head) appear(o.h, t, o.t0, { y0: 20 });
   o.items.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (!on) return; appear(it.e, t, it.t, { x0: -60, s0: .96 });
     const pr = Math.min(.42, (t - it.t) * .07); it.f.style.width = pr * 100 + '%'; it.p.textContent = Math.round(pr * 100) + '%'; });
 };
@@ -103,7 +104,7 @@ B.builds.u = (o, t) => {
 B.merge = o => {
   const p = el('div', 'pl'); o.e = p; o.bs = blobs(p); el('div', 'grain', p);
   o.h = abs(p, 'left:0;right:0;top:330px;text-align:center;font:700 54px Inter;color:#fff', o.head);
-  o.tiles = ['file-text', 'layout-template', 'megaphone'].map(n => abs(p, tileCss(540, 960, 190), ico(n, 96)));
+  o.tiles = ['file-text', 'layout-template', 'megaphone'].map(n => abs(p, tileCss(540, 960, 190), icoC(n, 96)));
   o.blk = abs(p, `left:150px;top:720px;width:780px;height:470px;border-radius:44px;background:linear-gradient(160deg,${BL2},${BL} 60%,#2222C8);color:#fff;padding:58px 54px;box-shadow:0 0 140px rgba(80,80,255,.8)`,
     `<div style="font:900 104px Inter;letter-spacing:-.05em;line-height:.92">Cyfrowy<br>Autopilot</div><div style="font:400 italic 58px 'Instrument Serif';margin-top:34px">jeden konkretny proces</div>`);
   o.fl = abs(p, 'inset:0;background:radial-gradient(circle at 50% 50%,rgba(230,232,255,.95),rgba(120,130,255,.35) 55%,rgba(5,7,26,0))');
@@ -129,7 +130,7 @@ B.chev = o => {
 B.chev.u = (o, t) => {
   o.items.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (!on) return; appear(it.e, t, it.t, { x0: -70, s0: .9 });
     const f = P(t, it.t + .2, .3) > 0.5; it.e.style.background = f ? BL : '#fff'; it.e.style.color = f ? '#fff' : '#0B0D24' });
-  o.az.style.display = t >= o.azT ? '' : 'none'; if (t >= o.azT) appear(o.az, t, o.azT, { y0: 16 });
+  o.az.style.display = o.label && t >= o.azT ? '' : 'none'; if (t >= o.azT) appear(o.az, t, o.azT, { y0: 16 });
 };
 
 /* 7. "ekspert od wszystkiego" badge gets a NIE MUSISZ stamp */

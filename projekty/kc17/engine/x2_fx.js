@@ -50,7 +50,7 @@ B.courses.u = (o, t) => { let n = 0; o.items.forEach((it, i) => { const on = t >
 /* 4. black insert: icons get clicked green by a cursor, the last slot stays an open question */
 B.clicker = o => { const p = abs(null, `inset:0;background:radial-gradient(circle at 50% 45%,#141824,#05060A 75%)`); o.e = p;
   o.items.forEach((it, i) => { const y = 520 + i * 330;
-    it.e = abs(p, `left:420px;top:${y}px;width:240px;height:240px;border-radius:56px;background:#fff;display:flex;align-items:center;justify-content:center;color:${DK};box-shadow:0 20px 50px rgba(0,0,0,.6)`, it.icon ? ico(it.icon, 120, null, 2.2) : `<span style="font:800 140px Poppins;color:${RED}">?</span>`);
+    it.e = abs(p, `left:420px;top:${y}px;width:240px;height:240px;border-radius:56px;background:#fff;display:flex;align-items:center;justify-content:center;color:${DK};box-shadow:0 20px 50px rgba(0,0,0,.6)`, it.icon ? icoC(it.icon, 120, null, 2.2) : `<span style="font:800 140px Poppins;color:${RED}">?</span>`);
     it.l = abs(p, `left:700px;top:${y + 90}px;font:800 44px Poppins;color:#fff;text-transform:uppercase`, it.text) });
   o.cur = abs(p, 'left:0;top:0;width:90px;height:90px', `<svg viewBox="0 0 24 24" width="90" height="90"><path d="M4 2l15 9-7 1.5L9 20z" fill="#fff" stroke="#000" stroke-width="1.2"/></svg>`) };
 B.clicker.u = (o, t) => { let cx = 980, cy = 1700;

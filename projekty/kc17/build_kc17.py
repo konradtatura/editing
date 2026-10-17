@@ -60,21 +60,21 @@ FIXS = ("Nie umiesz pisać ebooków? To nie znaczy, że nie możesz stworzyć w�
         "następnie możesz dopracować. Nie umiesz robić stron? AI może pomóc Ci stworzyć stronę pod Twój produkt. Nie znasz się na "
         "marketingu? AI może pomóc Ci przygotować pierwszą wersję oferty sprzedażowej. I właśnie dlatego stworzyliśmy Cyfrowy Autopilot, "
         "żeby pokazać Ci, jak połączyć te wszystkie elementy w *jeden_konkretny_proces.* Od pomysłu, przez stworzenie produktu, aż po "
-        "stronę, na której możesz go wystawić na sprzedaż. A wszystko według planu ~od_A_do_Z.~ Bo dzisiaj, żeby zacząć tworzyć produkty "
+        "stronę, na której możesz go wystawić na sprzedaż. A wszystko według planu *od_A_do_Z.* Bo dzisiaj, żeby zacząć tworzyć produkty "
         "cyfrowe, nie musisz najpierw zostać *ekspertem* od wszystkiego. Musisz po prostu wiedzieć, jak wykorzystać sztuczną inteligencję "
         "do rzeczy, których jeszcze nie potrafisz zrobić ~samodzielnie.~ Więc kliknij poniżej i zacznij działać już dzisiaj.")
 # NEW components (engine/skill_fx.js), style-3 look only
 ITS = [
-    dict(type="locks", t0=0.0, t1=13.367, y=1330, shakeT=7.96, unlockT=11.92, items=[
+    dict(type="locks", t0=0.0, t1=13.367, y=1215, shakeT=7.96, unlockT=11.92, items=[
         dict(icon="file-text", text="ebooki", t=0.52), dict(icon="layout-template", text="strony", t=3.66), dict(icon="megaphone", text="marketing", t=4.74)]),
-    dict(type="bars", t0=13.46, t1=23.467, y=1320, head="kiedyś musiałeś nauczyć się:", items=[
+    dict(type="bars", t0=13.46, t1=23.467, y=1205, items=[
         dict(text="Pisania", t=17.60), dict(text="Budowania stron", t=18.60), dict(text="Marketingu", t=20.70)]),
     dict(type="options", t0=23.467, t1=32.2, hideCaps=True, h0="Nie potrafisz?", hT=25.02, c1T=25.52, c2T=27.40, c3T=29.20, aiT=30.92),
-    dict(type="builds", t0=32.2, t1=44.533, y=1300, steps=[dict(t=32.2, title="Twój ebook"), dict(t=37.70, title="Twoja strona"), dict(t=40.68, title="Twoja oferta")]),
+    dict(type="builds", t0=32.2, t1=44.533, y=1185, steps=[dict(t=32.2, title="Twój ebook"), dict(t=37.70, title="Twoja strona"), dict(t=40.68, title="Twoja oferta")]),
     dict(type="merge", t0=44.533, t1=50.1, hideCaps=True, head="Dlatego stworzyliśmy", mergeT=47.64),
-    dict(type="chev", t0=50.1, t1=55.467, y=1330, azT=54.48, label="według planu od A do Z", items=[
+    dict(type="chev", t0=50.1, t1=55.467, y=1215, azT=54.48, label="", items=[
         dict(text="pomysł", t=50.38), dict(text="produkt", t=51.32), dict(text="strona", t=52.10)]),
-    dict(type="expert", t0=57.62, t1=59.7, y=1330, stampT=58.82),
-    dict(type="cta2", t0=64.80, t1=67.0, y=1420, text="Kliknij poniżej"),
+    dict(type="expert", t0=57.62, t1=59.7, y=1215, stampT=58.82),
+    dict(type="cta2", t0=64.80, t1=67.0, y=1305, text="Kliknij poniżej"),
 ]
-s3["make"]("skillh2v2", "skillh2v2.mp4", "tr_skillh2v2.json", FIXS, ITS, capY=0.6)
+s3["make"]("skillh2v2", "skillh2v2.mp4", "tr_skillh2v2.json", FIXS, ITS, capY=0.54)   # Konrad v3: captions ~54 %

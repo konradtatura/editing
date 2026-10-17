@@ -8,6 +8,7 @@ const svg = n => ICONS[n] || '';
 function el(tag, cls, parent, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; (parent || document.getElementById('stage')).appendChild(e); return e }
 function abs(parent, css, html) { const d = el('div', '', parent, html || ''); d.style.cssText = 'position:absolute;' + css; return d }
 function ico(name, px, col, sw) { return `<span style="display:inline-flex;width:${px}px;height:${px}px;color:${col || 'currentColor'}">${svg(name).replace('<svg', `<svg style="width:100%;height:100%;stroke-width:${sw || 2.4}"`)}</span>` }
+function icoC(name, px, col, sw) { return `<span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:block;width:${px}px;height:${px}px;color:${col || 'currentColor'}">${svg(name).replace('<svg', `<svg style="display:block;width:100%;height:100%;stroke-width:${sw || 2.4}"`)}</span>` }
 /* pop-in: scale s0 -> overshoot -> 1 with blur (the swipefile's universal entrance) */
 function pop(e, t, t0, o = {}) { const d = o.d || .3, p = P(t, t0, d), pe = (o.ease || E.back)(p);
   e.style.opacity = E.out(P(t, t0, d * .5)); e.style.filter = p < 1 ? `blur(${(1 - E.out(p)) * (o.b0 ?? 10)}px)` : 'none';
