@@ -63,8 +63,8 @@ for s in sfx:                                         # trim anything that would
     st = s["t"] - (pk[s["f"]] if s["peak"] else 0)
     for hc in HOOK_CUTS:
         if st < hc < st + dur(s["f"]): s["dur"] = round(hc - st - 0.01, 3)
-cues = dict(music=MUSIC, musicDb=round(-19.8 - 13 + 12.3, 1), fadeOut=2.0, duckThreshold=0.02,
-            musicSegments=[[0, 41.1, 0], [41.1, 999, 0]], sfx=sorted(sfx, key=lambda s: s["t"]))
+# v2 music (Konrad: not the same track again): Mixkit 738 "Hip Hop 02" (97 bpm, 1:55, -11.9 LUFS), one continuous take
+cues = dict(music=MUSIC, musicDb=round(-19.8 - 13 + 11.9, 1), fadeOut=2.0, duckThreshold=0.02, sfx=sorted(sfx, key=lambda s: s["t"]))
 json.dump(cues, open(OUT, "w"), indent=1)
 print(len(sfx), "sfx cues, music", cues["musicDb"], "dB")
 for s in cues["sfx"]: print(f'{s["t"]:7.2f} {os.path.basename(s["f"]):16s} {s["db"]:5.1f} dB' + (f' trim {s["dur"]}' if "dur" in s else ""))

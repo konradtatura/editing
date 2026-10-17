@@ -55,5 +55,8 @@ window.seek=t=>{SPEC.fx.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const els=Arra
   if(!on){els.forEach(e=>e.style.display='none');return}if(!Array.isArray(o.e))o.e.style.display='block';B[o.type].u(o,t)});
  const c=$('cap');const hid=(SPEC.hideCaps||[]).some(h=>t>=h[0]&&t<h[1]);const i=hid?-1:SPEC.caps.findIndex(b=>t>=b.t0-1e-3&&t<b.t1);
  if(i!==last){last=i;if(i<0)c.style.visibility='hidden';else{c.textContent=SPEC.caps[i].text;c.style.visibility='visible'}}
- const z=(SPEC.capZones||[]).find(z=>t>=z[0]-1e-3&&t<z[1]);c.style.top=((z?z[2]:SPEC.capY)*1920)+'px';return true};  // capZones: per-shot height, switches only on cuts
+ const z=(SPEC.capZones||[]).find(z=>t>=z[0]-1e-3&&t<z[1]);c.style.top=((z?z[2]:SPEC.capY)*1920)+'px';  // capZones: per-shot height, switches only on cuts
+ if(SPEC.capPop&&i>=0){const P=SPEC.capPop,x=cl((t-SPEC.caps[i].t0)/(P.dur||.16)),c1=P.back||1.0,c3=c1+1;   // subtle pop-in: scale s0 -> 1 with a small overshoot
+  const k=(P.s0||.85)+(1-(P.s0||.85))*(1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2));c.style.transform=`translateY(-50%) scale(${k})`;c.style.opacity=cl(x/.4)}
+ return true};
 </script></body></html>

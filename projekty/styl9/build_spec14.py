@@ -63,8 +63,8 @@ FX = [TB("199", 2.3, 3.9, 400, 190, r=30),                                  # "s
       dict(type="arrow", t0=102.12, t1=dur, x=540, y=1690, size=170),       # "Kliknij poniżej"
       dict(type="rain", t0=111.45, t1=dur, emo=MONEY, n=24, spawn=1.0, seed=5)]     # final "sprzedawać wielokrotnie"
 BLUR_CUTS = [14.967, 27.3, 41.1, 65.7, 77.5, 97.133, 104.4]               # hook starts + section changes
-HIDE = [[84.133, 87.167]]                                                  # 941 scene already says "941 sprzedanych ebooków"
-spec = dict(dur=round(dur, 3), fps=30, capY=0.61, capSize=28,  # same as ad13 v3
+HIDE = [[1.93, 3.9], [84.133, 87.167]]                                     # card "199 ZŁ" and the 941 scene already show the words
+spec = dict(dur=round(dur, 3), fps=30, capY=0.55, capSize=44, capPop=dict(s0=0.85, dur=0.16, back=1.0),  # Konrad v2: bigger, a bit higher, subtle pop-in
             caps=caps, fx=FX, blurCuts=BLUR_CUTS, hideCaps=HIDE)
 json.dump(spec, open(os.path.join(WD, f"spec9_{NAME}.json"), "w"), ensure_ascii=False, indent=1)
 for c in caps: print(f'{c["t0"]:6.2f}-{c["t1"]:6.2f} {c["text"]}')
