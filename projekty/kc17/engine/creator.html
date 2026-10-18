@@ -2,6 +2,7 @@
 <html><head><meta charset="utf-8">
 <link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
 <style>
+[hidden]{display:none!important}
 :root{--t1:#9EEBFF;--t2:#35C2DA;--t3:#0E8FA8;--bg:#0C1214;--ink:#0B1A1E}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
@@ -61,7 +62,7 @@ const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),lerp=(a,b,p)=>a+(b-a)*p,P=(t,t0,
 const E={out:t=>1-Math.pow(1-t,3),out5:t=>1-Math.pow(1-t,5),back:t=>{const c1=1.4,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}};
 const svg=n=>ICONS[n]||'';
 function el(tag,cls,parent,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;(parent||document.getElementById('stage')).appendChild(e);return e}
-function vis(e,on){e.style.display=on?'':'none'}
+function vis(e,on){e.hidden=!on}
 function appear(e,t,t0,o={}){const d=o.d||.38,p=P(t,t0,d),pe=(o.ease||E.out)(p);
  e.style.opacity=E.out(P(t,t0,d*.6));e.style.filter=p<1?`blur(${(1-pe)*(o.b0??8)}px)`:'none';
  e.style.transform=`${e.dataset.base||''} translate(${(1-pe)*(o.x0||0)}px,${(1-pe)*(o.y0??20)}px) scale(${lerp(o.s0??.9,1,pe)})`;return p}

@@ -24,19 +24,19 @@ FIXC = ("Większość ludzi używa ChatGPT, żeby szybciej wykonywać codzienne 
 # NEW components (engine/creator_fx.js) — Konrad: keep the style-2 look, never reuse its old animations 1:1
 ITC = [
     dict(type="chat", t0=0.0, t1=3.55, y=1300, text="Napisz maila do klienta…"),
-    dict(type="wipe", t0=3.62, t1=5.533, y=760, small="Ale jest coś", big=["znacznie", "ciekawszego"], size=130, bigT=4.05, hideCaps=True),
+    dict(type="wipe", t0=3.62, t1=5.533, y=1094, small="Ale jest coś", big=["znacznie", "ciekawszego"], size=130, bigT=4.05, hideCaps=True),
     dict(type="income", t0=5.68, t1=9.833, y=1330, label="dodatkowy dochód", lt=9.0),
-    dict(type="bubbles", t0=10.38, t1=17.367, y=1640, okT=16.9, okText="przydatne… ale", items=[
+    dict(type="bubbles", t0=10.38, t1=17.367, y=1640, okT=16.9, okText="", items=[
         dict(emo="✉️", text="maile", t=11.70), dict(emo="🖼️", text="obrazki", t=13.0), dict(emo="😂", text="memy", t=13.60),
         dict(emo="❓", text="pytania", t=14.20), dict(emo="📁", text="tysiące promptów", t=15.28)]),
     dict(type="versus", t0=17.367, t1=23.033, hideCaps=True, lt=18.80, rt=20.55, winT=22.30),
     dict(type="ebook", t0=23.033, t1=27.567, y=1060, stampT=26.70, hideCaps=True, items=[dict(text="szablon", t=24.20), dict(text="produkt cyfrowy", t=25.36)]),
-    dict(type="sales", t0=28.0, t1=34.867, y=1290, xT=33.70, notes=[dict(t=30.80), dict(t=31.90), dict(t=33.10)]),
+    dict(type="sales", t0=28.0, t1=34.867, y=1100, xT=33.70, notes=[dict(t=30.80), dict(t=31.90), dict(t=33.10)]),
     dict(type="brand", t0=34.96, t1=36.95, small="Dlatego stworzyłem", big="Cyfrowy<br>Autopilot", bigT=35.98, hideCaps=True),
     dict(type="strike", t0=37.0, t1=43.233, y=1330, bad="kolejne sztuczki z ChatGPT", strikeT=38.40, good="własny produkt cyfrowy", goodT=41.80),
     dict(type="path", t0=43.233, t1=47.533, y=1340, items=[dict(icon="lightbulb", text="pomysł", t=43.46),
         dict(icon="pen-line", text="treść", t=44.90), dict(icon="globe", text="strona", t=45.88)]),
-    dict(type="atoz", t0=47.533, t1=50.733, y=1290, aT=50.10, zT=50.48, label="konkretny proces"),
+    dict(type="atoz", t0=47.533, t1=50.733, y=1290, aT=49.98, zT=50.20, label=""),
     dict(type="morph", t0=50.733, t1=56.533, y=1360, a0="narzędzie, które oszczędza czas", b0="narzędzie do budowania", swapT=53.90),
     dict(type="tap", t0=56.6, t1=58.4, y=1330, text="Kliknij poniżej", hideCaps=False),
 ]

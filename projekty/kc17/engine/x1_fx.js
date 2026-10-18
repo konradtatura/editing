@@ -36,14 +36,14 @@ B.swap = o => {
   o.bub = [0, 1, 2].map(i => abs(r, `left:${130 + i * 40}px;top:${o.y + i * 120}px;width:${700 - i * 80}px;height:96px;border-radius:36px;border-bottom-left-radius:10px;background:rgba(235,238,242,.95);box-shadow:0 14px 30px rgba(0,0,0,.35);
      display:flex;align-items:center;padding:0 30px;font:600 30px Inter;color:#5A606B`, i ? '••• kolejna odpowiedź' : 'Oto odpowiedź na Twoje pytanie…'));
   o.box = abs(r, `left:390px;top:${o.y - 10}px;width:300px;height:300px;font-size:250px;line-height:300px;text-align:center;filter:drop-shadow(0 26px 34px rgba(0,0,0,.55))`, '📦');
-  o.sel = abs(r, `left:300px;top:${o.y + 300}px;width:480px;height:84px;border:3px solid #2F7BFF;display:flex;align-items:center;justify-content:center;font:700 36px Inter;color:#fff;${SH}`);
+  o.sel = abs(r, `left:370px;top:${o.y + 10}px;width:340px;height:300px;border:3px solid #2F7BFF;display:flex;align-items:center;justify-content:center;font:700 36px Inter;color:#fff;${SH}`);
   ['left:-9px;top:-9px', 'right:-9px;top:-9px', 'left:-9px;bottom:-9px', 'right:-9px;bottom:-9px'].forEach(p => abs(o.sel, `${p};width:15px;height:15px;background:#fff;border:3px solid #2F7BFF`));
   o.selT = el('span', '', o.sel, '');
 };
 B.swap.u = (o, t) => {
   o.bub.forEach((b, i) => { pop(b, t, o.t0 + i * .18, { y0: 40, s0: .85 }); const k = E.inout(P(t, o.boxT - .25, .4)); if (k > 0) { b.style.transform += ` translate(${-900 * k}px,${-120 * k}px) rotate(${-14 * k}deg)`; b.style.opacity = 1 - k } });
-  o.box.style.display = o.sel.style.display = t >= o.boxT ? '' : 'none';
-  if (t >= o.boxT) { pop(o.box, t, o.boxT, { s0: .3, y0: 120, d: .4 }); pop(o.sel, t, o.boxT + .3, { s0: .95, d: .2 }); o.selT.textContent = typed(t, o.boxT + .35, o.label, 30) }
+  o.box.hidden = o.sel.hidden = !(t >= o.boxT);
+  if (t >= o.boxT) { pop(o.box, t, o.boxT, { s0: .3, y0: 120, d: .4 }); pop(o.sel, t, o.boxT + .3, { s0: 1.15, d: .22 }) }   // selection just frames the box (no typed label)
 };
 
 /* 3. glossy app tiles combined with "+" (ebook + produkt + strona) */
@@ -54,7 +54,7 @@ B.equation = o => {
     it.l = abs(r, `left:${x - 40}px;width:${s + 80}px;top:${s + 18}px;text-align:center;font:800 34px Inter;color:#fff;${SH}`, it.text);
     if (i) it.p = abs(r, `left:${x - gap / 2 - 30}px;top:${s / 2 - 40}px;width:60px;text-align:center;font:900 70px Inter;color:#fff;${SH}`, '+') });
 };
-B.equation.u = (o, t) => o.items.forEach(it => { const on = t >= it.t; [it.e, it.l, it.p].forEach(n => n && (n.style.display = on ? '' : 'none')); if (!on) return;
+B.equation.u = (o, t) => o.items.forEach(it => { const on = t >= it.t; [it.e, it.l, it.p].forEach(n => n && (n.hidden = !(on))); if (!on) return;
   pop(it.e, t, it.t, { s0: .3, y0: 60, rot: 0 }); pop(it.l, t, it.t + .08, { s0: .8 }); it.p && pop(it.p, t, it.t - .05, { s0: .2 });
   it.e.style.transform += ` translateY(${Math.sin((t - it.t) * 3) * 6}px)` });
 
@@ -66,7 +66,7 @@ B.sales = o => {
      <div style="font:500 26px Inter;color:#5A606B">Twój produkt cyfrowy</div></div><div style="font:900 46px Inter;color:${GR2}">+79 zł</div>`), n));
 };
 B.sales.u = (o, t) => { const seen = o.notes.filter(n => t >= n.t).length;
-  o.notes.forEach((n, i) => { const on = t >= n.t; n.e.style.display = on ? '' : 'none'; if (!on) return; pop(n.e, t, n.t, { y0: -120, s0: .92, ease: E.out5, d: .32 });
+  o.notes.forEach((n, i) => { const on = t >= n.t; n.e.hidden = !(on); if (!on) return; pop(n.e, t, n.t, { y0: -120, s0: .92, ease: E.out5, d: .32 });
     const depth = seen - 1 - i; n.e.style.transform += ` translateY(${depth * 26}px) scale(${1 - depth * .05})`; n.e.style.zIndex = 10 + i; n.e.style.filter = depth ? `brightness(${1 - depth * .08})` : 'none' }) };
 
 /* 5. half-empty gauge: "pełne możliwości AI" */
@@ -80,8 +80,8 @@ B.gauge.u = (o, t) => { pop(o.e, t, o.t0, { y0: 50, s0: .9 }); const f = E.out(P
 B.pills = o => { const r = abs(null, `left:0;top:${o.y}px;width:1080px;height:400px`); o.e = r;
   o.items.forEach((it, i) => it.e = abs(r, `left:${[110, 420, 250][i % 3]}px;top:${i * 112}px;padding:20px 32px;border-radius:999px;${CARD};font:700 38px Inter;color:${INK};white-space:nowrap`, `${it.emo}&nbsp; ${it.text}`));
   o.ok = abs(r, `left:700px;top:${o.items.length * 112 - 40}px;padding:14px 26px;border-radius:16px;background:${GR};color:#04230F;font:900 32px Inter;transform:rotate(6deg)`, o.okText) };
-B.pills.u = (o, t) => { o.items.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (on) pop(it.e, t, it.t, { s0: .4, x0: it.t % 2 ? 80 : -80 }) });
-  o.ok.style.display = t >= o.okT ? '' : 'none'; if (t >= o.okT) pop(o.ok, t, o.okT, { s0: 1.8, ease: E.out, d: .2, rot: 6 }) };
+B.pills.u = (o, t) => { o.items.forEach(it => { const on = t >= it.t; it.e.hidden = !(on); if (on) pop(it.e, t, it.t, { s0: .4, x0: it.t % 2 ? 80 : -80 }) });
+  o.ok.hidden = !(t >= o.okT); if (t >= o.okT) pop(o.ok, t, o.okT, { s0: 1.8, ease: E.out, d: .2, rot: 6 }) };
 
 /* 7. light leak (transition flash) */
 B.leak = o => { o.e = abs(null, `inset:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 20% 30%,rgba(255,170,60,.95),rgba(255,90,20,.6) 35%,rgba(255,60,0,0) 70%),radial-gradient(ellipse at 90% 80%,rgba(255,220,140,.8),rgba(255,120,40,0) 60%)`) };
@@ -96,8 +96,8 @@ B.chat2prod = o => { const r = abs(null, `left:0;top:${o.y}px;width:1080px;heigh
   o.arr = abs(r, `left:700px;top:20px;color:${GR};filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))`, ico('trending-up', 120, GR, 3)) };
 B.chat2prod.u = (o, t) => { pop(o.win, t, o.t0, { y0: 60, s0: .9 }); const k = E.inout(P(t, o.prodT - .3, .35));
   if (k > 0) { o.win.style.transform += ` scale(${1 - .8 * k})`; o.win.style.opacity = 1 - k }
-  [o.box, o.tag].forEach(n => n.style.display = t >= o.prodT ? '' : 'none'); if (t >= o.prodT) { pop(o.box, t, o.prodT, { s0: .2, d: .4 }); pop(o.tag, t, o.prodT + .2, { y0: 30, s0: .8 }) }
-  o.arr.style.display = t >= o.growT ? '' : 'none'; if (t >= o.growT) pop(o.arr, t, o.growT, { s0: .3, x0: -40, y0: 40 }) };
+  [o.box, o.tag].forEach(n => n.hidden = !(t >= o.prodT)); if (t >= o.prodT) { pop(o.box, t, o.prodT, { s0: .2, d: .4 }); pop(o.tag, t, o.prodT + .2, { y0: 30, s0: .8 }) }
+  o.arr.hidden = !(t >= o.growT); if (t >= o.growT) pop(o.arr, t, o.growT, { s0: .3, x0: -40, y0: 40 }) };
 
 /* 9. white full-screen insert: brand title inside a Figma selection with cursor */
 B.figma = o => { const p = abs(null, `inset:0;background:radial-gradient(circle at 50% 40%,#FFFFFF,#ECEEF2 70%,#DDE1E7)`); o.e = p;
@@ -123,7 +123,7 @@ B.flow = o => { const r = abs(null, `left:0;top:${o.y}px;width:1080px;height:300
   o.items.forEach((it, i) => { const x = x0 + i * (s + gap); it.e = abs(r, `left:${x}px;top:0;width:${s}px;height:${s}px;${tile(it.c1, it.c2)}`, ico(it.icon, 78, '#fff', 2.3));
     it.l = abs(r, `left:${x - 50}px;width:${s + 100}px;top:${s + 14}px;text-align:center;font:800 30px Inter;color:#fff;${SH}`, it.text);
     if (i) it.a = abs(r, `left:${x - gap + 14}px;top:${s / 2 - 26}px;color:#fff`, ico('arrow-right', 64, '#fff', 3)) }) };
-B.flow.u = (o, t) => o.items.forEach(it => { const on = t >= it.t; [it.e, it.l, it.a].forEach(n => n && (n.style.display = on ? '' : 'none')); if (!on) return;
+B.flow.u = (o, t) => o.items.forEach(it => { const on = t >= it.t; [it.e, it.l, it.a].forEach(n => n && (n.hidden = !(on))); if (!on) return;
   pop(it.e, t, it.t, { s0: .3 }); pop(it.l, t, it.t + .06, { s0: .8 }); it.a && pop(it.a, t, it.t - .08, { s0: .4, x0: -30 }) });
 
 /* 12. macOS reminder card with red dots, one line gets struck */
@@ -131,14 +131,14 @@ B.reminder = o => { const r = abs(null, `left:150px;top:${o.y}px;width:780px;pad
   abs(r, 'position:relative;font:800 34px Inter;color:#FF453A;margin-bottom:12px', o.title);
   o.rows = o.items.map(it => (it.e = el('div', '', r, `<span style="display:inline-block;width:26px;height:26px;border-radius:50%;border:3px solid #FF453A;margin-right:18px;vertical-align:-4px"></span><span class="tx">${it.text}</span>`),
     it.e.style.cssText = `position:relative;font:600 34px Inter;color:${INK};padding:14px 0;border-top:1px solid #E5E7EB`, it)) };
-B.reminder.u = (o, t) => { pop(o.e, t, o.t0, { y0: 50, s0: .9 }); o.rows.forEach(it => { it.e.style.display = t >= it.t ? '' : 'none';
+B.reminder.u = (o, t) => { pop(o.e, t, o.t0, { y0: 50, s0: .9 }); o.rows.forEach(it => { it.e.hidden = !(t >= it.t);
   const sk = it.strike && t >= it.strike; it.e.querySelector('.tx').style.textDecoration = sk ? 'line-through' : 'none'; it.e.querySelector('.tx').style.color = sk ? '#A0A4AB' : INK }); out(o.e, t, o.t1) };
 
 /* 13. two pills: pracować szybciej (grey) vs budować coś swojego (green glow) */
 B.duo = o => { const r = abs(null, `left:0;top:${o.y}px;width:1080px;height:300px`); o.e = r;
   o.a = abs(r, `left:110px;top:0;width:860px;text-align:center;padding:26px;border-radius:26px;background:rgba(30,32,36,.82);color:#C7CBD1;font:700 40px Inter`, `⚡ ${o.a0}`);
   o.b = abs(r, `left:110px;top:130px;width:860px;text-align:center;padding:26px;border-radius:26px;background:linear-gradient(180deg,${GR},${GR2});color:#04230F;font:900 44px Inter;box-shadow:0 0 60px rgba(70,242,140,.55)`, `🏗️ ${o.b0}`) };
-B.duo.u = (o, t) => { pop(o.a, t, o.aT, { s0: .8, y0: 30 }); o.b.style.display = t >= o.bT ? '' : 'none'; if (t >= o.bT) pop(o.b, t, o.bT, { s0: .5, y0: 40 }) };
+B.duo.u = (o, t) => { pop(o.a, t, o.aT, { s0: .8, y0: 30 }); o.b.hidden = !(t >= o.bT); if (t >= o.bT) pop(o.b, t, o.bT, { s0: .5, y0: 40 }) };
 
 /* 14. CTA: IG-style link sticker + finger tap */
 B.link = o => { const r = abs(null, `left:0;top:${o.y}px;width:1080px;height:300px`); o.e = r;

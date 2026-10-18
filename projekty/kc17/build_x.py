@@ -14,7 +14,7 @@ exec(compile(s3[:s3.index("PL = dict")], "s3", "exec"), g3); align, chunk = g3["
 C1, C2 = dict(c1="#FF8A5C", c2="#E2452B"), dict(c1="#9B8CFF", c2="#5B47E0")
 C3, C4, C5 = dict(c1="#4DB5FF", c2="#1572E8"), dict(c1="#FFC94D", c2="#F08C00"), dict(c1="#FF6FAE", c2="#D61F69")
 ADS = {}
-ADS["creator4"] = dict(page="x1.html", capY=0.615, maxw=4, maxc=22, text=(
+ADS["creator4"] = dict(page="x1.html", capY=0.50, maxw=4, maxc=22, text=(
     "AI może zaoszczędzić Ci mnóstwo *czasu.* Ale wyobraź sobie, że zamiast kolejnej odpowiedzi z ChatGPT, masz przed sobą coś, co "
     "*sam_stworzyłeś.* Własnego *ebooka,* własny *produkt_cyfrowy,* własną *stronę,* na której możesz go *sprzedawać.* Czyli coś, co się "
     "*sprzedaje,* na co możesz spojrzeć i powiedzieć: dobra, to jest *moje.* I właśnie dlatego uważam, że większość ludzi nie wykorzystuje "
@@ -28,24 +28,24 @@ ADS["creator4"] = dict(page="x1.html", capY=0.615, maxw=4, maxc=22, text=(
     "Czegoś *własnego,* co możesz wystawić na sprzedaż. Bo AI może pomóc Ci pracować *szybciej,* ale może też pomóc Ci zacząć *budować* coś, "
     "co zostanie z Tobą na *dłużej.* Więc kliknij *poniżej* tego filmu i zobacz, jak to działa."),
   items=[
-    dict(type="notif", t0=0.0, t1=1.967, y=1350, title="ChatGPT", sub="Gotowe ✓ odpowiedź w 3 sekundy", icon="sparkles"),
-    dict(type="swap", t0=2.12, t1=6.433, y=1330, boxT=5.46, label="coś, co sam stworzyłeś"),
-    dict(type="equation", t0=6.433, t1=10.067, y=1330, items=[dict(C1, icon="file-text", text="ebook", t=6.90),
+    dict(type="notif", t0=0.0, t1=1.967, y=1129, title="ChatGPT", sub="Gotowe ✓ odpowiedź w 3 sekundy", icon="sparkles"),
+    dict(type="swap", t0=2.12, t1=6.433, y=1109, boxT=5.46, label="coś, co sam stworzyłeś"),
+    dict(type="equation", t0=6.433, t1=10.067, y=1109, items=[dict(C1, icon="file-text", text="ebook", t=6.90),
         dict(C2, icon="package", text="produkt", t=7.66), dict(C3, icon="globe", text="strona", t=8.74)]),
-    dict(type="sales", t0=10.067, t1=13.6, y=1370, notes=[dict(t=10.84), dict(t=11.50), dict(t=12.20)]),
-    dict(type="gauge", t0=15.24, t1=19.767, y=1360, label="Możliwości AI, które wykorzystujesz", sub="większość ludzi zatrzymuje się tutaj", fill=.22),
-    dict(type="pills", t0=19.767, t1=23.933, y=1330, okT=22.90, okText="✓ nic złego", items=[dict(emo="📧", text="maile", t=20.04),
+    dict(type="sales", t0=10.067, t1=13.6, y=1149, notes=[dict(t=10.84), dict(t=11.50), dict(t=12.20)]),
+    dict(type="gauge", t0=15.24, t1=19.767, y=1139, label="Możliwości AI, które wykorzystujesz", sub="większość ludzi zatrzymuje się tutaj", fill=.22),
+    dict(type="pills", t0=19.767, t1=23.933, y=1109, okT=22.90, okText="✓ nic złego", items=[dict(emo="📧", text="maile", t=20.04),
         dict(emo="🖼️", text="obrazki", t=20.76), dict(emo="💬", text="pytania", t=21.78)]),
     dict(type="leak", t0=23.75, t1=24.2),
-    dict(type="chat2prod", t0=27.867, t1=33.667, y=1330, prodT=31.60, growT=32.70),
+    dict(type="chat2prod", t0=27.867, t1=33.667, y=1109, prodT=31.60, growT=32.70),
     dict(type="figma", t0=33.667, t1=35.70, hideCaps=True, small="Dlatego powstał", big="Cyfrowy<br>Autopilot", bigT=34.70),
-    dict(type="toggle", t0=35.72, t1=40.833, y=1370, a="AI do zadań", b="AI do budowania", sub="przełącz się z zadań na produkty", flipT=39.14),
-    dict(type="flow", t0=40.833, t1=44.967, y=1340, items=[dict(C4, icon="lightbulb", text="pomysł", t=41.54), dict(C1, icon="file-text", text="ebook", t=42.48),
+    dict(type="toggle", t0=35.72, t1=40.833, y=1149, a="AI do zadań", b="AI do budowania", sub="przełącz się z zadań na produkty", flipT=39.14),
+    dict(type="flow", t0=40.833, t1=44.967, y=1119, items=[dict(C4, icon="lightbulb", text="pomysł", t=41.54), dict(C1, icon="file-text", text="ebook", t=42.48),
         dict(C3, icon="globe", text="strona", t=43.10), dict(C5, icon="megaphone", text="marketing", t=43.32)]),
-    dict(type="reminder", t0=47.50, t1=50.50, y=1350, title="Nie musisz:", items=[dict(text="być ekspertem od każdego narzędzia AI", t=47.60, strike=48.66)]),
+    dict(type="reminder", t0=47.50, t1=50.50, y=1129, title="Nie musisz:", items=[dict(text="być ekspertem od każdego narzędzia AI", t=47.60, strike=48.66)]),
     dict(type="leak", t0=54.65, t1=55.05),
-    dict(type="duo", t0=56.80, t1=61.80, y=1340, a0="pracować szybciej", aT=57.96, b0="budować coś swojego", bT=59.78),
-    dict(type="link", t0=61.98, t1=64.10, y=1380, text="Kliknij poniżej"),
+    dict(type="duo", t0=56.80, t1=61.80, y=1119, a0="pracować szybciej", aT=57.96, b0="budować coś swojego", bT=59.78),
+    dict(type="link", t0=61.98, t1=64.10, y=1159, text="Kliknij poniżej"),
   ])
 
 ADS["skill4"] = dict(page="x2.html", capY=0.60, maxw=4, maxc=20, text=(
@@ -69,7 +69,7 @@ ADS["skill4"] = dict(page="x2.html", capY=0.60, maxw=4, maxc=20, text=(
         dict(emo="📚", text="Kolejny kurs", t=15.52), dict(emo="🌙", text="Noce przy laptopie", t=16.64)]),
     dict(type="clicker", t0=18.167, t1=22.733, hideCaps=True, items=[dict(icon="file-text", text="produkt", t=18.30), dict(icon="layout-template", text="strona", t=19.86),
         dict(icon=None, text="klienci?", t=21.70)]),
-    dict(type="znowu", t0=22.733, t1=27.533, hideCaps=True, y=1230, items=[dict(text="nauka", t=23.00), dict(text="kursy", t=23.86), dict(text="kolejne rzeczy", t=24.56)]),
+    dict(type="znowu", t0=22.733, t1=27.533, hideCaps=True, y=1000, items=[dict(text="nauka", t=23.00), dict(text="kursy", t=23.86), dict(text="kolejne rzeczy", t=24.56)]),
     dict(type="flash", t0=27.533, t1=27.90),
     dict(type="brackets", t0=29.42, t1=30.46, x=250, y=320, w=520, h=680),
     dict(type="orb", t0=30.46, t1=36.033, y=1290, lT=32.98, label="robi dużą część pracy"),

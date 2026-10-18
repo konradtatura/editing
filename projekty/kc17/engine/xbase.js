@@ -19,6 +19,6 @@ const B = {};
 let SPEC = null;
 window.init = spec => { SPEC = spec; spec.items.forEach(o => B[o.type](o)); const c = el('div', ''); c.id = 'caps'; return true };
 window.seek = t => {
-  SPEC.items.forEach(o => { const on = t >= o.t0 - 1e-3 && t < o.t1; if (o.e) o.e.style.display = on ? '' : 'none'; if (on) B[o.type].u(o, t) });
+  SPEC.items.forEach(o => { const on = t >= o.t0 - 1e-3 && t < o.t1; if (o.e) o.e.hidden = !(on); if (on) B[o.type].u(o, t) });
   const hide = SPEC.items.some(o => o.hideCaps && t >= o.t0 && t < o.t1) || (SPEC.hide || []).some(([a, b]) => t >= a && t < b);
   window.CAPS(SPEC, t, hide); return true };

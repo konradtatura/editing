@@ -1,6 +1,6 @@
 /* Creator H1 v2 — NEW components in the style-2 language (turquoise glass, Inter + Instrument Serif italic, soft blur-in motion).
    Every builder: B.x = o => {...; o.e = root}  and  B.x.u = (o, t) => {...}.  Times are absolute seconds. */
-const G = 'linear-gradient(180deg,#9DC3F7 8%,#007A7C 92%)';
+const G = 'linear-gradient(180deg,#BDF3FF 0%,#5FD3E6 50%,#22B4CC 100%)';   // Konrad: same lighter gradient as the CTA button
 const glass = 'background:rgba(245,250,252,.94);border-radius:34px;box-shadow:0 30px 70px rgba(0,0,0,.42),0 0 0 2px rgba(255,255,255,.5)';
 const sh = 'text-shadow:0 1px 2px rgba(0,0,0,.85),0 3px 10px rgba(0,0,0,.75),0 0 30px rgba(0,0,0,.5)';
 function abs(parent, css, html) { const d = el('div', '', parent, html || ''); d.style.cssText = 'position:absolute;' + css; return d; }
@@ -63,11 +63,11 @@ B.bubbles = o => {
       background:${i % 2 ? 'linear-gradient(180deg,#BDF3FF,#35C2DA)' : 'rgba(245,250,252,.95)'};box-shadow:0 18px 40px rgba(0,0,0,.35);font:700 38px Inter;color:#0B1A1E;white-space:nowrap`,
       `${it.emo}&nbsp; ${it.text}`);
   });
-  o.ok = abs(r, `left:0;right:0;top:${o.y - o.items.length * 112 - 40}px;text-align:center;font:400 italic 64px 'Instrument Serif';color:#9EEBFF;${sh}`, o.okText);
+  o.ok = abs(r, `display:${o.okText ? 'block' : 'none'};left:0;right:0;top:${o.y - o.items.length * 112 - 40}px;text-align:center;font:400 italic 64px 'Instrument Serif';color:#9EEBFF;${sh}`, o.okText);
 };
 B.bubbles.u = (o, t) => {
-  o.items.forEach(it => { const on = t >= it.t - .01; it.e.style.display = on ? '' : 'none'; if (on) appear(it.e, t, it.t, { y0: 40, s0: .6, ease: E.back, d: .34 }); });
-  o.ok.style.display = t >= o.okT ? '' : 'none'; if (t >= o.okT) appear(o.ok, t, o.okT, { y0: 20 });
+  o.items.forEach(it => { const on = t >= it.t - .01; it.e.hidden = !(on); if (on) appear(it.e, t, it.t, { y0: 40, s0: .6, ease: E.back, d: .34 }); });
+  o.ok.hidden = !(o.okText && t >= o.okT); if (o.okText && t >= o.okT) appear(o.ok, t, o.okT, { y0: 20 });
   if (t >= o.okT) o.items.forEach(it => it.e.style.opacity = lerp(1, .55, P(t, o.okT, .4)));
 };
 
@@ -105,8 +105,8 @@ B.ebook = o => {
 B.ebook.u = (o, t) => {
   const p = E.out5(P(t, o.t0, .7)); o.book.style.opacity = P(t, o.t0, .25);
   o.book.style.transform = `rotateY(${lerp(-70, -16, p) + Math.sin(t * 1.2) * 2}deg) rotateX(4deg) translateY(${(1 - p) * 80}px)`;
-  o.tags.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (on) appear(it.e, t, it.t, { s0: .6, ease: E.back }) });
-  const sp = P(t, o.stampT, .22); o.stamp.style.display = t >= o.stampT ? '' : 'none';
+  o.tags.forEach(it => { const on = t >= it.t; it.e.hidden = !(on); if (on) appear(it.e, t, it.t, { s0: .6, ease: E.back }) });
+  const sp = P(t, o.stampT, .22); o.stamp.hidden = !(t >= o.stampT);
   o.stamp.style.transform = `rotate(-8deg) scale(${lerp(2.2, 1, E.out(sp))})`; o.stamp.style.opacity = sp;
 };
 
@@ -123,9 +123,9 @@ B.sales = o => {
   o.x = abs(r, `right:70px;top:${o.y - 40}px;font:900 150px Inter;letter-spacing:-.05em;filter:drop-shadow(0 8px 20px rgba(0,0,0,.6))`, `<span style="background:${G};-webkit-background-clip:text;color:transparent">×3</span>`);
 };
 B.sales.u = (o, t) => {
-  o.one.style.display = t < o.notes[0].t ? '' : 'none'; appear(o.one, t, o.t0, { y0: 30 });
-  o.ns.forEach(n => { const on = t >= n.t; n.e.style.display = on ? '' : 'none'; if (on) appear(n.e, t, n.t, { y0: -60, s0: .9, d: .32 }) });
-  o.x.style.display = t >= o.xT ? '' : 'none'; if (t >= o.xT) appear(o.x, t, o.xT, { s0: .4, ease: E.back });
+  o.one.hidden = !(t < o.notes[0].t); appear(o.one, t, o.t0, { y0: 30 });
+  o.ns.forEach(n => { const on = t >= n.t; n.e.hidden = !(on); if (on) appear(n.e, t, n.t, { y0: -60, s0: .9, d: .32 }) });
+  o.x.hidden = !(t >= o.xT); if (t >= o.xT) appear(o.x, t, o.xT, { s0: .4, ease: E.back });
 };
 
 /* 8. full-screen brand reveal with a light sweep */
@@ -150,7 +150,7 @@ B.strike = o => {
 };
 B.strike.u = (o, t) => {
   appear(o.a, t, o.t0, { y0: 30 }); o.ln.style.width = E.out(P(t, o.strikeT, .3)) * 800 + 'px';
-  o.b.style.display = t >= o.goodT ? '' : 'none'; if (t >= o.goodT) appear(o.b, t, o.goodT, { y0: 30, s0: .85, ease: E.back });
+  o.b.hidden = !(t >= o.goodT); if (t >= o.goodT) appear(o.b, t, o.goodT, { y0: 30, s0: .85, ease: E.back });
 };
 
 /* 10. glowing path drawing through 3 nodes */
@@ -165,7 +165,7 @@ B.path = o => {
 };
 B.path.u = (o, t) => {
   const last = o.items[o.items.length - 1].t; o.line.style.width = E.out(P(t, o.items[0].t, last - o.items[0].t + .2)) * 780 + 'px';
-  o.items.forEach(it => { const on = t >= it.t; it.n.style.display = it.l.style.display = on ? '' : 'none'; if (on) { appear(it.n, t, it.t, { s0: .4, ease: E.back }); appear(it.l, t, it.t + .06, { y0: 14 }) } });
+  o.items.forEach(it => { const on = t >= it.t; it.n.hidden = it.l.hidden = !(on); if (on) { appear(it.n, t, it.t, { s0: .4, ease: E.back }); appear(it.l, t, it.t + .06, { y0: 14 }) } });
 };
 
 /* 11. A -> Z */
@@ -178,8 +178,8 @@ B.atoz = o => {
   o.cap = abs(r, `left:0;right:0;top:250px;text-align:center;font:400 italic 64px 'Instrument Serif';color:#9EEBFF;${sh}`, o.label);
 };
 B.atoz.u = (o, t) => {
-  appear(o.A, t, o.aT, { s0: .5, ease: E.back }); o.ar.style.width = E.out(P(t, o.aT + .15, o.zT - o.aT)) * 370 + 'px';
-  o.Z.style.display = t >= o.zT ? '' : 'none'; if (t >= o.zT) appear(o.Z, t, o.zT, { s0: .5, ease: E.back }); appear(o.cap, t, o.t0 + .1, { y0: 14 });
+  appear(o.A, t, o.aT, { s0: .5, ease: E.back }); o.ar.style.width = E.out(P(t, o.aT + .05, Math.max(.15, o.zT - o.aT - .05))) * 370 + 'px';
+  o.Z.hidden = !(t >= o.zT); if (t >= o.zT) appear(o.Z, t, o.zT, { s0: .5, ease: E.back, d: .22 }); o.cap.hidden = !o.label; if (o.label) appear(o.cap, t, o.t0 + .1, { y0: 14 });
 };
 
 /* 12. label morph: tool that saves time -> tool you build with */

@@ -23,7 +23,7 @@ B.locks = o => {
 };
 B.locks.u = (o, t) => {
   const u = E.out(P(t, o.unlockT, .35));
-  o.items.forEach((it, i) => { const on = t >= it.t; [it.e, it.lk, it.lb].forEach(n => n.style.display = on ? '' : 'none'); if (!on) return;
+  o.items.forEach((it, i) => { const on = t >= it.t; [it.e, it.lk, it.lb].forEach(n => n.hidden = !(on)); if (!on) return;
     appear(it.e, t, it.t, { s0: .4, ease: E.back, y0: 40 }); appear(it.lb, t, it.t + .05, { y0: 16 });
     const shake = t > o.shakeT && t < o.shakeT + .45 ? Math.sin((t - o.shakeT) * 70) * 9 * (1 - (t - o.shakeT) / .45) : 0;
     it.e.style.transform += ` translateX(${shake}px)`;
@@ -45,7 +45,7 @@ B.bars = o => {
 };
 B.bars.u = (o, t) => {
   if (o.head) appear(o.h, t, o.t0, { y0: 20 });
-  o.items.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (!on) return; appear(it.e, t, it.t, { x0: -60, s0: .96 });
+  o.items.forEach(it => { const on = t >= it.t; it.e.hidden = !(on); if (!on) return; appear(it.e, t, it.t, { x0: -60, s0: .96 });
     const pr = Math.min(.42, (t - it.t) * .07); it.f.style.width = pr * 100 + '%'; it.p.textContent = Math.round(pr * 100) + '%'; });
 };
 
@@ -64,10 +64,10 @@ B.options = o => {
 };
 B.options.u = (o, t) => {
   moveBlobs(o.bs, t); const hs = t >= (o.hT || 0); o.h.textContent = hs ? 'Dwie opcje' : (o.h0 || 'Dwie opcje'); appear(o.h, t, hs ? o.hT : o.t0, { y0: 30 });
-  [[o.c1, o.c1T], [o.c2, o.c2T]].forEach(([c, ct]) => { c.style.display = t >= ct ? '' : 'none'; if (t >= ct) appear(c, t, ct, { y0: 80, s0: .9 });
+  [[o.c1, o.c1T], [o.c2, o.c2T]].forEach(([c, ct]) => { c.hidden = !(t >= ct); if (t >= ct) appear(c, t, ct, { y0: 80, s0: .9 });
     const d = E.out(P(t, o.c3T, .4)); if (d > 0) { c.style.opacity = 1 - .8 * d; c.style.filter = `blur(${d * 6}px)`; c.style.transform += ` scale(${1 - .15 * d}) translateY(${-140 * d}px)` } });
   o.h.style.opacity = Math.min(+o.h.style.opacity, 1 - P(t, o.c3T, .25));
-  o.c3.style.display = t >= o.c3T ? '' : 'none'; if (t >= o.c3T) appear(o.c3, t, o.c3T, { y0: 300, s0: .9, d: .45 });
+  o.c3.hidden = !(t >= o.c3T); if (t >= o.c3T) appear(o.c3, t, o.c3T, { y0: 300, s0: .9, d: .45 });
   const ai = o.c3.querySelector('#ai'); const ap = P(t, o.aiT, .3); ai.style.opacity = ap; ai.style.transform = `scale(${lerp(.4, 1, E.back(ap))})`;
   const fp = P(t, o.c3T, .35); o.fl.style.opacity = t >= o.c3T ? (1 - fp) * .9 : 0;
 };
@@ -93,7 +93,7 @@ B.builds = o => {
 B.builds.u = (o, t) => {
   appear(o.e, t, o.t0, { y0: 60, s0: .94 }); appear(o.badge, t, o.t0 + .2, { s0: .5, ease: E.back });
   const st = o.steps.filter(s => t >= s.t).length - 1, s = o.steps[Math.max(0, st)]; o.title.textContent = s.title;
-  [o.doc, o.web, o.off].forEach((n, i) => n.style.display = i === Math.max(0, st) ? '' : 'none');
+  [o.doc, o.web, o.off].forEach((n, i) => n.hidden = !(i === Math.max(0, st)));
   if (st <= 0) o.docRows.forEach((n, i) => appear(n, t, o.steps[0].t + .3 + i * .55, { x0: -40 }));
   if (st === 1) o.webParts.forEach((n, i) => appear(n, t, s.t + .15 + i * .22, { y0: 20, s0: .8 }));
   if (st === 2) o.offParts.forEach((n, i) => appear(n, t, s.t + .15 + i * .35, { y0: 20 }));
@@ -115,7 +115,7 @@ B.merge.u = (o, t) => {
   o.tiles.forEach((n, i) => { const a = (t - o.t0) * 1.6 + i * 2.094, R = 300 * (1 - m);
     n.style.opacity = Math.min(P(t, o.t0 + i * .12, .3), 1 - P(t, o.mergeT, .1));
     n.style.transform = `translate(${Math.cos(a) * R}px,${Math.sin(a) * R * .55}px) scale(${1 - .5 * m})` });
-  o.blk.style.display = t >= o.mergeT ? '' : 'none'; if (t >= o.mergeT) appear(o.blk, t, o.mergeT, { s0: .5, ease: E.back, d: .45, b0: 4 });
+  o.blk.hidden = !(t >= o.mergeT); if (t >= o.mergeT) appear(o.blk, t, o.mergeT, { s0: .5, ease: E.back, d: .45, b0: 4 });
   const fp = P(t, o.mergeT, .35); o.fl.style.opacity = t >= o.mergeT ? (1 - fp) * .85 : 0;
 };
 
@@ -128,9 +128,9 @@ B.chev = o => {
   o.az = abs(r, `left:0;right:0;top:150px;text-align:center;font:400 italic 60px 'Instrument Serif';color:#fff;text-shadow:0 4px 14px rgba(0,0,0,.6)`, o.label);
 };
 B.chev.u = (o, t) => {
-  o.items.forEach(it => { const on = t >= it.t; it.e.style.display = on ? '' : 'none'; if (!on) return; appear(it.e, t, it.t, { x0: -70, s0: .9 });
+  o.items.forEach(it => { const on = t >= it.t; it.e.hidden = !(on); if (!on) return; appear(it.e, t, it.t, { x0: -70, s0: .9 });
     const f = P(t, it.t + .2, .3) > 0.5; it.e.style.background = f ? BL : '#fff'; it.e.style.color = f ? '#fff' : '#0B0D24' });
-  o.az.style.display = o.label && t >= o.azT ? '' : 'none'; if (t >= o.azT) appear(o.az, t, o.azT, { y0: 16 });
+  o.az.hidden = !(o.label && t >= o.azT); if (t >= o.azT) appear(o.az, t, o.azT, { y0: 16 });
 };
 
 /* 7. "ekspert od wszystkiego" badge gets a NIE MUSISZ stamp */
@@ -140,7 +140,7 @@ B.expert = o => {
   o.s = abs(r, `left:310px;top:120px;padding:12px 34px;border:7px solid ${RED};border-radius:16px;color:${RED};font:900 60px Inter;background:rgba(255,255,255,.92);transform:rotate(-7deg)`, 'NIE MUSISZ');
 };
 B.expert.u = (o, t) => {
-  appear(o.b, t, o.t0, { y0: 40 }); const sp = P(t, o.stampT, .2); o.s.style.display = t >= o.stampT ? '' : 'none';
+  appear(o.b, t, o.t0, { y0: 40 }); const sp = P(t, o.stampT, .2); o.s.hidden = !(t >= o.stampT);
   o.s.style.opacity = sp; o.s.style.transform = `rotate(-7deg) scale(${lerp(2.4, 1, E.out(sp))})`;
 };
 

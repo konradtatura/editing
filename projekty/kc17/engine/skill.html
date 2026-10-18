@@ -2,6 +2,7 @@
 <html><head><meta charset="utf-8">
 <link rel="stylesheet" href="../../reklamy_CA/engine/assets/fonts/g.css">
 <style>
+[hidden]{display:none!important}
 :root{--bg:#05071A;--blue:#3B3BFF;--blue2:#5B5BFF;--ink:#0B0D24}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
@@ -86,5 +87,5 @@ function caps(spec,t){const box=document.getElementById('caps');
 let SPEC=null,PEND=[];
 window.init=(spec)=>{SPEC=spec;spec.items.forEach(o=>B[o.type](o));const c=el('div','');c.id='caps';return true};
 window.seek=(t)=>{SPEC.items.forEach(o=>{const on=t>=o.t0-1e-3&&t<o.t1;const nodes=[o.e].filter(Boolean);
- nodes.forEach(n=>n.style.display=on?'':'none');if(on)B[o.type].u(o,t)});caps(SPEC,t);const pd=PEND;PEND=[];return pd.length?Promise.all(pd).then(()=>true):true};
+ nodes.forEach(n=>n.hidden=!on);if(on)B[o.type].u(o,t)});caps(SPEC,t);const pd=PEND;PEND=[];return pd.length?Promise.all(pd).then(()=>true):true};
 </script></body></html>
