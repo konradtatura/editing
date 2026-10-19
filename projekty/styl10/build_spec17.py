@@ -52,7 +52,7 @@ for i, g in enumerate(groups):
     caps.append(dict(t0=round(max(0, t0), 3), t1=round(t1, 3), text=text, big=any(norm(x["d"]) in {norm(b) for b in BIG} for x in g["w"])))
 FX = [dict(type="arrow", t0=161.8, t1=dur, x=540, y=1790, size=130)]                   # "Kliknij na dole"
 BLUR_CUTS = []
-ZONES = [[143.1, 147.033, 0.885], [161.867, 999, 0.24]]   # 17 zł card on screen
+ZONES = [[143.1, 147.033, 0.885], [161.867, 999, 0.10]]   # 17 zł card on screen
 spec = dict(dur=round(dur, 3), fps=30, capY=0.70, capSize=84, bigSize=112, capPunch=True, capZones=ZONES,
             caps=caps, fx=FX, blurCuts=BLUR_CUTS, hideCaps=[])
 json.dump(spec, open(os.path.join(WD, f"spec10_{NAME}.json"), "w"), ensure_ascii=False, indent=1)
